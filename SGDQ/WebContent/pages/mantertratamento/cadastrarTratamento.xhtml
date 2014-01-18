@@ -10,17 +10,12 @@
 <ui:define name="metadata"/>
     <ui:define name="content">
     <h:body style="font-size:small;padding:0px;">
-    	<h:inputHidden value="#{tratamentoController.selected.idprontuario}" />
-    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
-    	<h:inputHidden value="#{tratamentoController.selected.icativo}" />
-    	<h:inputHidden value="#{tratamentoController.selected.dtinclusao}">
-    		<f:convertDateTime pattern="yyyy-MM-dd" />
-    	</h:inputHidden>	
-		 	<p:commandButton 
+    	 	<p:commandButton 
 						id="button_pesquisarprontuario" 
 						value="Pesquisar Prontuário" 
 						action="/pages/manterprontuario/consultar?faces-redirect=true" 
-						immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
+						immediate="true" icon="ui-icon-arrowreturnthick-1-w" 
+						disabled="#{not empty tratamentoController.prontuario.idProntuario}"/>
 			<br/><br/> 	
 			<p:fieldset id="fieldset_dados_prontuario" toggleable="true" legend="Prontuário: #{tratamentoController.prontuario.idProntuario}" 
 				rendered="#{not empty tratamentoController.prontuario.idProntuario}">	 	
@@ -59,8 +54,12 @@
 				
 				 	
 			<h:form id="formTratamento" prependId="false" enctype="multipart/form-data" >
-			
-				<h:inputHidden value="tratamentoController.selected.idprontuario" />
+				<h:inputHidden value="#{tratamentoController.selected.idprontuario}" />
+		    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
+		    	<h:inputHidden value="#{tratamentoController.selected.icativo}" />
+		    	<h:inputHidden value="#{tratamentoController.selected.dtinclusao}">
+		    		<f:convertDateTime pattern="yyyy-MM-dd" />
+		    	</h:inputHidden>	
 <!-- 				<p:messages id="mensagens" closable="true"/> -->
 				<br/>	
 				<p:fieldset  id="fieldset_dados_do_tratamento" legend="#{rotulo['tratamento.dados_do_tratamento']}" >
@@ -84,20 +83,6 @@
 					        </p:row>
 					   </p:panelGrid>     
 					   <p:panelGrid id="tratamento" >
-					    	
-<!-- 					    	<p:row > -->
-<!-- 					    		<p:column> -->
-<!-- 					  				<p:outputLabel value="#{rotulo['tratamento.responsavel_medico']}:" /> -->
-<!-- 					  			</p:column> -->
-<!-- 					  			<p:column> -->
-<!-- 					  				<p:inputText  -->
-<!-- 					  					id="input_responsavel_medico"  -->
-<!-- 					  					value="#{tratamentoController.selected.nmmedicoresponsavel}"  -->
-<!-- 					  					required="true"  -->
-<!-- 					  					disabled="#{!tratamentoController.prontuarioExiste}" -->
-<!-- 					  					requiredMessage="#{mensagem['sistema.descricao.required']}" />   -->
-<!-- 					        	</p:column> -->
-<!-- 					        </p:row> -->
 					    	<p:row>
 					    		<p:column>
 					  				<p:outputLabel value="#{rotulo['tratamento.tipo_de_tratamento']}:" />
@@ -111,16 +96,6 @@
 							            <f:selectItem itemLabel="Ambulatorial" itemValue="1" />  
 							            <f:selectItem itemLabel="Internação" itemValue="2" />  
 							        </p:selectOneRadio>
-<!-- 					  			<ui:repeat value="#{bean.list}" var="item" step="1"> -->
-<!-- 					  				 <p:selectOneRadio  -->
-<!-- 					  				 		id = "radio_tipo_de_tratamento"  -->
-<!-- 					  				 		value="#{tratamentoController.selected.idtratamentotipo}">  -->
-<!-- 										<f:selectItems  -->
-<!-- 											value="#{tratamentoTipoController.itemsAvailableSelectOne}"  -->
-<!-- 											var="item"  -->
-<!-- 											itemLabel="#{item}"  -->
-<!-- 											itemValue="" /> -->
-<!-- 									</p:selectOneRadio>     -->
 					        	</p:column>
 					        </p:row>
 					  		<p:row>
@@ -132,21 +107,12 @@
 					  						id="radio_status_do_tratamento" 
 					  						value="#{tratamentoController.selected.idtratamentostatus}" 
 					  						required="true" requiredMessage="Status do tratamento deve ser informado."
-					  						disabled="#{not empty tratamentoController.selected.idtratamento}">  
-							            <f:selectItem itemLabel="Em andamento" itemValue="1" />  
-							            <f:selectItem itemLabel="Finalizado por abandono" itemValue="2" />
-							            <f:selectItem itemLabel="Finalizado por conclusão" itemValue="3" />  
+					  						>  
+							            <f:selectItem itemLabel="Em andamento" itemValue="1" checked="checked"/>  
+							            <f:selectItem itemLabel="Finalizado por abandono" itemValue="2" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Finalizado por conclusão" itemValue="3" itemDisabled="true"/>  
 							        </p:selectOneRadio>
 					  				
-<!-- 					  				<p:selectOneRadio  -->
-<!-- 					  				 		id = "radio_status_do_tratamento"  -->
-<!-- 					  				 		value="#{tratamentoController.selected.idtratamentostatus}">  -->
-<!-- 										<f:selectItems  -->
-<!-- 											value="#{tratamentoStatusController.itemsAvailableSelectOne}"  -->
-<!-- 											var="item"  -->
-<!-- 											itemLabel="#{item}"  -->
-<!-- 											itemValue="" /> -->
-<!-- 									</p:selectOneRadio>  -->
 					  			</p:column>
 					  		</p:row>
 					  		<p:row>
@@ -158,7 +124,7 @@
 					  					id="input_motivo_do_status" 
 					  					value="#{tratamentoController.selected.dstratamentostatusmotivo}" 
 					  					required="true" 
-					  					requiredMessage="#{mensagem['sistema.descricao.required']}" cols="60" />
+					  					requiredMessage="#{mensagem['sistema.descricao.required']}" cols="60"/>
 					  			</p:column>
 							</p:row>
 					    	
@@ -191,14 +157,15 @@
 									<p:outputLabel value="Fim: " style="font-weight: bold"/>
 								</p:column>
 								<p:column size="50" >
-<!-- 									<c:if test="#{empty varFaseTratamento.dtfasetratamentofim}"> -->
-<!-- 										Fase Atual -->
-<!-- 									</c:if> -->
-<!-- 									<c:otherwise> -->
-										<h:outputText  value="#{varFaseTratamento.dtfasetratamentofim}" >
+										<h:outputText  value="#{empty varFaseTratamento.dtfasetratamentofim ? 'Fase Atual &nbsp;&nbsp;' : varFaseTratamento.dtfasetratamentofim}" >
 											<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
 										</h:outputText >
-<!-- 									</c:otherwise> -->
+								</p:column>
+								<p:column>
+									<p:outputLabel value="Justificativa: " style="font-weight: bold"/>
+								</p:column>
+								<p:column size="50" >
+										<h:outputText  value="#{varFaseTratamento.dsmotivofasetratamento}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
@@ -212,14 +179,14 @@
 						id="button_salvarTratamento"      
 						value="#{rotulo['generico.salvar']}" 
 						actionListener="#{tratamentoController.create}" 
-						readonly="#{empty tratamentoController.prontuario.idProntuario or not empty tratamentoController.selected.idtratamento}"
 					  	update="formTratamento" icon="ui-icon-check" />  
+<!-- 						readonly="#{empty tratamentoController.prontuario.idProntuario or not empty tratamentoController.selected.idtratamento}" -->
 					
 					<p:commandButton 
 						id="button_atualizarTratamento"      
 						value="#{rotulo['generico.atualizar']}" 
 						action="#{tratamentoController.update}" 
-						readonly="#{empty tratamentoController.prontuario.idProntuario or empty tratamentoController.selected.idtratamento}"
+						disabled="#{empty tratamentoController.prontuario.idProntuario or empty tratamentoController.selected.idtratamento}"
 						update="formTratamento" icon="ui-icon-check" />   	
 					<p:commandButton 
 						id="button_voltar" 
@@ -227,17 +194,24 @@
 						action="/pages/mantertratamento/consultar?faces-redirect=true" 
 						immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
 				
-					<p:commandButton id="showDialogFaseTratamento" icon="ui-icon-newwin" type="button" value="Incluir Fase" onclick="dialogFaseTratamento.show()" />   	
+					<p:commandButton 
+						id="showDialogFaseTratamento" 
+						icon="ui-icon-newwin" 
+						type="button" 
+						value="Incluir Fase" 
+						onclick="dialogFaseTratamento.show()" 
+						disabled="#{empty tratamentoController.selected.idtratamento}"/>   	
 					  	
 					<p:commandButton 
 					 	value="Incluir Exame" icon="ui-icon-disk" 
 					 	update="formTratamento"  
-					 	readonly="#{empty tratamentoController.selected.idtratamento}"
+					 	disabled="#{empty tratamentoController.selected.idtratamento}"
 					 	oncomplete="dialog.show();"/>
 					
 					<p:commandButton 
-					 	value="Solicitar Termino" icon="ui-icon-newwin" 
-					 	readonly="#{empty tratamentoController.selected.idtratamento}"
+					 	value="Solicitar Termino: #{tratamentoController.selected.idtratamento}" icon="ui-icon-newwin" 
+					 	disabled="#{empty tratamentoController.selected.idtratamento}"
+					 	imediate="true"
 					 	oncomplete="dialogTerminoTratamento.show()"/> 	
 					 	 		
 				</div>
@@ -287,10 +261,10 @@
 				        </p:panelGrid>  
 				  
 				        <p:commandButton 
-					 	value="Incluir" icon="ui-icon-disk" 
-					 	update=":formTratamento"  
-					 	oncomplete="dialogFaseTratamento.hide()"
-					 	actionListener="#{tratamentoController.addFaseTratamento}"/> 
+						 	value="Incluir" icon="ui-icon-disk" 
+						 	update=":formTratamento"  
+						 	oncomplete="dialogFaseTratamento.hide()"
+						 	actionListener="#{tratamentoController.addFaseTratamento}"/> 
 				        
 				        <p:commandButton 
 					 	value="Fechar" icon="ui-icon-close" 
@@ -344,7 +318,7 @@
 <!-- 				      ************** Solicitacao termino ***************** -->
 				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento"
 							toggleable="true" legend="Solicitação" 
-							rendered="#{not empty tratamentoController.selected.dtsolicitacaotermino}">	
+							>	
 					
 							<p:panelGrid>
 								<p:row>

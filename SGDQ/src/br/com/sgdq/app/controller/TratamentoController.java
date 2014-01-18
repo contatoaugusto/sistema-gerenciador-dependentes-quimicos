@@ -244,9 +244,11 @@ public class TratamentoController implements Serializable {
     public String create() {
         try {
         	
+        	loadUsuarioSessao();
+        	
         	getSelected().setDtinclusao(new Date());
         	getSelected().setIdusuario(usuario.getIdUsuario());
-        	//getSelected().setIcativo(new Short("1"));
+        	getSelected().setIcativo(new Integer(1).shortValue());
         	
         	getFacade().create(current);
         	
@@ -255,9 +257,9 @@ public class TratamentoController implements Serializable {
         		addFaseTratamento();
         	}
         	
-        	
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.inclusao"));
-            return prepareCreate();
+           // return prepareCreate();
+            return "cadastrarTratamento";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/message").getString("sistema.inclusao.erro"));
             return null;
@@ -317,7 +319,8 @@ public class TratamentoController implements Serializable {
         	
         	current = getFacade().find(getSelected().getIdtratamento());
         	current.setIdtratamentostatus(idTratamentoStatus);
-        	current.setIcativo(new Short("0"));
+        	current.setIcativo(new Integer(0).shortValue());
+        	current.setDttratamentofim(new Date());
         	update();
         	
             JsfUtil.addSuccessMessage("Solicitação de termino incluida com sucesso.");

@@ -109,7 +109,8 @@ public class FaseTratamentoController implements Serializable {
 //    	else
 //    		dsFaseTratamento = "Criado automaticamente na inclusão de tratamento. Inicio de tratamento por internação";
     	
-    	if (nuFase > 3){
+    	// Sistema idealizado prater apenas 3 fases
+    	if (nuFase <= 3){
 	    	current = new FaseTratamento();
 	    	current.setIdtratamento(idTratamento); // Tratamento que foi criado nesse instante
 	    	current.setIdfase(nuFase);

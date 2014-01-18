@@ -4,14 +4,15 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:pe="http://primefaces.org/ui/extensions"
     template="/templates/Template.xhtml">
 
 <ui:define name="metadata"/>
     <ui:define name="content">
     <h:body style="font-size:small;padding:0px;">
-		
-			<h:form id="formConsultarTratamento" prependId="false">
+		<p:fieldset id="fieldset_consulta_prontuario" legend="Tratamentos Cadastrados">
+			<h:form id="formConsultarTratamento">
 				<!-- Mensagens -->
 <!-- 				<p:messages id="mensagens" closable="true"/> -->
 				<!-- Buttons -->
@@ -19,41 +20,34 @@
 				<div class="buttons-alone">
 				    <p:commandButton id="button_novo" value="#{rotulo['generico.novo']}" action="/pages/mantertratamento/cadastrarTratamento?faces-redirect=true" icon="ui-icon-plus" />
 				</div>
-				<div class="resultado">
 					<p:dataTable id="dataTable_consultar_prontuario" value="#{tratamentoController.items}" var="tratamento" 
 						emptyMessage="#{mensagem['datatable.empty']}" paginator="true" paginatorPosition="bottom" 
-						resizableColumns="true" rows="10">
-						
+						resizableColumns="true" rows="10" rowKey="#{tratamento.idprontuario}" selectionMode="single">
+						<p:column headerText="Paciente" sortBy="#{tratamento.prontuario.idPaciente.idPessoa.nmPessoa}">
+							<p:outputLabel value="#{tratamento.prontuario.idPaciente.idPessoa.nmPessoa}" />
+						</p:column>
 						<p:column headerText="#{rotulo['tratamento.tipo_de_tratamento']}" sortBy="#{tratamento.idtratamentotipo}">
-							<p:outputLabel value="#{tratamento.idtratamentotipo}" />
+							<p:outputLabel value="#{tratamento.idtratamentotipo == 1 ? 'Ambulatorial' : 'Internação'}" />
 						</p:column>
 						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.idtratamentostatus}">
-							<p:outputLabel value="#{tratamento.idtratamentostatus}" />
+							<p:outputLabel value="#{tratamento.idtratamentostatus == 1 ? 'Em Andamento' : tratamento.idtratamentostatus == 2 ? 'Finalizado por Abandono' : tratamento.idtratamentostatus == 3 ? 'Finalizado por Conclusão' : ''}" />
 						</p:column>
 						<p:column headerText="#{rotulo['tratamento.motivo_do_status']}" sortBy="#{tratamento.dstratamentostatusmotivo}">
 							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" />
 						</p:column>
 						
-						<p:column headerText="#{rotulo['tratamento.responsavel_medico']}" sortBy="#{tratamento.nmmedicoresponsavel}">
-							<p:outputLabel value="#{tratamento.nmmedicoresponsavel}" />
-						</p:column>
 						<p:column headerText="#{rotulo['generico.acoes']}">
-						 	<p:commandButton id="button_detalhar" action="#{manterProntuarioController.detalhar}" icon="ui-icon-folder-open">
-								<f:setPropertyActionListener value="#{prontuario}" target="#{manterProntuarioController.prontuarioSelecionado}" />  
-						 	</p:commandButton>
-							
+<!-- 						 	<p:commandButton id="button_editar_tratamento" action="tratamentoController.prepareEdit" icon="ui-icon-pencil" value="Editar"/> -->
 							<h:commandLink action="#{tratamentoController.prepareEdit}" value="Editar"/>
-
-						
 						</p:column>
 					</p:dataTable>
-				</div>
 			</h:form>
 			<!-- Button -->
 			<br/>
 			<div class="button-voltar">
 				<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/manterprontuario/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
 			</div>
+			</p:fieldset>
 		</h:body>
 	</ui:define>
 </ui:composition>		

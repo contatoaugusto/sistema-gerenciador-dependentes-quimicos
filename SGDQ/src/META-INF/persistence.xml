@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="SGDQPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+	    <class>br.com.sgdq.app.entity.Estado</class>
+	    <class>br.com.sgdq.app.entity.Cidade</class>
+	    <class>br.com.sgdq.app.entity.Prontuario</class>
+	    <class>br.com.sgdq.app.entity.Tratamento</class>
+	    <class>br.com.sgdq.app.entity.Fase</class>
+	    <class>br.com.sgdq.app.entity.Endereco</class>
+	    <class>br.com.sgdq.app.entity.Paciente</class>
+	    <class>br.com.sgdq.app.entity.Responsavel</class>
+	    <class>br.com.sgdq.app.entity.Pessoa</class>
+	    <class>br.com.sgdq.app.entity.FaseTratamento</class>
+	    <class>br.com.sgdq.app.entity.PacienteResponsavel</class>
+	    <class>br.com.sgdq.app.entity.Fasetratamento</class>
+	    <class>br.com.sgdq.app.entity.Exame</class>
+	    <class>br.com.sgdq.app.entity.TratamentoStatus</class>
+	    <class>br.com.sgdq.app.entity.TratamentoTipo</class>
+	   <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+	   	<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sgdq"/>
+	   	<property name="javax.persistence.jdbc.password" value="admin"/>
+	   	<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+	   	<property name="javax.persistence.jdbc.user" value="postgres"/>
+	   	<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+		<property name="hibernate.generate_statistics"  value="true" />
+	   	<property name="hibernate.show_sql" value="true" />
+	   	
+	   	<property name="eclipselink.logging.level" value="FINE"/>
+	   	<property name="eclipselink.logging.level.sql" value="FINE"/>
+	   	<property name="eclipselink.logging.session" value="true"/> 
+    	<property name="eclipselink.logging.parameters" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

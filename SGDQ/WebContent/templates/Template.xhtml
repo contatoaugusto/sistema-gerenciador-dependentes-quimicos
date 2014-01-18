@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" id="fview">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>::SGDQ</title>
+    <ui:debug />
+    <f:metadata>
+        <ui:insert name="metadata" />
+    </f:metadata>
+
+<h:head>
+	<p:growl id="mensagens" autoUpdate="true"  sticky="true"/>
+    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+	        <p:layoutUnit position="north" size="100" id="north" resizable="false">
+    	        <ui:include src="topo.xhtml" />
+        	</p:layoutUnit>
+
+	        <p:layoutUnit size="190" 
+	        		position="west" 
+	        		id="west"  
+	        		resizable="true" 
+	        		header="Módulos SGDQ" 
+	        		collapsible="true" 
+	        		closable="false" style="font-size:small;padding:0px;">
+    	        <ui:include src="menu.xhtml" />
+        	</p:layoutUnit>
+
+        	<p:layoutUnit styleClass="layoutUnitCenter" position="center">
+<!--         		<h:form id="mainform"> -->
+        	        <ui:insert name="content" />
+<!-- 	        	</h:form> -->
+	        </p:layoutUnit>
+        	<p:layoutUnit position="south" id="south">
+        	    <ui:include src="rodape.xhtml" />
+    	    </p:layoutUnit>
+	    </p:layout>
+
+	</h:head>
+
+
+</f:view>
+</html>

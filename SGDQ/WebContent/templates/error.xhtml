@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<!-- Head -->
+<h:head>
+	<title>SGDQ</title>
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="style.css" />
+	</f:facet>
+</h:head>
+<!-- Body -->
+<h:body>
+	<!-- Main -->
+	<div id="main">
+		<!-- Topo -->
+		<div id="topo">
+		    <div id="banner">
+			    <div id="nomenclatura">
+			    	<h:outputLabel id="titulo" value="#{rotulo['generico.titulo']}:" />
+			    	<br />
+			    	<h:outputLabel id="subtitulo" value="#{rotulo['generico.titulo.descricaosistema']}:" />
+			    </div>
+		    </div>
+		</div>
+		<div id="toolbar">
+				<h:form>
+					<p:toolbar>  
+					    <p:toolbarGroup align="left">  
+							<h:outputText value="Desculpe-nos! ):" />					  
+					    </p:toolbarGroup>  
+					</p:toolbar>
+				</h:form>
+			</div>
+		<!-- Conteúdo -->
+		<div id="conteudo_login_and_error">
+			<ui:insert name="content" />
+			<div id="clear" />
+		</div>
+		<!-- Rodapé -->
+		<div id="rodape" />
+	</div>
+</h:body>
+</html>

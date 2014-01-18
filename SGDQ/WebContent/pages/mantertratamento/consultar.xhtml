@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    template="/templates/Template.xhtml">
+
+<ui:define name="metadata"/>
+    <ui:define name="content">
+    <h:body style="font-size:small;padding:0px;">
+		
+			<h:form id="formConsultarTratamento" prependId="false">
+				<!-- Mensagens -->
+<!-- 				<p:messages id="mensagens" closable="true"/> -->
+				<!-- Buttons -->
+				<br/>
+				<div class="buttons-alone">
+				    <p:commandButton id="button_novo" value="#{rotulo['generico.novo']}" action="/pages/mantertratamento/cadastrarTratamento?faces-redirect=true" icon="ui-icon-plus" />
+				</div>
+				<div class="resultado">
+					<p:dataTable id="dataTable_consultar_prontuario" value="#{tratamentoController.items}" var="tratamento" 
+						emptyMessage="#{mensagem['datatable.empty']}" paginator="true" paginatorPosition="bottom" 
+						resizableColumns="true" rows="10">
+						
+						<p:column headerText="#{rotulo['tratamento.tipo_de_tratamento']}" sortBy="#{tratamento.idtratamentotipo}">
+							<p:outputLabel value="#{tratamento.idtratamentotipo}" />
+						</p:column>
+						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.idtratamentostatus}">
+							<p:outputLabel value="#{tratamento.idtratamentostatus}" />
+						</p:column>
+						<p:column headerText="#{rotulo['tratamento.motivo_do_status']}" sortBy="#{tratamento.dstratamentostatusmotivo}">
+							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" />
+						</p:column>
+						
+						<p:column headerText="#{rotulo['tratamento.responsavel_medico']}" sortBy="#{tratamento.nmmedicoresponsavel}">
+							<p:outputLabel value="#{tratamento.nmmedicoresponsavel}" />
+						</p:column>
+						<p:column headerText="#{rotulo['generico.acoes']}">
+						 	<p:commandButton id="button_detalhar" action="#{manterProntuarioController.detalhar}" icon="ui-icon-folder-open">
+								<f:setPropertyActionListener value="#{prontuario}" target="#{manterProntuarioController.prontuarioSelecionado}" />  
+						 	</p:commandButton>
+							
+							<h:commandLink action="#{tratamentoController.prepareEdit}" value="Editar"/>
+
+						
+						</p:column>
+					</p:dataTable>
+				</div>
+			</h:form>
+			<!-- Button -->
+			<br/>
+			<div class="button-voltar">
+				<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/manterprontuario/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
+			</div>
+		</h:body>
+	</ui:define>
+</ui:composition>		

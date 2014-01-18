@@ -1,0 +1,961 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.2
+-- Dumped by pg_dump version 9.3.2
+-- Started on 2013-12-29 22:13:32
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 6 (class 2615 OID 16487)
+-- Name: dbo; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA dbo;
+
+
+ALTER SCHEMA dbo OWNER TO postgres;
+
+--
+-- TOC entry 195 (class 3079 OID 11750)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2085 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = dbo, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 171 (class 1259 OID 16488)
+-- Name: Cidade; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Cidade" (
+    "idCidade" integer DEFAULT nextval(('id_cidade_seq'::text)::regclass) NOT NULL,
+    "nmCidade" text,
+    "idEstado" integer
+);
+
+
+ALTER TABLE dbo."Cidade" OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 16495)
+-- Name: Endereco; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Endereco" (
+    "idEndereco" integer DEFAULT nextval(('id_endereco_seq'::text)::regclass) NOT NULL,
+    "dsEndereco" text,
+    "nmBairro" text,
+    "idCidade" integer,
+    "nuCEP" text,
+    "nuResidencia" integer
+);
+
+
+ALTER TABLE dbo."Endereco" OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 16502)
+-- Name: Estado; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Estado" (
+    "idEstado" integer DEFAULT nextval(('id_estado_seq'::text)::regclass) NOT NULL,
+    "nmEstado" text,
+    "sgEstado" text
+);
+
+
+ALTER TABLE dbo."Estado" OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 16509)
+-- Name: Fase; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Fase" (
+    "idFase" integer DEFAULT nextval(('id_fase_seq'::text)::regclass) NOT NULL,
+    "nmFase" text,
+    "dsFase" text
+);
+
+
+ALTER TABLE dbo."Fase" OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 16516)
+-- Name: FaseTratamento; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "FaseTratamento" (
+    "idFaseTratamento" integer DEFAULT nextval(('id_fasetratamento_seq'::text)::regclass) NOT NULL,
+    "dtFaseTratamentoInicio" date,
+    "dtFaseTratamentoFim" date,
+    "idTratamento" integer,
+    "idFase" integer,
+    "dsMotivoFaseTratamento" text
+);
+
+
+ALTER TABLE dbo."FaseTratamento" OWNER TO postgres;
+
+--
+-- TOC entry 2086 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: TABLE "FaseTratamento"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON TABLE "FaseTratamento" IS 'Essa tabela armazena os dado referente a cada fase do tratamento. Serve para registro de histórico e descirções de cada fase';
+
+
+--
+-- TOC entry 176 (class 1259 OID 16523)
+-- Name: Paciente; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Paciente" (
+    "idPaciente" integer DEFAULT nextval(('id_paciente_seq'::text)::regclass) NOT NULL,
+    "dtEntrada" date,
+    "idPessoa" integer,
+    "idResponsavel" integer
+);
+
+
+ALTER TABLE dbo."Paciente" OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 16670)
+-- Name: PacienteResponsavel; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "PacienteResponsavel" (
+    "idPacienteResponsavel" integer DEFAULT nextval(('id_pacienteresponsavel_seq'::text)::regclass) NOT NULL,
+    "idPaciente" integer,
+    "idResponsavel" integer
+);
+
+
+ALTER TABLE dbo."PacienteResponsavel" OWNER TO postgres;
+
+--
+-- TOC entry 2087 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: TABLE "PacienteResponsavel"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON TABLE "PacienteResponsavel" IS 'Um paciente pode ter mais de um responsável da mesmo forma que um responsável pode se responsabilizar por mais de um paciente';
+
+
+--
+-- TOC entry 177 (class 1259 OID 16527)
+-- Name: Pessoa; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Pessoa" (
+    "idPessoa" integer DEFAULT nextval(('id_pessoa_seq'::text)::regclass) NOT NULL,
+    "nmPessoa" text,
+    "nuCPF" text,
+    "nmOrgaoEmissor" text,
+    "nmSexo" text,
+    "idEstadoOrgaoEmissor" integer,
+    "nuTelefone" text,
+    "nuCelular" text,
+    "idEndereco" integer,
+    "dtNascimento" date,
+    "idCidadeNascimento" integer,
+    "nuRG" text,
+    "dsEmail" text,
+    "btImagem" bytea
+);
+
+
+ALTER TABLE dbo."Pessoa" OWNER TO postgres;
+
+--
+-- TOC entry 2088 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN "Pessoa"."nmSexo"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON COLUMN "Pessoa"."nmSexo" IS 'Se masculino ou feminino';
+
+
+--
+-- TOC entry 2089 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN "Pessoa"."btImagem"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON COLUMN "Pessoa"."btImagem" IS 'Foto da pessoa';
+
+
+--
+-- TOC entry 178 (class 1259 OID 16534)
+-- Name: Prontuario; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Prontuario" (
+    "idProntuario" integer NOT NULL,
+    "idPaciente" integer,
+    "idProntuarioStatus" integer,
+    "dtProntuarioInicio" date,
+    "idUsuarioCadastro" integer
+);
+
+
+ALTER TABLE dbo."Prontuario" OWNER TO postgres;
+
+--
+-- TOC entry 2090 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: TABLE "Prontuario"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON TABLE "Prontuario" IS 'É a ficha de fato do paciente. Existe apenas um prontuário para cada paciente. Quando um paciente recai ou volta pra fazer novo tratamento é reutilizado os mesmos cadastros básicos';
+
+
+--
+-- TOC entry 179 (class 1259 OID 16537)
+-- Name: Responsavel; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Responsavel" (
+    "idResponsavel" integer DEFAULT nextval(('id_responsavel_seq'::text)::regclass) NOT NULL,
+    "idPessoa" integer,
+    "nmVinculoFamiliar" text,
+    "vrRendaFamiliar" money,
+    "dsObservacao" text
+);
+
+
+ALTER TABLE dbo."Responsavel" OWNER TO postgres;
+
+--
+-- TOC entry 2091 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: COLUMN "Responsavel"."dsObservacao"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON COLUMN "Responsavel"."dsObservacao" IS 'Observacoes pertinentes sobre o responsável do paciente';
+
+
+--
+-- TOC entry 180 (class 1259 OID 16544)
+-- Name: Tratamento; Type: TABLE; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Tratamento" (
+    "idTratamento" integer DEFAULT nextval(('id_tratamento_seq'::text)::regclass) NOT NULL,
+    "idTipoTratamento" integer NOT NULL,
+    "idStatusTratamento" integer NOT NULL,
+    "dsMotivoStatus" text,
+    "idPaciente" integer NOT NULL,
+    "icAtivo" smallint DEFAULT 1 NOT NULL
+);
+
+
+ALTER TABLE dbo."Tratamento" OWNER TO postgres;
+
+--
+-- TOC entry 2092 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: TABLE "Tratamento"; Type: COMMENT; Schema: dbo; Owner: postgres
+--
+
+COMMENT ON TABLE "Tratamento" IS 'Contém as informações do tratamento de um paciente, assim como o(s) responsável(eis). É nessa entidade que se mantém todo o controle do progresso e e informações gerais do negocio. Podemos dizer que se trata do núcleo do sistema de onde também irá partir todos os relatórios
+Existe apenas um tratamento ativo por vez para um paciente. O tratamento pode ser do tipo ambulatorial ou internação. 
+5 Motivos de finalização
+Fases 1, 2 e 3';
+
+
+--
+-- TOC entry 181 (class 1259 OID 16552)
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 2
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.hibernate_sequence OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 16554)
+-- Name: id_cidade_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_cidade_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_cidade_seq OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 16556)
+-- Name: id_endereco_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_endereco_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_endereco_seq OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 16558)
+-- Name: id_estado_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_estado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_estado_seq OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 16560)
+-- Name: id_fase_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_fase_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_fase_seq OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 16562)
+-- Name: id_fasetratamento_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_fasetratamento_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_fasetratamento_seq OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 16564)
+-- Name: id_paciente_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_paciente_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_paciente_seq OWNER TO postgres;
+
+--
+-- TOC entry 194 (class 1259 OID 16673)
+-- Name: id_pacienteresponsavel_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_pacienteresponsavel_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_pacienteresponsavel_seq OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 16566)
+-- Name: id_pessoa_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_pessoa_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_pessoa_seq OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 16568)
+-- Name: id_responsavel_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_responsavel_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_responsavel_seq OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 16570)
+-- Name: id_tratamento_seq; Type: SEQUENCE; Schema: dbo; Owner: postgres
+--
+
+CREATE SEQUENCE id_tratamento_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dbo.id_tratamento_seq OWNER TO postgres;
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 191 (class 1259 OID 16572)
+-- Name: Pessoa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Pessoa" (
+);
+
+
+ALTER TABLE public."Pessoa" OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 16575)
+-- Name: Prontuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Prontuario" (
+    id integer
+);
+
+
+ALTER TABLE public."Prontuario" OWNER TO postgres;
+
+SET search_path = dbo, pg_catalog;
+
+--
+-- TOC entry 2054 (class 0 OID 16488)
+-- Dependencies: 171
+-- Data for Name: Cidade; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Cidade" ("idCidade", "nmCidade", "idEstado") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2055 (class 0 OID 16495)
+-- Dependencies: 172
+-- Data for Name: Endereco; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Endereco" ("idEndereco", "dsEndereco", "nmBairro", "idCidade", "nuCEP", "nuResidencia") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2056 (class 0 OID 16502)
+-- Dependencies: 173
+-- Data for Name: Estado; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Estado" ("idEstado", "nmEstado", "sgEstado") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2057 (class 0 OID 16509)
+-- Dependencies: 174
+-- Data for Name: Fase; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Fase" ("idFase", "nmFase", "dsFase") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2058 (class 0 OID 16516)
+-- Dependencies: 175
+-- Data for Name: FaseTratamento; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "FaseTratamento" ("idFaseTratamento", "dtFaseTratamentoInicio", "dtFaseTratamentoFim", "idTratamento", "idFase", "dsMotivoFaseTratamento") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2059 (class 0 OID 16523)
+-- Dependencies: 176
+-- Data for Name: Paciente; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Paciente" ("idPaciente", "dtEntrada", "idPessoa", "idResponsavel") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2076 (class 0 OID 16670)
+-- Dependencies: 193
+-- Data for Name: PacienteResponsavel; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "PacienteResponsavel" ("idPacienteResponsavel", "idPaciente", "idResponsavel") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2060 (class 0 OID 16527)
+-- Dependencies: 177
+-- Data for Name: Pessoa; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Pessoa" ("idPessoa", "nmPessoa", "nuCPF", "nmOrgaoEmissor", "nmSexo", "idEstadoOrgaoEmissor", "nuTelefone", "nuCelular", "idEndereco", "dtNascimento", "idCidadeNascimento", "nuRG", "dsEmail", "btImagem") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2061 (class 0 OID 16534)
+-- Dependencies: 178
+-- Data for Name: Prontuario; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Prontuario" ("idProntuario", "idPaciente", "idProntuarioStatus", "dtProntuarioInicio", "idUsuarioCadastro") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2062 (class 0 OID 16537)
+-- Dependencies: 179
+-- Data for Name: Responsavel; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Responsavel" ("idResponsavel", "idPessoa", "nmVinculoFamiliar", "vrRendaFamiliar", "dsObservacao") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2063 (class 0 OID 16544)
+-- Dependencies: 180
+-- Data for Name: Tratamento; Type: TABLE DATA; Schema: dbo; Owner: postgres
+--
+
+COPY "Tratamento" ("idTratamento", "idTipoTratamento", "idStatusTratamento", "dsMotivoStatus", "idPaciente", "icAtivo") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2093 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hibernate_sequence', 2, false);
+
+
+--
+-- TOC entry 2094 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: id_cidade_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_cidade_seq', 1, false);
+
+
+--
+-- TOC entry 2095 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: id_endereco_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_endereco_seq', 1, false);
+
+
+--
+-- TOC entry 2096 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: id_estado_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_estado_seq', 1, false);
+
+
+--
+-- TOC entry 2097 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: id_fase_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_fase_seq', 1, false);
+
+
+--
+-- TOC entry 2098 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: id_fasetratamento_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_fasetratamento_seq', 1, false);
+
+
+--
+-- TOC entry 2099 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: id_paciente_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_paciente_seq', 1, false);
+
+
+--
+-- TOC entry 2100 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: id_pacienteresponsavel_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_pacienteresponsavel_seq', 1, false);
+
+
+--
+-- TOC entry 2101 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: id_pessoa_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_pessoa_seq', 1, false);
+
+
+--
+-- TOC entry 2102 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: id_responsavel_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_responsavel_seq', 1, false);
+
+
+--
+-- TOC entry 2103 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: id_tratamento_seq; Type: SEQUENCE SET; Schema: dbo; Owner: postgres
+--
+
+SELECT pg_catalog.setval('id_tratamento_seq', 1, false);
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2074 (class 0 OID 16572)
+-- Dependencies: 191
+-- Data for Name: Pessoa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Pessoa"  FROM stdin;
+\.
+
+
+--
+-- TOC entry 2075 (class 0 OID 16575)
+-- Dependencies: 192
+-- Data for Name: Prontuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Prontuario" (id) FROM stdin;
+\.
+
+
+SET search_path = dbo, pg_catalog;
+
+--
+-- TOC entry 1912 (class 2606 OID 16579)
+-- Name: Cidade_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Cidade"
+    ADD CONSTRAINT "Cidade_pkey" PRIMARY KEY ("idCidade");
+
+
+--
+-- TOC entry 1914 (class 2606 OID 16581)
+-- Name: Endereco_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Endereco"
+    ADD CONSTRAINT "Endereco_pkey" PRIMARY KEY ("idEndereco");
+
+
+--
+-- TOC entry 1916 (class 2606 OID 16583)
+-- Name: Estado_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Estado"
+    ADD CONSTRAINT "Estado_pkey" PRIMARY KEY ("idEstado");
+
+
+--
+-- TOC entry 1918 (class 2606 OID 16585)
+-- Name: Fase_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Fase"
+    ADD CONSTRAINT "Fase_pkey" PRIMARY KEY ("idFase");
+
+
+--
+-- TOC entry 1920 (class 2606 OID 16587)
+-- Name: FasesTratamento_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "FaseTratamento"
+    ADD CONSTRAINT "FasesTratamento_pkey" PRIMARY KEY ("idFaseTratamento");
+
+
+--
+-- TOC entry 1932 (class 2606 OID 16676)
+-- Name: PacienteResponsavel_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "PacienteResponsavel"
+    ADD CONSTRAINT "PacienteResponsavel_pkey" PRIMARY KEY ("idPacienteResponsavel");
+
+
+--
+-- TOC entry 1926 (class 2606 OID 16589)
+-- Name: Prontuario_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Prontuario"
+    ADD CONSTRAINT "Prontuario_pkey" PRIMARY KEY ("idProntuario");
+
+
+--
+-- TOC entry 1928 (class 2606 OID 16591)
+-- Name: Responsavel_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Responsavel"
+    ADD CONSTRAINT "Responsavel_pkey" PRIMARY KEY ("idResponsavel");
+
+
+--
+-- TOC entry 1930 (class 2606 OID 16593)
+-- Name: Tratamento_pkey; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Tratamento"
+    ADD CONSTRAINT "Tratamento_pkey" PRIMARY KEY ("idTratamento");
+
+
+--
+-- TOC entry 1922 (class 2606 OID 16595)
+-- Name: idPaciente_fk; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Paciente"
+    ADD CONSTRAINT "idPaciente_fk" PRIMARY KEY ("idPaciente");
+
+
+--
+-- TOC entry 1924 (class 2606 OID 16597)
+-- Name: idPessoa_fk; Type: CONSTRAINT; Schema: dbo; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Pessoa"
+    ADD CONSTRAINT "idPessoa_fk" PRIMARY KEY ("idPessoa");
+
+
+--
+-- TOC entry 1933 (class 2606 OID 16598)
+-- Name: Cidade_idEstado_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Cidade"
+    ADD CONSTRAINT "Cidade_idEstado_fkey" FOREIGN KEY ("idEstado") REFERENCES "Estado"("idEstado");
+
+
+--
+-- TOC entry 1934 (class 2606 OID 16603)
+-- Name: Endereco_idCidade_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Endereco"
+    ADD CONSTRAINT "Endereco_idCidade_fkey" FOREIGN KEY ("idCidade") REFERENCES "Cidade"("idCidade");
+
+
+--
+-- TOC entry 1935 (class 2606 OID 16608)
+-- Name: FasesTratamento_idFase_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "FaseTratamento"
+    ADD CONSTRAINT "FasesTratamento_idFase_fkey" FOREIGN KEY ("idFase") REFERENCES "Fase"("idFase");
+
+
+--
+-- TOC entry 1936 (class 2606 OID 16613)
+-- Name: FasesTratamento_idTratamento_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "FaseTratamento"
+    ADD CONSTRAINT "FasesTratamento_idTratamento_fkey" FOREIGN KEY ("idTratamento") REFERENCES "Tratamento"("idTratamento");
+
+
+--
+-- TOC entry 1945 (class 2606 OID 16678)
+-- Name: PacienteResponsavel_idPaciente_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "PacienteResponsavel"
+    ADD CONSTRAINT "PacienteResponsavel_idPaciente_fkey" FOREIGN KEY ("idPaciente") REFERENCES "Paciente"("idPaciente");
+
+
+--
+-- TOC entry 1946 (class 2606 OID 16683)
+-- Name: PacienteResponsavel_idResponsavel_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "PacienteResponsavel"
+    ADD CONSTRAINT "PacienteResponsavel_idResponsavel_fkey" FOREIGN KEY ("idResponsavel") REFERENCES "Responsavel"("idResponsavel");
+
+
+--
+-- TOC entry 1937 (class 2606 OID 16693)
+-- Name: Paciente_idPessoa_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Paciente"
+    ADD CONSTRAINT "Paciente_idPessoa_fkey" FOREIGN KEY ("idPessoa") REFERENCES "Pessoa"("idPessoa");
+
+
+--
+-- TOC entry 1938 (class 2606 OID 16708)
+-- Name: Paciente_idResponsavel_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Paciente"
+    ADD CONSTRAINT "Paciente_idResponsavel_fkey" FOREIGN KEY ("idResponsavel") REFERENCES "Responsavel"("idResponsavel");
+
+
+--
+-- TOC entry 1939 (class 2606 OID 16618)
+-- Name: Pessoa_idCidadeNascimento_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Pessoa"
+    ADD CONSTRAINT "Pessoa_idCidadeNascimento_fkey" FOREIGN KEY ("idCidadeNascimento") REFERENCES "Cidade"("idCidade");
+
+
+--
+-- TOC entry 1940 (class 2606 OID 16623)
+-- Name: Pessoa_idEndereco_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Pessoa"
+    ADD CONSTRAINT "Pessoa_idEndereco_fkey" FOREIGN KEY ("idEndereco") REFERENCES "Endereco"("idEndereco");
+
+
+--
+-- TOC entry 1941 (class 2606 OID 16628)
+-- Name: Pessoa_idEstadoOrgaoEmissor_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Pessoa"
+    ADD CONSTRAINT "Pessoa_idEstadoOrgaoEmissor_fkey" FOREIGN KEY ("idEstadoOrgaoEmissor") REFERENCES "Estado"("idEstado");
+
+
+--
+-- TOC entry 1942 (class 2606 OID 16698)
+-- Name: Prontuario_idPaciente_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Prontuario"
+    ADD CONSTRAINT "Prontuario_idPaciente_fkey" FOREIGN KEY ("idPaciente") REFERENCES "Paciente"("idPaciente");
+
+
+--
+-- TOC entry 1943 (class 2606 OID 16638)
+-- Name: Responsavel_idPessoa_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Responsavel"
+    ADD CONSTRAINT "Responsavel_idPessoa_fkey" FOREIGN KEY ("idPessoa") REFERENCES "Pessoa"("idPessoa");
+
+
+--
+-- TOC entry 1944 (class 2606 OID 16643)
+-- Name: Tratamento_idPaciente_fkey; Type: FK CONSTRAINT; Schema: dbo; Owner: postgres
+--
+
+ALTER TABLE ONLY "Tratamento"
+    ADD CONSTRAINT "Tratamento_idPaciente_fkey" FOREIGN KEY ("idPaciente") REFERENCES "Paciente"("idPaciente");
+
+
+--
+-- TOC entry 2084 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2013-12-29 22:13:34
+
+--
+-- PostgreSQL database dump complete
+--
+

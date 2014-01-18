@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/templates/Template.xhtml">
+
+<ui:define name="metadata"/>
+    <ui:define name="content">
+    <h:body style="font-size:small;padding:0px;">
+	     
+			<h:form id="form" prependId="false" enctype="multipart/form-data">
+				<p:messages id="mensagens" closable="true"/>
+				<br/>	
+				<p:fieldset id="fieldset_dados_do_tratamento" legend="#{rotulo['tratamento.dados_do_tratamento']}">
+					
+					   <p:panelGrid id="merda">
+					    	<p:row>
+					    		<p:column>
+					  				<p:outputLabel value="#{rotulo['tratamento.responsavel_medico']}:" />
+					  			</p:column>
+					  			<p:column>
+					  				<p:inputText id="input_responsavel_medico" value="#{manterTratamentoController.tratamento.responsavelMedico}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" />  
+					        	</p:column>
+					        </p:row>
+					    	<p:row>
+					    		<p:column>
+					  				<p:outputLabel value="#{rotulo['tratamento.tipo_de_tratamento']}:" />
+					  			</p:column>
+					  			<p:column>  
+					        		<p:selectOneRadio id="radio_tipo_de_tratamento" value="#{manterTratamentoController.tratamento.tipoDeTratamento}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}">  
+							            <f:selectItem itemLabel="Ambulatorial" itemValue="Ambulatorial" />  
+							            <f:selectItem itemLabel="Internação" itemValue="Internação" />  
+							        </p:selectOneRadio>
+					        	</p:column>
+					        </p:row>
+					  		<p:row>
+					  			<p:column>
+					  				<p:outputLabel value="#{rotulo['tratamento.status_do_tratamento']}:" />
+					  			</p:column>  
+					  			<p:column>
+					  				<p:selectOneMenu id="radio_status_do_tratamento" value="#{manterTratamentoController.tratamento.statusDoTratamento}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}">  
+							            <f:selectItem itemLabel="Em andamento" itemValue="Em andamento" />  
+							            <f:selectItem itemLabel="Finalizado por abandono" itemValue="Finalizado por abandono" />
+							            <f:selectItem itemLabel="Finalizado por conclusão" itemValue="Finalizado por conclusão" />  
+							        </p:selectOneMenu>
+					  			</p:column>
+					  		</p:row>
+					  		<p:row>
+					  			<p:column>
+					  				<p:outputLabel value="#{rotulo['tratamento.motivo_do_status']}:" />
+					  			</p:column>  
+					  			<p:column>
+					  				<p:inputTextarea id="input_motivo_do_status" value="#{manterTratamentoController.tratamento.motivoDoStatus}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" cols="26" />
+					  			</p:column>
+							</p:row>
+					    	
+					    </p:panelGrid>
+				</p:fieldset>
+				<br/>			
+				<div class="buttons">
+				    <p:commandButton id="button_salvar" value="#{rotulo['generico.salvar']}" action="#{manterTratamentoController.incluir}" update=":mainform" icon="ui-icon-check" />  
+					<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/usuario/mantertratamento/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
+				</div>
+			</h:form>  
+		</h:body>
+	</ui:define>
+</ui:composition>

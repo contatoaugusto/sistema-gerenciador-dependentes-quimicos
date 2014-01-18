@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/templates/main.xhtml">
+	<ui:define name="content">
+		<div class="content">
+			<!-- Incluir Sistema -->
+			<h:form id="form_detalhar_prontuario">
+				<p:focus context=":form_detalhar_prontuario" />
+				<!-- Mensagens -->
+				<p:messages id="mensagens" closable="true"/>
+				<!-- Dados Gerais -->
+				<p:fieldset id="fieldset_dados_gerais" legend="#{rotulo['prontuario.dados_gerais']}">
+					<!-- Inputs -->
+					<div class="input-and-label">
+					    <p:panelGrid>
+					    	<p:row>
+					    		<p:column>
+					  				<p:outputLabel value="#{rotulo['prontuario.paciente.cpf']}:" />
+					  			</p:column>
+					  			<p:column>  
+					        		<p:inputMask id="input_paciente_cpf" value="#{manterProntuarioController.prontuarioSelecionado.paciente.cpf}" required="true" requiredMessage="#{mensagem['sistema.nome.required']}" mask="999.999.999-99" disabled="true" />
+					        	</p:column>
+					        </p:row>
+					  		<p:row>
+					  			<p:column>
+					  				<p:outputLabel value="#{rotulo['prontuario.paciente.nome']}:" />
+					  			</p:column>  
+					  			<p:column>
+					  				<p:inputText id="input_paciente_nome" value="#{manterProntuarioController.prontuarioSelecionado.paciente.nome}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />
+					  			</p:column>
+					  			<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.sexo']}:" />
+								</p:column>
+								<p:column>
+									<p:selectOneRadio id="radio_sexo" value="#{manterProntuarioController.prontuarioSelecionado.paciente.sexo}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true">  
+							            <f:selectItem itemLabel="Masculino" itemValue="Masculino" />  
+							            <f:selectItem itemLabel="Feminino" itemValue="Feminino" />  
+							        </p:selectOneRadio>
+							     </p:column>
+					  		</p:row>
+					  		<p:row>
+					  			<p:column>
+					  				<p:outputLabel value="#{rotulo['prontuario.responsavel_medico']}:" />
+					  			</p:column>  
+					  			<p:column>
+					  				<p:inputText id="input_responsavel" value="#{manterProntuarioController.prontuarioSelecionado.responsavelMedico}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />
+					  			</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+				</p:fieldset>
+				<!-- Dados do Paciente -->
+				<p:fieldset id="fieldset_dados_do_paciente" legend="#{rotulo['prontuario.dados_do_paciente']}">
+					<div class="input-and-label">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.rg']}:" />								
+								</p:column>
+								<p:column>
+						  			<p:inputMask id="input_paciente_rg" value="#{manterProntuarioController.prontuarioSelecionado.paciente.rg}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="999999999-9" disabled="true" />
+						  		</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.emissor_do_rg']}:" />								
+								</p:column>
+								<p:column>
+						  			<p:inputText id="input_paciente_emissor_do_rg" value="#{manterProntuarioController.prontuarioSelecionado.paciente.emissorDoRg}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />
+						  		</p:column>
+						  	</p:row>
+						  	<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.uf_do_rg']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_uf_do_rg" value="#{manterProntuarioController.prontuarioSelecionado.paciente.ufDoRg}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+						  	<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.telefone']}:" />								
+								</p:column>
+								<p:column>
+						  			<p:inputMask id="input_paciente_telefone" value="#{manterProntuarioController.prontuarioSelecionado.paciente.telefone}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="(99) 9999-9999" disabled="true" />
+						  		</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.celular']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_celular" value="#{manterProntuarioController.prontuarioSelecionado.paciente.celular}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="(99) 9999-9999" disabled="true" />								
+								</p:column>
+						  	</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.endereco']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_endereco" value="#{manterProntuarioController.prontuarioSelecionado.paciente.endereco}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" size="50" disabled="true" />								
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.uf']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_uf" value="#{manterProntuarioController.prontuarioSelecionado.paciente.uf}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.bairro']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_bairro" value="#{manterProntuarioController.prontuarioSelecionado.paciente.bairro}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.cidade']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_cidade" value="#{manterProntuarioController.prontuarioSelecionado.paciente.cidade}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.cep']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_cep" value="#{manterProntuarioController.prontuarioSelecionado.paciente.cep}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="99999-999" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.data_de_nascimento']}:" />								
+								</p:column>
+								<p:column>
+									<p:calendar id="input_paciente_data_de_nascimento" value="#{manterProntuarioController.prontuarioSelecionado.paciente.dataDeNascimento}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.uf_de_nascimento']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_uf_de_nascimento" value="#{manterProntuarioController.prontuarioSelecionado.paciente.ufDeNascimento}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+				</p:fieldset>
+				<!-- Dados do Responsável -->
+				<p:fieldset id="fieldset_dados_do_responsavel" legend="#{rotulo['prontuario.dados_do_responsavel']}">
+					<div class="input-and-label">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.cpf']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_cpf" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.cpf}" required="true" requiredMessage="#{mensagem['sistema.nome.required']}" mask="999.999.999-99" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.nome']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_nome" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.nome}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />						  			
+						  		</p:column>
+						  	</p:row>
+						  	<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.rg']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_rg" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.rg}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="999999999-9" disabled="true" />								
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.emissor_do_rg']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_emissor_do_rg" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.emissorDoRg}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.uf_do_rg']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_uf_do_rg" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.ufDoRg}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.telefone']}:" />								
+								</p:column>
+								<p:column>
+						  			<p:inputMask id="input_responsavel_telefone" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.telefone}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="(99) 9999-9999" disabled="true" />
+						  		</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.celular']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_celular" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.celular}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="(99) 9999-9999" disabled="true" />								
+								</p:column>
+						  	</p:row>
+						  	<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.endereco']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_endereco" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.endereco}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" size="50" disabled="true" />								
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.uf']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_uf" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.uf}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.bairro']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_bairro" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.bairro}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.cidade']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_cidade" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.cidade}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.cep']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_cep" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.cep}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" mask="99999-999" disabled="true" />								
+								</p:column>
+							</p:row>
+						  	<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.data_de_nascimento']}:" />								
+								</p:column>
+								<p:column>
+						  			<p:calendar id="input_responsavel_data_de_nascimento" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.dataDeNascimento}" disabled="true" />
+						  		</p:column>
+						  	</p:row>
+						  	<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.uf_de_nascimento']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_uf_de_nascimento" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.ufDeNascimento}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+<!-- 							<p:row> -->
+<!-- 								<p:column> -->
+<!-- 									<p:outputLabel value="#{rotulo['prontuario.responsavel.rua']}:" />								 -->
+<!-- 								</p:column> -->
+<!-- 								<p:column> -->
+<!-- 									<p:inputText id="input_responsavel_rua" value="#{manterProntuarioController.prontuarioSelecionado.paciente.bairro}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" />								 -->
+<!-- 								</p:column> -->
+<!-- 							</p:row> -->
+<!-- 							<p:row> -->
+<!-- 								<p:column> -->
+<!-- 									<p:outputLabel value="#{rotulo['prontuario.responsavel.numero']}:" />								 -->
+<!-- 								</p:column> -->
+<!-- 								<p:column> -->
+<!-- 									<p:inputText id="input_responsavel_numero" value="#{manterProntuarioController.prontuarioSelecionado.paciente.cidade}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" />								 -->
+<!-- 								</p:column> -->
+<!-- 							</p:row> -->
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.vinculo_familiar']}:" />								
+								</p:column>
+								<p:column>
+						  			<p:inputText id="input_responsavel_vinculo_familiar" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.vinculoFamiliar}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />
+						  		</p:column>
+						  	</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.email']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_email" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.email}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.renda_familiar']}:" />								
+								</p:column>
+								<p:column>
+									<pe:inputNumber id="input_responsavel_renda_familiar" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.rendaFamiliar}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" decimalSeparator="," disabled="true" /> 								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.observacoes']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_observacoes" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.observacoes}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.numero_da_residencia']}:" />								
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_numero_da_residencia" value="#{manterProntuarioController.prontuarioSelecionado.responsavel.numeroDaResidencia}" required="true" requiredMessage="#{mensagem['sistema.descricao.required']}" disabled="true" />								
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+				</p:fieldset>
+				<!-- Button -->
+				<div class="button-voltar">
+					<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/usuario/manterprontuario/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
+				</div>
+			</h:form>  
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,7 @@
+Colocar evento onblur quando preencher CPF Paciente e carregar se ja existir
+
+
+Se o tratamento em Andamento
+
+Embulatorial > 
+

@@ -107,7 +107,11 @@ public class Tratamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "idprontuario")
     private Integer idprontuario;
- 
+    
+    @ManyToOne
+    @JoinColumn(name="idProntuario", referencedColumnName = "idprontuario", insertable=false, updatable=false)
+    public Prontuario prontuario; //unidirectional
+    
     @Column(name = "dssolicitacaotermino")
     private String dssolicitacaotermino;
 
@@ -115,7 +119,11 @@ public class Tratamento implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dtsolicitacaotermino;
  
-    @Column(name = "idusuariosolicitacaotermino")
+    @Column(name = "dttratamentofim")
+    @Temporal(TemporalType.DATE)
+    private Date dttratamentofim;
+    
+	@Column(name = "idusuariosolicitacaotermino")
     private Integer idusuariosolicitacaotermino;
 
     public Tratamento() {
@@ -245,6 +253,22 @@ public class Tratamento implements Serializable {
 		this.idusuariosolicitacaotermino = idusuariosolicitacaotermino;
 	}
 
+    public Date getDttratamentofim() {
+		return dttratamentofim;
+	}
+
+	public void setDttratamentofim(Date dttratamentofim) {
+		this.dttratamentofim = dttratamentofim;
+	}
+	
+
+    public Prontuario getProntuario() {
+		return prontuario;
+	}
+
+	public void setProntuario(Prontuario prontuario) {
+		this.prontuario = prontuario;
+	}
 	
     @Override
     public int hashCode() {

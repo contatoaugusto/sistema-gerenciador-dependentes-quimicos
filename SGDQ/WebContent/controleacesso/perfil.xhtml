@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" id="fview">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Controle de Acesso</title>
+    <ui:debug />
+    <f:metadata>
+        <ui:insert name="metadata" />
+    </f:metadata>
+
+<h:head>
+
+    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+			<p:layoutUnit position="north" size="120" id="north" >
+    	        <ui:include src="menu.xhtml" />
+        	</p:layoutUnit>
+        	<p:layoutUnit styleClass="layoutUnitCenter" position="center">
+        		<h:body >
+			        <p:panel header="#{perfilController.message}" footer="Listagem de Perfils" style="font-size:small;padding:0px;">  
+				        <p:commandButton value="Novo" icon="ui-icon-disk" actionListener="#{perfilController.prepararAdicionarPerfil}" update=":formcontroleacesso"  oncomplete="dialogPerfil.show();"/> 
+			        <h:form id="formcontroleacesso" prependId="false" enctype="multipart/form-data">
+				     	<p:dataTable var="perfil" id="dataTabelPerfil" value="#{perfilController.listarPerfil}" > 
+			 	 	       
+				  	      <p:column headerText="Nome">  
+				  	      		<center>
+				    	        	<h:outputText value="#{perfil.dsPerfil}" />
+				    	        </center>  
+				       	  </p:column>  
+				       	  <p:column headerText="Status">  
+				  	      		<center>
+				    	        	<h:outputText value="#{perfil.fgAtivo}" />
+				    	        </center>  
+				       	  </p:column>
+				  	       <p:column headerText="Alterar">  
+				             	<center>
+				             			<p:commandButton icon="ui-icon-pencil" actionListener="#{perfilController.prepararAlterarPerfil}" update=":formcontroleacesso" oncomplete="dialogPerfil.show();"/>
+				                </center>
+				       	   </p:column>  
+				           <p:column headerText="Excluir">  
+				                <center>
+				                    	<p:commandButton action="#{perfilController.excluirPerfil}" update=":formcontroleacesso" icon="ui-icon-trash"/>
+				                </center>
+				        	</p:column>
+				        </p:dataTable>  
+				
+					
+				    <p:dialog id="dlgPerfil" header="Perfil" widgetVar="dialogPerfil" resizable="false" showEffect="slide" width="350" >
+						
+						    <h:panelGrid id="infosPerfil" columns="1" style="margin-bottom:10px">
+			
+			                    <h:outputLabel for="dsPerfil" value="Nome:" />
+			                    <p:inputText id="dsPerfil" value="#{perfilController.perfil.dsPerfil}" /> 
+			
+								<h:outputLabel for="fgAtivo" value="Status:" />
+					    	    <p:selectBooleanCheckbox id="fgAtivo" value="#{perfilController.perfil.fgAtivo}" />
+					    	    
+			                </h:panelGrid>
+			 				<h:panelGrid columns="3" cellpadding="5" style="font-size:small;padding:0px;">
+			 
+			                    <p:commandButton update=":formcontroleacesso"  oncomplete="dialogPerfil.hide();"  value="Inserir" 
+			                    	actionListener="#{perfilController.adicionarPerfil}"/>
+			                    <p:commandButton   update=":formcontroleacesso" oncomplete="dialogPerfil.hide();" value="Alterar"
+			                    	actionListener="#{perfilController.alterarPerfil}" />
+			                </h:panelGrid>
+			   		</p:dialog> 
+			   	</h:form>
+			        </p:panel>
+			        <br/>
+			    </h:body>
+	        </p:layoutUnit>
+        	
+	    </p:layout>
+
+	</h:head>
+
+
+</f:view>
+</html>

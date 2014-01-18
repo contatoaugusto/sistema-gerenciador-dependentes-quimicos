@@ -1,0 +1,23 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+    	xmlns:p="http://primefaces.org/ui"
+    	xmlns:f="http://java.sun.com/jsf/core">
+
+        <h:form>               
+           <p:panel header="Controle de acesso">  
+        		       
+				<p:menubar autoDisplay="false" style="font-size:small;padding:0px;">  
+			    	<p:menuitem value="Pessoa" url="pessoa.jsf" disabled="#{!permissaoController.hasPermission('pessoa.jsf')}"/> 
+			    	<p:menuitem value="Usuario" url="usuario.jsf" disabled="#{!permissaoController.hasPermission('usuario.jsf')}"/>
+			   		<p:menuitem value="Perfil" url="perfil.jsf" disabled="#{!permissaoController.hasPermission('perfil.jsf')}"/>
+			 	    <p:menuitem value="Recurso" url="recurso.jsf" disabled="#{!permissaoController.hasPermission('recurso.jsf')}"/>        
+			    	
+			    </p:menubar>
+				<ui:include src="/controleacesso/sessionTimeOut.xhtml" />
+				
+			</p:panel>   
+
+        </h:form>
+</ui:composition>

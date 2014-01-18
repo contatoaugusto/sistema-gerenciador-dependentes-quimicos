@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:pe="http://primefaces.org/ui/extensions"
+    template="/templates/Template.xhtml">
+
+<ui:define name="metadata"/>
+    <ui:define name="content">
+		<!-- Breadcrumb -->
+		<p:breadCrumb>  
+		    <p:menuitem url="#" icon="ui-icon-home" />  
+		    <p:menuitem value="Relatórios - Emitir Relatório de Fluxo de Pacientes" url="#" />  
+		</p:breadCrumb>
+		<div class="relatorio">
+			<p:barChart id="basic" value="#{emitirRelatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Basic Bar Chart" min="0" max="200" style="height:300px"/>  
+		</div>
+	</ui:define>
+</ui:composition>
+	

@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" id="fview">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Controle de Acesso</title>
+<!--     <ui:debug /> -->
+<!--     <f:metadata> -->
+<!--         <ui:insert name="metadata" /> -->
+<!--     </f:metadata> -->
+
+<h:head>
+
+    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+			<p:layoutUnit position="north" size="120" id="north" >
+    	        <ui:include src="menu.xhtml" />
+        	</p:layoutUnit>
+        	<p:layoutUnit styleClass="layoutUnitCenter" position="center">
+        		<h:body >
+			        <p:panel header="#{recursoController.message}" style="font-size:small;padding:0px;">  
+				        <p:commandButton value="Novo" icon="ui-icon-disk" actionListener="#{recursoController.prepararAdicionarRecurso}" update=":formcontroleacesso"  oncomplete="dialog.show();"/> 
+			        <h:form id="formcontroleacesso" prependId="false" enctype="multipart/form-data">
+				     	<p:dataTable var="recurso" id="dataTabelRecurso" value="#{recursoController.listarRecurso}" > 
+			 	 	       
+			 	 	       <p:column headerText="Código Recurso">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.idRecurso}" />
+				    	        </center>  
+				       	  </p:column>
+				  	      <p:column headerText="Nome">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.nmRecurso}" />
+				    	        </center>  
+				       	  </p:column>  
+				  	      <p:column headerText="Data Inclusão">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.dtInclusao}" />
+				    	        </center>  
+				       	  </p:column>
+				       	  <p:column headerText="Tipo Recurso">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.idTiporecurso}" />
+				    	        </center>  
+				       	  </p:column>
+				       	  <p:column headerText="Recurso Pai">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.tbrecursoFilho.idRecurso}" />
+				    	        </center>  
+				       	  </p:column>
+				       	  <p:column headerText="Descrição">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.dsRecurso}" />
+				    	        </center>  
+				       	  </p:column>
+				       	  <p:column headerText="Link">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.lkLink}" />
+				    	        </center>  
+				       	  </p:column>
+				       	  <p:column headerText="Status">  
+				  	      		<center>
+				    	        	<h:outputText value="#{recurso.fgAtivo}" />
+				    	        </center>  
+				       	  </p:column>
+				  	       <p:column headerText="Alterar">  
+				             	<center>
+				             			<p:commandButton icon="ui-icon-pencil" actionListener="#{recursoController.prepararAlterarRecurso}" update=":formcontroleacesso" oncomplete="dialog.show();"/>
+				                </center>
+				       	   </p:column>  
+				           <p:column headerText="Excluir">  
+				                <center>
+				                    	<p:commandButton action="#{recursoController.excluirRecurso}" update=":formcontroleacesso" icon="ui-icon-trash"/>
+				                </center>
+				        	</p:column>
+				        </p:dataTable>  
+				
+					
+				    <p:dialog id="dlgRecurso" header="Recurso" widgetVar="dialog" resizable="true" showEffect="slide" width="600" >
+						<h:panelGrid id="infosRecurso" columns="4" cellpadding="5"  style="font-size:small;padding:0px;">
+
+			
+			                    <h:outputLabel for="nmRecurso" value="Nome:" />
+			                    <p:inputText id="nmRecurso" value="#{recursoController.recurso.nmRecurso}" /> 
+								
+								<h:outputLabel  for="DT_INCLUSAO"  value="Inclusão:" /> 
+				    			<p:calendar id="DT_INCLUSAO" value="#{recursoController.recurso.dtInclusao}" effect="slideDown" size="10" disabled="true"/>
+							
+								<h:outputLabel for="idTiporecurso" value="Tipo Recurso:" /> 
+				            	<p:inputText id="idTiporecurso" value="#{recursoController.recurso.idTiporecurso}"/> 
+
+								<h:outputLabel for="idRecursoPai" value="Recurso Pai:" /> 
+				            	<p:selectOneMenu id="idRecursoPai"  value="#{recursoController.recurso.tbrecursoFilho}" converter="recursoSelectOneMenuConverter"> 
+									
+									<f:selectItem itemLabel="Selecione..." itemValue="" />   
+							        <f:selectItems value="#{recursoController.itemsRecursoPai}"  />
+							    </p:selectOneMenu> 
+	
+								<h:outputLabel for="dsRecurso" value="Descrição:" /> 
+				            	<p:inputText id="dsRecurso" value="#{recursoController.recurso.dsRecurso}"/> 
+								
+								<h:outputLabel for="lkLink" value="Link:" /> 
+				            	<p:inputText id="lkLink" value="#{recursoController.recurso.lkLink}"/> 
+								
+
+								<h:outputLabel for="fgAtivo" value="Status:" />
+			                    <p:selectBooleanCheckbox  id="fgAtivo" value="#{recursoController.recurso.fgAtivo}" checked="true"/>
+			                    
+							</h:panelGrid>
+						 	<h:panelGrid id="infosPerfil" colspan="2" style="font-size:small;padding:0px;">		
+								<p:growl id="msg" showDetail="true" escape="false" /> 
+								<p:pickList  id="pojoPickList" value="#{recursoController.perfis}" var="perfil" effect="bounce"  
+						                    itemValue="#{perfil}" itemLabel="#{perfil.dsPerfil}"  converter="PerfilConverter"
+						                   showSourceControls="true" showTargetControls="true" showCheckbox="true"  
+						                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
+						  
+							       <f:facet name="sourceCaption">Perfis</f:facet>  
+							       <f:facet name="targetCaption">Perfis com Acesso</f:facet>  
+							 
+							        <p:ajax event="transfer" listener="#{recursoController.onTransfer}" update="msg" />  
+							  
+							        <p:column style="width:25%">  
+							        	<h:outputText value="#{perfil.idPerfil}"/>
+							        </p:column>  
+							  
+							        <p:column style="width:75%;">  
+							            #{perfil.dsPerfil}  
+							        </p:column>  
+						  
+						    	</p:pickList>
+							
+							                    
+		                    </h:panelGrid>
+ 							<h:panelGrid style="font-size:small;padding:0px;" >
+			                    <p:column colspan="4" cellpadding="5" style="float: center;"> 
+				                    <p:commandButton update=":formcontroleacesso"  oncomplete="dialog.hide();"  value="Inserir" 
+				                    	actionListener="#{recursoController.adicionarRecurso}" />			                    	
+				                    
+				                    <p:commandButton   update=":formcontroleacesso" oncomplete="dialog.hide();" value="Alterar"
+				                    	actionListener="#{recursoController.alterarRecurso}" />
+			                	</p:column>
+			                </h:panelGrid>
+						    
+			   		</p:dialog> 
+			   		
+			                    
+			   	</h:form>
+			        </p:panel>
+			        <br/>
+			    </h:body>
+	        </p:layoutUnit>
+        	
+	    </p:layout>
+
+	</h:head>
+
+
+</f:view>
+</html>

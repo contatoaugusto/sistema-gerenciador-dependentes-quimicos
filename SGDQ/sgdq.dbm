@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel>
+<schema name="public" protected="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<database name="sgdq">
+</database>
+
+<table name="prontuario">
+	<schema name="public"/>
+	<position x="506" y="284"/>
+	<column name="id" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="data_de_inclusao" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="responsavel_medico" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="pk_prontuario" type="pk-constr" factor="10" table="public.prontuario">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="paciente">
+	<schema name="public"/>
+	<position x="878.5" y="416.5"/>
+	<column name="cpf" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="sexo" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="rg" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="emissor_do_rg" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="uf_do_rg" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="telefone" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="celular" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="endereco" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="uf" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="bairro" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="cidade" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="cep" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="data_de_nascimento" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="uf_de_nascimento" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="pk_paciente" type="pk-constr" factor="10" table="public.paciente">
+		<columns names="cpf" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="prontuario_has_one_paciente" type="rel11"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 col-indexes="3" constr-indexes="1,2"
+	 src-table="public.paciente"
+	 dst-table="public.prontuario"
+	 src-required="false" dst-required="false"/>
+
+<table name="responsavel">
+	<schema name="public"/>
+	<position x="872.75" y="14.5"/>
+	<column name="cpf" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="rg" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="emissor_do_rg" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="uf_do_rg" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="telefone" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="celular" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="endereco" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="uf" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="bairro" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="cidade" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="cep" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="data_de_nascimento" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="uf_de_nascimento" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="vinculo_familiar" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="renda_familiar" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="observacoes" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="numero_da_residencia" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<constraint name="pk_responsavel" type="pk-constr" factor="10" table="public.responsavel">
+		<columns names="cpf" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="responsavel_has_many_prontuario" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 col-indexes="4" constr-indexes="3"
+	 src-table="public.responsavel"
+	 dst-table="public.prontuario"
+	 src-required="false" dst-required="false"/>
+
+<table name="tratamento">
+	<schema name="public"/>
+	<position x="73.75" y="282.5"/>
+	<column name="id" not-null="true">
+		<type name="smallint"/>
+	</column>
+	<column name="tipo_de_tratamento" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="status_do_tratamento" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="motivo_do_status" not-null="true">
+		<type name="text"/>
+	</column>
+	<column name="data_de_inclusao" not-null="true">
+		<type name="date"/>
+	</column>
+	<column name="responsavel_medico" not-null="true">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="pk_tratamento" type="pk-constr" factor="10" table="public.tratamento">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="prontuario_has_many_tratamento" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 col-indexes="6" constr-indexes="1"
+	 src-table="public.prontuario"
+	 dst-table="public.tratamento"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

@@ -1,0 +1,467 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/Template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="metadata" />
+	<ui:define name="content">
+
+		<h:body style="font-size:small;padding:0px;">
+			<h:form id="mainform"  prependId="false" enctype="multipart/form-data">
+<!-- 				<p:messages id="mensagens" closable="true" /> -->
+				<br />
+
+				<p:fieldset id="fieldset_dados_gerais"
+					toggleable="true"
+					legend="#{rotulo['prontuario.dados_gerais']}">
+					<div class="input-and-label">
+						<p:panelGrid >
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.cpf']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_cpf"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nuCPF}"
+										required="true"
+										requiredMessage="#{mensagem['paciente.cpf.required']}"
+										mask="999.999.999-99" >
+										<p:ajax event="blur" update=":mainform" partialSubmit="true" process="@this"  
+    										 listener="#{prontuarioController.buscaProntuarioBynuCPFPaciente}"></p:ajax>
+									</p:inputMask>	
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.nome']}:" />
+								</p:column>
+								<p:column >
+									<p:inputText id="input_paciente_nome"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nmPessoa}"
+										required="true"
+										requiredMessage="#{mensagem['paciente.nome.required']}" size="50"/>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.sexo']}:" />
+								</p:column>
+								<p:column>
+									<p:selectOneRadio id="radio_sexo"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nmSexo}"
+										required="true"
+										requiredMessage="#{mensagem['paciente.sexo.required']}">
+										<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+										<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+									</p:selectOneRadio>
+								</p:column>
+
+							</p:row>
+
+<!-- 							<p:row> -->
+<!-- 								<p:column> -->
+<!-- 									<p:outputLabel -->
+<!-- 										value="#{rotulo['prontuario.responsavel_medico']}:" /> -->
+<!-- 								</p:column> -->
+<!-- 								<p:column> -->
+<!-- 									<p:inputText id="input_responsavel" -->
+<!-- 										value="#{prontuarioController.selected.responsavelMedico}" -->
+<!-- 										required="true" -->
+<!-- 										requiredMessage="#{mensagem['sistema.descricao.required']}" /> -->
+<!-- 								</p:column> -->
+<!-- 							</p:row> -->
+						</p:panelGrid>
+					</div>
+				</p:fieldset>
+				<br />
+
+				<p:fieldset id="fieldset_dados_do_paciente"
+					toggleable="true"
+					legend="#{rotulo['prontuario.dados_do_paciente']}">
+					<div class="input-and-label">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.rg']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_rg"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nuRG}"
+										mask="999999999-9" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.emissor_do_rg']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_emissor_do_rg"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nmOrgaoEmissor}"
+										required="false"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.uf_do_rg']}:" />
+								</p:column>
+								<p:column>
+<!-- 									<p:inputText id="input_paciente_uf_do_rg" -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.idEstadoOrgaoEmissor}" -->
+<!-- 										required="false"/> -->
+									<p:autoComplete id="input_paciente_uf_do_rg" value="#{prontuarioController.selected.idPaciente.idPessoa.idEstadoOrgaoEmissor}"   
+                    					completeMethod="#{estadoController.autocomplete}"/> 	
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.telefone']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_telefone"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nuTelefone}"
+										required="true"
+										requiredMessage="#{mensagem['paciente.telefone.required']}"
+										mask="(99) 9999-9999" />
+								</p:column>
+								
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.endereco']}:" />
+								</p:column>
+
+								<p:column>
+
+									<p:inputText id="input_paciente_endereco"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.idEndereco.dsEndereco}"
+										required="true"
+										requiredMessage="#{mensagem['paciente.endereco.required']}"
+										size="50" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.celular']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_celular"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.nuCelular}"
+										required="false"
+										mask="(99) 9999-9999" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.bairro']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_bairro"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.idEndereco.nmBairro}"
+										required="true"
+										requiredMessage="#{mensagem['paciente.bairro.required']}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.cidade']}:" />
+								</p:column>
+								<p:column>
+									<p:autoComplete id="input_paciente_cidade_endereco" value="#{prontuarioController.selected.idPaciente.idPessoa.idEndereco.idCidade}"   
+                    					completeMethod="#{cidadeController.autocomplete}"/> 
+<!-- 									<h:selectOneMenu  -->
+<!-- 											id="input_paciente_cidade_endereco"  -->
+<!-- 											value="#{prontuarioController.tbCidadeEnderecoPaciente}" -->
+<!-- 											converter="cidadeControllerConverter"> -->
+<!-- 				                        <f:selectItems value="#{cidadeController.itemsAvailableSelectOne}"/> -->
+<!-- 				                    </h:selectOneMenu> -->
+				                </p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.paciente.cep']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_paciente_cep"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.idEndereco.nuCEP}"
+										required="false"
+										mask="99999-999" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.data_de_nascimento']}:" />
+								</p:column>
+								<p:column>
+<!-- 									<p:calendar id="input_paciente_data_de_nascimento" -->
+<!-- 										datePattern="MM/dd/yyyy" -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" /> -->
+									<p:inputMask 
+										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" 
+										mask="99/99/9999"/>
+									
+								</p:column>
+						
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.paciente.cidade_nascimento']}:" />
+								</p:column>
+								<p:column>
+									<p:autoComplete id="input_paciente_cidade_nascimento" value="#{prontuarioController.selected.idPaciente.idPessoa.idCidadeNascimento}"   
+                    					completeMethod="#{cidadeController.autocomplete}"/>
+<!-- 									<h:selectOneMenu  -->
+<!-- 											id="input_paciente_cidade_nascimento"  -->
+<!-- 											value="#{prontuarioController.tbCidadeNascimentoPaciente}" -->
+<!-- 											converter="cidadeControllerConverter"> -->
+<!-- 				                        <f:selectItems value="#{cidadeController.itemsAvailableSelectOne}"/> -->
+<!-- 				                    </h:selectOneMenu> -->
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+				</p:fieldset>
+				<br />
+				<p:fieldset id="fieldset_dados_do_responsavel"
+					toggleable="true"
+					legend="#{rotulo['prontuario.dados_do_responsavel']}">
+					<div class="input-and-label">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.cpf']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_cpf"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuCPF}"
+										required="true"
+										requiredMessage="#{mensagem['responsavel.cpf.required']}"
+										mask="999.999.999-99" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.nome']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_nome"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nmPessoa}"
+										required="true"
+										requiredMessage="#{mensagem['responsavel.nome.required']}" 
+										size="50"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.rg']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_rg"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuRG}"
+										required="false"
+										mask="999999999-9" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.emissor_do_rg']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_emissor_do_rg"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nmOrgaoEmissor}"
+										required="false"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.uf_do_rg']}:" />
+								</p:column>
+								<p:column>
+									<p:autoComplete id="input_responsavel_uf_do_rg" value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idEstadoOrgaoEmissor}"   
+                    					completeMethod="#{estadoController.autocomplete}"/> 		
+<!-- 									<h:selectOneMenu  -->
+<!-- 											id="input_responsavel_uf_do_rg"  -->
+<!-- 											value="#{prontuarioController.tbEstadoOrgaoEmissorResponsavel}" -->
+<!-- 											converter="estadoControllerConverter"> -->
+<!-- 				                        <f:selectItems value="#{estadoController.itemsAvailableSelectOne}"/> -->
+<!-- 				                    </h:selectOneMenu> -->
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.telefone']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_telefone"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuTelefone}"
+										required="true"
+										requiredMessage="#{mensagem['responsavel.telefone.required']}"
+										mask="(99) 9999-9999" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.endereco']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_endereco"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idEndereco.dsEndereco}"
+										required="true"
+										requiredMessage="#{mensagem['responsavel.endereco.required']}"
+										size="50" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.celular']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_celular"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuCelular}"
+										required="false"
+										mask="(99) 9999-9999" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.bairro']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_bairro"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idEndereco.nmBairro}"
+										required="true"
+										requiredMessage="#{mensagem['responsavel.bairro.required']}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.cidade']}:" />
+								</p:column>
+								<p:column>
+									<p:autoComplete id="input_responsavel_cidade_endereco" value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idEndereco.idCidade}"   
+                    					completeMethod="#{cidadeController.autocomplete}"/> 
+<!-- 									<h:selectOneMenu  -->
+<!-- 											id="input_responsavel_cidade_endereco"  -->
+<!-- 											value="#{prontuarioController.tbCidadeEnderecoResponsavel}" -->
+<!-- 											converter="cidadeControllerConverter"> -->
+<!-- 				                        <f:selectItems value="#{cidadeController.itemsAvailableSelectOne}"/> -->
+<!-- 				                    </h:selectOneMenu> -->
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel value="#{rotulo['prontuario.responsavel.cep']}:" />
+								</p:column>
+								<p:column>
+									<p:inputMask id="input_responsavel_cep"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idEndereco.nuCEP}"
+										required="false"
+										mask="99999-999" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.numero_da_residencia']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_numero_da_residencia"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idEndereco.nuResidencia}"
+										required="false"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.data_de_nascimento']}:" />
+								</p:column>
+								<p:column>
+									<p:calendar id="input_responsavel_data_de_nascimento"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dtNascimento}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="Cidade Nascimento:" />
+								</p:column>
+								<p:column>
+									<p:autoComplete id="input_responsavel_uf_de_nascimento" value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.idCidadeNascimento}"   
+                    					completeMethod="#{cidadeController.autocomplete}"/> 
+<!-- 									<h:selectOneMenu  -->
+<!-- 											id="input_responsavel_uf_de_nascimento"  -->
+<!-- 											value="#{prontuarioController.tbCidadeNascimentoResponsavel}" -->
+<!-- 											converter="cidadeControllerConverter"> -->
+<!-- 				                        <f:selectItems value="#{cidadeController.itemsAvailableSelectOne}"/> -->
+<!-- 				                    </h:selectOneMenu> -->
+								</p:column>
+							</p:row>
+
+							<p:row>
+
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.vinculo_familiar']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_vinculo_familiar"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.nmVinculoFamiliar}"
+										required="true"
+										requiredMessage="#{mensagem['responsavel.vinculofamiliar.required']}" />
+								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.email']}:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_responsavel_email"
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dsEmail}"
+										required="false"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.renda_familiar']}:" />
+								</p:column>
+	                                <p:column>
+	                                        <pe:inputNumber id="input_responsavel_renda_familiar" 
+	                                        value="#{prontuarioController.selected.idPaciente.idResponsavel.vrRendaFamiliar}" 
+	                                        required="false" 
+	                                        decimalSeparator="," />                                                            
+	                                </p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="#{rotulo['prontuario.responsavel.observacoes']}:" />
+								</p:column>
+								<p:column colspan="3">
+									<p:inputTextarea rows="5" cols="90" counter="counter" maxlength="10"       
+											counterTemplate="{0} carateres restantes." autoResize="false"
+											id="input_responsavel_observacoes"
+											value="#{prontuarioController.selected.idPaciente.idResponsavel.dsObservacao}"/>
+									<h:outputText id="counter" /> 
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+				</p:fieldset>
+				<br />
+				
+				<div class="buttons">
+					<p:commandButton 
+						disabled="#{not empty prontuarioController.selected.idProntuario}"
+						id="button_salvar" value="#{rotulo['generico.salvar']}" actionListener="#{prontuarioController.create}" update=":mainform" icon="ui-icon-check" />  
+					<p:commandButton 
+						disabled="#{empty prontuarioController.selected.idProntuario}"
+						id="button_atualizar" value="#{rotulo['generico.atualizar']}" 
+						actionListener="#{prontuarioController.update}" update=":mainform" icon="ui-icon-check" />  
+										
+					<p:commandButton id="button_voltar"
+						value="#{rotulo['generico.voltar']}"
+						action="/pages/manterprontuario/consultar?faces-redirect=true"
+						immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
+
+				</div>
+
+				<br />
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>

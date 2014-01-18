@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/templates/Template.xhtml">
+
+<ui:define name="metadata"/>
+    <ui:define name="content">	
+		<div class="content">
+			
+			<p:breadCrumb>  
+			    <p:menuitem value="Manter Prontuario - Consultar" url="/pages/manterprontuario/cadastrar.xhtml" />  
+			</p:breadCrumb> 
+			
+			<h:form id="form">
+				
+				<p:messages id="mensagens" closable="true"/>
+				<br/>
+				<p:fieldset id="fieldset_filtros_de_pesquisa" legend="#{rotulo['generico.filtros.de.pesquisa']}">
+			
+					<div class="input-and-label">
+					    <p:panelGrid>
+					    	
+					    	<p:row>
+					    		<p:column>
+							  		<p:outputLabel for="input_id" value="#{rotulo['prontuario.id']}:" />  
+					    		</p:column>
+					    		<p:column>
+							        <p:inputMask id="input_id" value="#{prontuarioController.selected.idProntuario}" mask="9?99999999999999" placeHolder="" />
+					    		</p:column>
+					    	</p:row>
+					    	<p:row>
+					    		<p:column>
+							  		<p:outputLabel for="input_nome" value="#{rotulo['prontuario.paciente.nome']}:" />  
+					    		</p:column>
+					    		<p:column>
+							        <p:inputText id="input_nome" value="#{prontuarioController.selected.idPaciente.idPessoa.nmPessoa}" />
+					    		</p:column>
+					    	</p:row>
+					    	<p:row>
+					    		<p:column>
+							  		<p:outputLabel for="input_cpf" value="#{rotulo['prontuario.paciente.cpf']}:" />  
+					    		</p:column>
+					    		<p:column>
+							        <p:inputMask id="input_cpf" value="#{prontuarioController.selected.idPaciente.idPessoa.nuCPF}" mask="999.999.999-99" />
+					    		</p:column>
+					    	</p:row>
+						</p:panelGrid>  	
+					</div>
+				</p:fieldset>
+				<br/>		
+				<div class="buttons-alone">
+				    <p:commandButton id="button_consultar" value="#{rotulo['generico.consultar']}" action="#{manterProntuarioController.consultar}" update=":mainform" icon="ui-icon-search" />
+				    <p:commandButton id="button_novo" value="#{rotulo['generico.novo']}" action="/pages/manterprontuario/cadastrar?faces-redirect=true" icon="ui-icon-plus" />
+				</div>
+				<br/>
+				<div class="resultado">
+					<p:dataTable id="dataTable_consultar_prontuario" value="#{prontuarioController.items}" var="prontuario" emptyMessage="#{mensagem['datatable.empty']}" paginator="true" paginatorPosition="bottom" resizableColumns="true" rows="10">
+						<p:column headerText="#{rotulo['prontuario']}" sortBy="#{prontuario.idProntuario}">
+							<p:outputLabel value="#{prontuario.idProntuario}" />
+						</p:column>
+						<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}">
+							<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuCPF}" />
+						</p:column>
+						<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}">
+							<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmPessoa}" />
+						</p:column>
+<!-- 						<p:column headerText="#{rotulo['prontuario.paciente.responsavel']}" sortBy="#{prontuario.responsavel}"> -->
+<!-- 							<p:outputLabel value="#{prontuario.responsavelMedico}" /> -->
+<!-- 						</p:column> -->
+						<p:column headerText="#{rotulo['generico.acoes']}">
+						 	<p:commandButton id="button_detalhar" action="#{manterProntuarioController.detalhar}" icon="ui-icon-folder-open">
+								<f:setPropertyActionListener value="#{prontuario}" target="#{manterProntuarioController.prontuarioSelecionado}" />  
+						 	</p:commandButton>
+							<p:commandButton id="button_editar" action="#{manterProntuarioController.editar}" icon="ui-icon-pencil" />
+							<p:commandButton id="button_consultar_tratamentos" action="/pages/mantertratamento/consultar?faces-redirect=true" icon="ui-icon-close">
+								<f:setPropertyActionListener value="#{prontuario}" target="#{manterProntuarioController.prontuarioSelecionado}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</h:form>
+		</div>
+
+</ui:define>
+</ui:composition>

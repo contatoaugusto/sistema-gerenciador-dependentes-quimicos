@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" id="fview">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Controle de Acesso</title>
+    <ui:debug />
+    <f:metadata>
+        <ui:insert name="metadata" />
+    </f:metadata>
+
+<h:head>
+
+    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+			<p:layoutUnit position="north" size="120" id="north" >
+    	        <ui:include src="menu.xhtml" />
+        	</p:layoutUnit>
+        	<p:layoutUnit styleClass="layoutUnitCenter" position="center">
+        		<h:body >
+			        <p:panel header="#{pessoaController.message}" footer="Listagem de Pessoas" style="font-size:small;padding:0px;">  
+				        <p:commandButton value="Novo" icon="ui-icon-disk" actionListener="#{pessoaController.prepararAdicionarPessoa}" update=":formcontroleacesso"  oncomplete="dialogPessoa.show();" /> 
+			        <h:form id="formcontroleacesso" prependId="false" enctype="multipart/form-data">
+				     	<p:dataTable var="pessoa" id="dataTabelPessoa" value="#{pessoaController.listarPessoa}" > 
+			 	 	       
+				  	      <p:column headerText="Nome">  
+				  	      		<center>
+				    	        	<h:outputText value="#{pessoa.nmPessoa}" />
+				    	        </center>  
+				       	  </p:column>  
+				  	       <p:column headerText="Alterar">  
+				             	<center>
+				             			<p:commandButton icon="ui-icon-pencil" actionListener="#{pessoaController.prepararAlterarPessoa}" update=":formcontroleacesso" oncomplete="dialogPessoa.show();" />
+				                </center>
+				       	   </p:column>  
+				           <p:column headerText="Excluir">  
+				                <center>
+				                    	<p:commandButton action="#{pessoaController.excluirPessoa}" update=":formcontroleacesso" icon="ui-icon-trash" />
+				                </center>
+				        	</p:column>
+				        </p:dataTable>  
+				
+					
+				    <p:dialog id="dlgPessoa" header="Pessoa" widgetVar="dialogPessoa" resizable="false" showEffect="slide" width="350" >
+						
+						    <h:panelGrid id="infosPessoa" columns="1" style="margin-bottom:10px">
+			
+			                    <h:outputLabel for="nmPessoa" value="Nome:" />
+			                    <p:inputText id="nmPessoa" value="#{pessoaController.pessoa.nmPessoa}" /> 
+			
+			                </h:panelGrid>
+			 				<h:panelGrid columns="3" cellpadding="5" style="font-size:small;padding:0px;">
+			 
+			                    <p:commandButton update=":formcontroleacesso"  oncomplete="dialogPessoa.hide();"  value="Inserir" 
+			                    	actionListener="#{pessoaController.adicionarPessoa}"/>
+			                    <p:commandButton   update=":formcontroleacesso" oncomplete="dialogPessoa.hide();" value="Alterar"
+			                    	actionListener="#{pessoaController.alterarPessoa}" />
+			                </h:panelGrid>
+			   		</p:dialog> 
+			   	</h:form>
+			        </p:panel>
+			        <br/>
+			    </h:body>
+	        </p:layoutUnit>
+        	
+	    </p:layout>
+
+	</h:head>
+
+
+</f:view>
+</html>

@@ -1,0 +1,2 @@
+1 - Deve configurar o site como em Security como intranet
+2 - Em se tratando do Postgresql, os nomes das tabelas e campos devem ser todos minusculos, ainda não entendi o erro se colocar maiúsculo no mapeamento do hibernate

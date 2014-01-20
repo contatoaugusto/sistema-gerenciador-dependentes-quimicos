@@ -10,8 +10,9 @@
 	<ui:define name="content">
 
 		<h:body style="font-size:small;padding:0px;">
-			<h:form id="mainform"  prependId="false" enctype="multipart/form-data">
-<!-- 				<p:messages id="mensagens" closable="true" /> -->
+			<h:form id="formCadastroProntuario"  prependId="false" enctype="multipart/form-data">
+				<p:messages id="mensagensCadastroProntuario" closable="true" />
+				
 				<br />
 
 				<p:fieldset id="fieldset_dados_gerais"
@@ -29,7 +30,7 @@
 										required="true"
 										requiredMessage="#{mensagem['paciente.cpf.required']}"
 										mask="999.999.999-99" >
-										<p:ajax event="blur" update=":mainform" partialSubmit="true" process="@this"  
+										<p:ajax event="blur" update="formCadastroProntuario" partialSubmit="true" process="@this"  
     										 listener="#{prontuarioController.buscaProntuarioBynuCPFPaciente}"></p:ajax>
 									</p:inputMask>	
 								</p:column>
@@ -196,9 +197,8 @@
 <!-- 										datePattern="MM/dd/yyyy" -->
 <!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" /> -->
 									<p:inputMask 
-										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" 
-										mask="99/99/9999"/>
-									
+										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" mask="99/99/9999" converter="convertInput"/>
+										
 								</p:column>
 						
 								<p:column>
@@ -447,11 +447,11 @@
 				<div class="buttons">
 					<p:commandButton 
 						disabled="#{not empty prontuarioController.selected.idProntuario}"
-						id="button_salvar" value="#{rotulo['generico.salvar']}" actionListener="#{prontuarioController.create}" update=":mainform" icon="ui-icon-check" />  
+						id="button_salvar" value="#{rotulo['generico.salvar']}" actionListener="#{prontuarioController.create}" update="formCadastroProntuario" icon="ui-icon-check" />  
 					<p:commandButton 
 						disabled="#{empty prontuarioController.selected.idProntuario}"
 						id="button_atualizar" value="#{rotulo['generico.atualizar']}" 
-						actionListener="#{prontuarioController.update}" update=":mainform" icon="ui-icon-check" />  
+						actionListener="#{prontuarioController.update}" update=":formCadastroProntuario" icon="ui-icon-check" />  
 										
 					<p:commandButton id="button_voltar"
 						value="#{rotulo['generico.voltar']}"

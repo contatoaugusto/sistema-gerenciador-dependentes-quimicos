@@ -192,12 +192,6 @@ public class ProntuarioController implements Serializable {
         try {
         	
         	Logger logger = Logger.getLogger("ProntuarioController - Criando novo prontuário");
-        	//prontuario.getIdPaciente().getIdPessoa().setIdEstadoOrgaoEmissor(tbEstadoOrgaoEmissor.getIdEstado());
-        	//prontuario.getIdPaciente().getIdPessoa().setIdCidadeNascimento(tbCidadeNascimentoPaciente.getIdCidade());
-        	//prontuario.getIdPaciente().getIdPessoa().getIdEndereco().setIdCidade(tbCidadeEnderecoPaciente.getIdCidade());
-        	//prontuario.getIdPaciente().getIdResponsavel().getIdPessoa().setIdEstadoOrgaoEmissor(tbEstadoOrgaoEmissorResponsavel.getIdEstado());
-        	//prontuario.getIdPaciente().getIdResponsavel().getIdPessoa().getIdEndereco().setIdCidade(tbCidadeEnderecoResponsavel.getIdCidade());
-        	//prontuario.getIdPaciente().getIdResponsavel().getIdPessoa().setIdCidadeNascimento(tbCidadeNascimentoResponsavel.getIdCidade());
         	
         	prontuario.setDtProntuarioInicio(new Date());
         	
@@ -207,12 +201,13 @@ public class ProntuarioController implements Serializable {
 			HttpSession httpSession = request.getSession(false);  
 			Usuario usuario = (Usuario) httpSession.getAttribute("usuario");  
 			getSelected().setIdUsuarioCadastro(usuario.getIdUsuario());	
+			
+			prontuario.setIdProntuarioStatus(1);
         	
-        	getFacade().create(prontuario);
-        	//	prontuarioService.incluir(prontuario);
-        	//prontuarioService.save(prontuario);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.inclusao"));
-            return prepareCreate();
+			getFacade().create(prontuario);
+        	
+        	JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.inclusao"));
+            return "consultar";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/message").getString("sistema.inclusao.erro"));
             return null;

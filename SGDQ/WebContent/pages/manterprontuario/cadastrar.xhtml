@@ -108,9 +108,6 @@
 										value="#{rotulo['prontuario.paciente.uf_do_rg']}:" />
 								</p:column>
 								<p:column>
-<!-- 									<p:inputText id="input_paciente_uf_do_rg" -->
-<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.idEstadoOrgaoEmissor}" -->
-<!-- 										required="false"/> -->
 									<p:autoComplete id="input_paciente_uf_do_rg" value="#{prontuarioController.selected.idPaciente.idPessoa.idEstadoOrgaoEmissor}"   
                     					completeMethod="#{estadoController.autocomplete}"/> 	
 								</p:column>
@@ -431,7 +428,7 @@
 										value="#{rotulo['prontuario.responsavel.observacoes']}:" />
 								</p:column>
 								<p:column colspan="3">
-									<p:inputTextarea rows="5" cols="90" counter="counter" maxlength="10"       
+									<p:inputTextarea rows="5" cols="150" counter="counter" maxlength="500"       
 											counterTemplate="{0} carateres restantes." autoResize="false"
 											id="input_responsavel_observacoes"
 											value="#{prontuarioController.selected.idPaciente.idResponsavel.dsObservacao}"/>

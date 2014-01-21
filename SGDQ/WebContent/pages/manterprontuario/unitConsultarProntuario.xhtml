@@ -36,6 +36,7 @@
 								        <p:inputMask id="input_cpf" value="#{prontuarioController.selected.idPaciente.idPessoa.nuCPF}" mask="999.999.999-99" />
 						    		</p:column>
 						    	</p:row>
+						    	
 							</p:panelGrid>  	
 						</div>
 					</p:fieldset>
@@ -58,6 +59,13 @@
 							<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuCPF}" />
 							</p:column>
+							
+							<p:column headerText="#{rotulo['prontuario.paciente.telefone']}" sortBy="#{prontuario.idPaciente.idPessoa.nuTelefone}">
+								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuTelefone}"/>
+						    </p:column>
+						    <p:column headerText="#{rotulo['prontuario.paciente.cidade']}" sortBy="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}">
+								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}"/>
+						    </p:column>
 							<p:column headerText="#{rotulo['generico.acoes']}">
 
 								<p:commandButton id="button_editar" action="#{prontuarioController.prepareEdit}" icon="ui-icon-pencil" value="Editar"/>

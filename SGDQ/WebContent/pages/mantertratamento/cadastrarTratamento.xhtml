@@ -29,15 +29,19 @@
 					$("#button_atualizarTratamento").prop("disabled", btnAtualizaTratamentoDisable);
 
 					$('#showDialogTerminoTratamento').click(function() {
-	 					alert ("Teste tudo desabilita");
 
-	 					var toggle = document.getElementById("formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento_inclusao");
-						alert (toggle.disabled);
-	 				    toggle.disabled = true;
-	 					//$("#formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento").prop("disabled", true);
-	 					//$("#fieldset_dados_solicitcao_termino_tratamento").children().prop("disabled", true);
-	 					//$("#formSolicitacaoTerminoTratamento:btnFinalizaTratamento").prop("disabled", true);
-	 					//alert (#{tratamentoController.selected.dtsolicitacaotermino});
+						alert ("Teste tudo desabilita: "+ #{empty tratamentoController.selected.dtsolicitacaotermino });
+
+						var toggleDados = document.getElementById("formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento_inclusao");
+						var toggleSolicitacao = document.getElementById("formSolicitacaoTerminoTratamento:radio_status_do_tratamento_finaliza");
+
+						if (#{empty tratamentoController.selected.dtsolicitacaotermino }){
+							toggleSolicitacao.disabled = true;
+							toggleDados.disabled = false;
+						}else {
+							toggleSolicitacao.disabled = false;
+							toggleDados.disabled = true;
+						}
 	 				});	
 				});
  		</script> 
@@ -314,11 +318,10 @@
 			
 			
 			<!-- 		************** Solicitacao termino ***************** -->	
-				<p:dialog header="Solicitação Termino Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="true" width="600">  
+				<p:dialog header="Solicitação Termino Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="true" width="600" appendToBody="true">  
 				    <h:form id="formSolicitacaoTerminoTratamento">
 				    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
-				    	<p:fieldset id="fieldset_dados_solicitcao_termino_tratamento_inclusao"
-							toggleable="true" legend="Dados">	
+				    	<p:fieldset id="fieldset_dados_solicitcao_termino_tratamento_inclusao" toggleable="true" legend="Dados">	
 					    	<p:panelGrid> 
 					        	<p:row> 
 									<p:column>
@@ -354,9 +357,7 @@
 					        	</p:row>
 					        </p:panelGrid>
 				        </p:fieldset>
-				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento"
-							toggleable="true" legend="Solicitação" >	
-					
+				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento" toggleable="true" legend="Solicitação" >	
 							<p:panelGrid>
 								<p:row>
 									<p:column>
@@ -406,7 +407,7 @@
 						</p:fieldset>  
 
 				        <p:commandButton 
-							 	value="Incluir Solicitação:  #{tratamentoController.selected.dtsolicitacaotermino}" icon="ui-icon-disk" 
+							 	value="Incluir Solicitação" icon="ui-icon-disk" 
 							 	update=":formTratamento"  
 							 	oncomplete="dialogTerminoTratamento.hide()"
 							 	actionListener="#{tratamentoController.incluirSolicitacaoTermino}"

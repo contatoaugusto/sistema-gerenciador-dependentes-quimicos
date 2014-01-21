@@ -36,9 +36,22 @@
 							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" />
 						</p:column>
 						
+						<p:column headerText="Início" sortBy="#{tratamento.dtinclusao}">
+							<h:outputText value="#{tratamento.dtinclusao}" >
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Fim" sortBy="#{tratamento.dttratamentofim}">
+							<h:outputText value="#{tratamento.dttratamentofim}" >
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</p:column>
+						
 						<p:column headerText="#{rotulo['generico.acoes']}">
 <!-- 						 	<p:commandButton id="button_editar_tratamento" action="tratamentoController.prepareEdit" icon="ui-icon-pencil" value="Editar"/> -->
-							<h:commandLink action="#{tratamentoController.prepareEdit}" value="Editar"/>
+							<h:commandLink action="#{tratamentoController.prepareEdit}">
+								<p:graphicImage value="/resources/images/editar.png"/>
+							</h:commandLink>
 						</p:column>
 					</p:dataTable>
 			</h:form>

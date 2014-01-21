@@ -201,10 +201,8 @@ public class ProntuarioController implements Serializable {
 			HttpSession httpSession = request.getSession(false);  
 			Usuario usuario = (Usuario) httpSession.getAttribute("usuario");  
 			getSelected().setIdUsuarioCadastro(usuario.getIdUsuario());	
-			
-			prontuario.setIdProntuarioStatus(1);
         	
-			getFacade().create(prontuario);
+        	getFacade().create(prontuario);
         	
         	JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.inclusao"));
             return "consultar";

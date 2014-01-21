@@ -9,7 +9,41 @@
 
 <ui:define name="metadata"/>
     <ui:define name="content">
+<!--      <script src="/SGDQ/resources/javascript/jquery-2.0.2.js"/> -->
+    	<script type="text/javascript"> 
+<!-- //     		$(init);  -->
+<!-- // 			    alert (#{tratamentoController.selected.dtsolicitacaotermino}); -->
+<!-- // 			    //dlSolicitaTerminoTratamento -->
+<!-- // 			    function init() { -->
+<!-- // 			       (function($){ -->
+<!-- // 			          var sortOpts = { -->
+<!-- // 			             connectWith: ["#sortablesA", "#sortablesB"] -->
+<!-- // 			          }; -->
+<!-- // 			          $("#sortablesA, #sortablesB").sortable(sortOpts); -->
+<!-- // 			       })(jQuery); -->
+<!-- // 			    } -->
+				$(document).ready(function () {
+					var btnAtualizaTratamentoDisable = false;	
+					if (#{empty tratamentoController.prontuario.idProntuario or empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1})	
+						btnAtualizaTratamentoDisable = true
+					$("#button_atualizarTratamento").prop("disabled", btnAtualizaTratamentoDisable);
+
+					$('#showDialogTerminoTratamento').click(function() {
+	 					alert ("Teste tudo desabilita");
+
+	 					var toggle = document.getElementById("formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento_inclusao");
+						alert (toggle.disabled);
+	 				    toggle.disabled = true;
+	 					//$("#formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento").prop("disabled", true);
+	 					//$("#fieldset_dados_solicitcao_termino_tratamento").children().prop("disabled", true);
+	 					//$("#formSolicitacaoTerminoTratamento:btnFinalizaTratamento").prop("disabled", true);
+	 					//alert (#{tratamentoController.selected.dtsolicitacaotermino});
+	 				});	
+				});
+ 		</script> 
     <h:body style="font-size:small;padding:0px;">
+    	
+    	 
     	 	<p:commandButton 
 						id="button_pesquisarprontuario" 
 						value="Pesquisar Prontuário" 
@@ -57,6 +91,8 @@
 				<h:inputHidden value="#{tratamentoController.selected.idprontuario}" />
 		    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
 		    	<h:inputHidden value="#{tratamentoController.selected.icativo}" />
+		    	<h:inputHidden value="#{tratamentoController.selected.icativo}" />
+		    	<h:inputHidden value="#{tratamentoController.selected.idusuario}" />
 		    	<h:inputHidden value="#{tratamentoController.selected.dtinclusao}">
 		    		<f:convertDateTime pattern="yyyy-MM-dd" />
 		    	</h:inputHidden>	
@@ -179,15 +215,17 @@
 						id="button_salvarTratamento"      
 						value="#{rotulo['generico.salvar']}" 
 						actionListener="#{tratamentoController.create}" 
-					  	update="formTratamento" icon="ui-icon-check" />  
+					  	update="formTratamento" icon="ui-icon-check"
+					  	disabled="#{not empty tratamentoController.selected.idtratamento}" 
+					  	/>  
 <!-- 						readonly="#{empty tratamentoController.prontuario.idProntuario or not empty tratamentoController.selected.idtratamento}" -->
 					
 					<p:commandButton 
 						id="button_atualizarTratamento"      
 						value="#{rotulo['generico.atualizar']}" 
 						action="#{tratamentoController.update}" 
-						disabled="#{empty tratamentoController.prontuario.idProntuario or empty tratamentoController.selected.idtratamento}"
-						update="formTratamento" icon="ui-icon-check" />   	
+						update="formTratamento" icon="ui-icon-check" >
+					</p:commandButton>						    	
 					<p:commandButton 
 						id="button_voltar" 
 						value="#{rotulo['generico.voltar']}" 
@@ -200,19 +238,21 @@
 						type="button" 
 						value="Incluir Fase" 
 						onclick="dialogFaseTratamento.show()" 
-						disabled="#{empty tratamentoController.selected.idtratamento}"/>   	
+						disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"/>   	
 					  	
 					<p:commandButton 
-					 	value="Incluir Exame" icon="ui-icon-disk" 
+					 	value="Incluir Exame" icon="ui-icon-newwin" 
 					 	update="formTratamento"  
-					 	disabled="#{empty tratamentoController.selected.idtratamento}"
-					 	oncomplete="dialog.show();"/>
+					 	oncomplete="dialog.show();"
+					 	disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"/>
 					
 					<p:commandButton 
-					 	value="Solicitar Termino: #{tratamentoController.selected.idtratamento}" icon="ui-icon-newwin" 
-					 	disabled="#{empty tratamentoController.selected.idtratamento}"
+						id="showDialogTerminoTratamento" 
+					 	value="Solicitar Termino" icon="ui-icon-newwin" 
 					 	imediate="true"
-					 	oncomplete="dialogTerminoTratamento.show()"/> 	
+					 	oncomplete="dialogTerminoTratamento.show()"
+					 	disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"
+					 	/> 	
 					 	 		
 				</div>
 			</h:form>  
@@ -271,14 +311,14 @@
 					 	oncomplete="dialogFaseTratamento.hide()"/>       
 				    </h:form>  
 				</p:dialog> 
-				
-				<p:dialog header="Solicitação Termino Tratamento" widgetVar="dialogTerminoTratamento" resizable="true" width="600">  
+			
+			
+			<!-- 		************** Solicitacao termino ***************** -->	
+				<p:dialog header="Solicitação Termino Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="true" width="600">  
 				    <h:form id="formSolicitacaoTerminoTratamento">
 				    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
-				    	
 				    	<p:fieldset id="fieldset_dados_solicitcao_termino_tratamento_inclusao"
-							toggleable="true" legend="Dados" 
-							rendered="#{empty tratamentoController.selected.dtsolicitacaotermino}">	
+							toggleable="true" legend="Dados">	
 					    	<p:panelGrid> 
 					        	<p:row> 
 									<p:column>
@@ -309,16 +349,13 @@
 						  					id="input_motivo_solicitacao_termino"
 						  					value="#{tratamentoController.dsmotivofasetratamento}" 
 						  					cols="60" 
-						  					disabled="#{not empty tratamentoController.selected.dtsolicitacaotermino}"/>
+						  					/>
 									</p:column> 
 					        	</p:row>
 					        </p:panelGrid>
 				        </p:fieldset>
-				        
-<!-- 				      ************** Solicitacao termino ***************** -->
 				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento"
-							toggleable="true" legend="Solicitação" 
-							>	
+							toggleable="true" legend="Solicitação" >	
 					
 							<p:panelGrid>
 								<p:row>
@@ -352,30 +389,28 @@
 										<p:selectOneRadio 
 						  						id="radio_status_do_tratamento_finaliza" 
 						  						value="#{tratamentoController.idTratamentoStatus}" 
-						  						required="true" requiredMessage="Status do tratamento deve ser informado.">  
+						  						required="true" requiredMessage="Status do tratamento deve ser informado na finalização do tratamento.">  
 								            <f:selectItem itemLabel="Finalizado por abandono" itemValue="2" />
 								            <f:selectItem itemLabel="Finalizado por conclusão" itemValue="3" />  
 								        </p:selectOneRadio>
 									</p:column>
 								</p:row>
 								<p:row>
-									<p:column colspan="4">
-										<p:commandButton 
-										 	value="Finalizar Tratamento" icon="ui-icon-check" 
-										 	update=":formTratamento"  
-										 	oncomplete="dialogTerminoTratamento.hide()"
-										 	actionListener="#{tratamentoController.finalizaTratamento}"/>
+									<p:column colspan="4" style="text-align: center;">
+										<h:commandLink action="#{tratamentoController.finalizaTratamento}">
+											<p:graphicImage value="/resources/images/finalizarTratamento.png"/>
+										</h:commandLink>
 									</p:column>
 								</p:row>
 							</p:panelGrid>
 						</p:fieldset>  
-				  
+
 				        <p:commandButton 
-							 	value="Incluir Solicitação" icon="ui-icon-disk" 
+							 	value="Incluir Solicitação:  #{tratamentoController.selected.dtsolicitacaotermino}" icon="ui-icon-disk" 
 							 	update=":formTratamento"  
 							 	oncomplete="dialogTerminoTratamento.hide()"
 							 	actionListener="#{tratamentoController.incluirSolicitacaoTermino}"
-							 	disabled="#{not empty tratamentoController.selected.dtsolicitacaotermino}"/>
+							 	/>
 					    <p:commandButton 
 							 	value="Fechar" icon="ui-icon-close" 
 							 	oncomplete="dialogTerminoTratamento.hide()"/>       

@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Prontuario.findByDtProntuarioInicio", query = "SELECT p FROM Prontuario p WHERE p.dtProntuarioInicio = :dtProntuarioInicio"),
     @NamedQuery(name = "Prontuario.findByIdUsuarioCadastro", query = "SELECT p FROM Prontuario p WHERE p.idUsuarioCadastro = :idUsuarioCadastro"),
     @NamedQuery(name = "Prontuario.findBynuCPFPaciente", query = "SELECT p FROM Prontuario p INNER JOIN fetch p.idPaciente.idPessoa pessoa WHERE pessoa.nuCPF = :nucpf"),
-    @NamedQuery(name = "Prontuario.findByProntuarioCPFNomePaciente", query = "SELECT p FROM Prontuario p INNER JOIN fetch p.idPaciente.idPessoa pessoa WHERE p.idProntuario = :idProntuario OR pessoa.nmPessoa = :nmPessoa OR pessoa.nuCPF = :nucpf")})
+    @NamedQuery(name = "Prontuario.findByProntuarioCPFNomePaciente", query = "SELECT p FROM Prontuario p INNER JOIN fetch p.idPaciente.idPessoa pessoa WHERE p.idProntuario = :idProntuario OR pessoa.nmPessoa like :nmPessoa OR pessoa.nuCPF = :nucpf")})
 public class Prontuario implements Serializable {
     private static final long serialVersionUID = 1L;
     

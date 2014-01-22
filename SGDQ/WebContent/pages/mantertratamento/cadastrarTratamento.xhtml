@@ -9,40 +9,28 @@
 
 <ui:define name="metadata"/>
     <ui:define name="content">
-<!--      <script src="/SGDQ/resources/javascript/jquery-2.0.2.js"/> -->
     	<script type="text/javascript"> 
-<!-- //     		$(init);  -->
-<!-- // 			    alert (#{tratamentoController.selected.dtsolicitacaotermino}); -->
-<!-- // 			    //dlSolicitaTerminoTratamento -->
-<!-- // 			    function init() { -->
-<!-- // 			       (function($){ -->
-<!-- // 			          var sortOpts = { -->
-<!-- // 			             connectWith: ["#sortablesA", "#sortablesB"] -->
-<!-- // 			          }; -->
-<!-- // 			          $("#sortablesA, #sortablesB").sortable(sortOpts); -->
-<!-- // 			       })(jQuery); -->
-<!-- // 			    } -->
 				$(document).ready(function () {
 					var btnAtualizaTratamentoDisable = false;	
 					if (#{empty tratamentoController.prontuario.idProntuario or empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1})	
 						btnAtualizaTratamentoDisable = true
 					$("#button_atualizarTratamento").prop("disabled", btnAtualizaTratamentoDisable);
 
-					$('#showDialogTerminoTratamento').click(function() {
+// 					$('#showDialogTerminoTratamento').click(function() {
 
-						//alert ("Teste tudo desabilita: "+ #{empty tratamentoController.selected.dtsolicitacaotermino });
+// 						//alert ("Teste tudo desabilita: "+ #{empty tratamentoController.selected.dtsolicitacaotermino });
 
-						var toggleDados = document.getElementById("formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento_inclusao");
-						var toggleSolicitacao = document.getElementById("formSolicitacaoTerminoTratamento:radio_status_do_tratamento_finaliza");
+// 						var toggleDados = document.getElementById("formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento_inclusao");
+// 						var toggleSolicitacao = document.getElementById("formSolicitacaoTerminoTratamento:radio_status_do_tratamento_finaliza");
 
-						if (#{empty tratamentoController.selected.dtsolicitacaotermino }){
-							toggleSolicitacao.disabled = true;
-							toggleDados.disabled = false;
-						}else {
-							toggleSolicitacao.disabled = false;
-							toggleDados.disabled = true;
-						}
-	 				});	
+// 						if (#{empty tratamentoController.selected.dtsolicitacaotermino }){
+// 							toggleSolicitacao.disabled = true;
+// 							toggleDados.disabled = false;
+// 						}else {
+// 							toggleSolicitacao.disabled = false;
+// 							toggleDados.disabled = true;
+// 						}
+// 	 				});	
 				});
  		</script> 
     <h:body style="font-size:small;padding:0px;">
@@ -246,11 +234,11 @@
 						onclick="dialogFaseTratamento.show()" 
 						disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"/>   	
 					  	
-					<p:commandButton 
-					 	value="Incluir Exame" icon="ui-icon-newwin" 
-					 	update="formTratamento"  
-					 	oncomplete="dialog.show();"
-					 	disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"/>
+<!-- 					<p:commandButton  -->
+<!-- 					 	value="Incluir Exame" icon="ui-icon-newwin"  -->
+<!-- 					 	update="formTratamento"   -->
+<!-- 					 	oncomplete="dialog.show();" -->
+<!-- 					 	disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"/> -->
 					
 					<p:commandButton 
 						id="showDialogTerminoTratamento" 
@@ -320,7 +308,7 @@
 			
 			
 			<!-- 		************** Solicitacao termino ***************** -->	
-				<p:dialog header="Finalizar Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="true" width="600" appendToBody="true">  
+				<p:dialog header="Finalizar Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="false" width="640" appendToBody="true">  
 				    <h:form id="formSolicitacaoTerminoTratamento">
 				    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
 <!-- 				    	<p:fieldset id="fieldset_dados_solicitcao_termino_tratamento_inclusao" toggleable="true" legend="Dados">	 -->
@@ -359,7 +347,7 @@
 <!-- 					        	</p:row> -->
 <!-- 					        </p:panelGrid> -->
 <!-- 				        </p:fieldset> -->
-				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento" toggleable="true" legend="Solicitação" >	
+				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento" legend="Solicitação" >	
 							<p:panelGrid>
 								<p:row>
 									<p:column>
@@ -393,10 +381,10 @@
 						  						id="radio_status_do_tratamento_finaliza" 
 						  						value="#{tratamentoController.idTratamentoStatus}" 
 						  						required="true" requiredMessage="Status do tratamento deve ser informado na finalização do tratamento.">  
-								        <f:selectItem itemLabel="Interrompido" itemValue="2" itemDisabled="true"/>
-							            <f:selectItem itemLabel="Concluido" itemValue="3" itemDisabled="true"/>
-							            <f:selectItem itemLabel="Desistência" itemValue="4" itemDisabled="true"/>
-							            <f:selectItem itemLabel="Afastado" itemValue="5" itemDisabled="true"/>   
+								        <f:selectItem itemLabel="Interrompido" itemValue="2" />
+							            <f:selectItem itemLabel="Concluido" itemValue="3" />
+							            <f:selectItem itemLabel="Desistência" itemValue="4" />
+							            <f:selectItem itemLabel="Afastado" itemValue="5" />   
 								        </p:selectOneRadio>
 									</p:column>
 								</p:row>
@@ -410,12 +398,7 @@
 							</p:panelGrid>
 						</p:fieldset>  
 
-				        <p:commandButton 
-							 	value="Incluir Solicitação" icon="ui-icon-disk" 
-							 	update=":formTratamento"  
-							 	oncomplete="dialogTerminoTratamento.hide()"
-							 	actionListener="#{tratamentoController.incluirSolicitacaoTermino}"
-							 	/>
+
 					    <p:commandButton 
 							 	value="Fechar" icon="ui-icon-close" 
 							 	oncomplete="dialogTerminoTratamento.hide()"/>       

@@ -29,9 +29,12 @@
 						<p:column headerText="#{rotulo['tratamento.tipo_de_tratamento']}" sortBy="#{tratamento.idtratamentotipo}">
 							<p:outputLabel value="#{tratamento.idtratamentotipo == 1 ? 'Ambulatorial' : 'Internação'}" />
 						</p:column>
-						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.idtratamentostatus}">
-							<p:outputLabel value="#{tratamento.idtratamentostatus == 1 ? 'Em Andamento' : tratamento.idtratamentostatus == 2 ? 'Finalizado por Abandono' : tratamento.idtratamentostatus == 3 ? 'Finalizado por Conclusão' : ''}" />
+						
+
+						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}">
+							<p:outputLabel value="#{tratamento.tratamentoStatus.nmtratamentostatus}" />
 						</p:column>
+						
 						<p:column headerText="#{rotulo['tratamento.motivo_do_status']}" sortBy="#{tratamento.dstratamentostatusmotivo}">
 							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" />
 						</p:column>

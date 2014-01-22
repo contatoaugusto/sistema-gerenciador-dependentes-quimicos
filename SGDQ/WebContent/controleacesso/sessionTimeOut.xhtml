@@ -13,9 +13,12 @@
          timeout="#{100}"
          onidle="startIdleMonitor()" rendered="#{(request.remoteUser != null)}"/>
        #{msg['logoff.soon.1']}
-       <p:toolbar >  
+       <p:toolbar style="height:90px">  
+       		<p:toolbarGroup align="left"> 
+       			<p:graphicImage value="/resources/images/topo.png" rendered="true" />
+       		</p:toolbarGroup> 
        		<p:toolbarGroup align="right">  
-<!--        			<p:graphicImage url="/resources/images/topo.png" rendered="true" /> -->
+       			
        			<span id="usuario" style="font-weight: bold ; font-size:12px;"> #{request.remoteUser == null ? 'Visitante' : request.remoteUser}</span>
        			<p:separator />
        			<span id="textosessaoexpira" style="font-weight: bold ; font-size:12px;">#{request.remoteUser == null ? '' : 'Sessão expira em: '} </span>

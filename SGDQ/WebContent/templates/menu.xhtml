@@ -12,14 +12,21 @@
 	        </p:submenu>
 	         <p:submenu label="Tratamento">  
 	            <p:menuitem value="Cadastrar" url="/pages/mantertratamento/cadastrarTratamento.xhtml" icon="ui-icon-disk" /> 
-	            <p:menuitem value="Detalhar" url="/pages/mantertratamento/detalhar.xhtml" icon="ui-icon-pencil"/>   
 	            <p:menuitem value="Consultar" url="/pages/mantertratamento/consultar.xhtml" icon="ui-icon-search"/>  
 	        </p:submenu> 
 	         <p:submenu label="Relatorio">  
-	            <p:menuitem value="Relatório" url="/pages/relatorios/fluxodepacientes/relatorio.xhtml" icon="ui-icon-script" /> 
-	           
+	            <p:menuitem value="Relatório 1" url="/pages/relatorios/fluxodepacientes/relatorio.xhtml" icon="ui-icon-script" />
+	            <p:menuitem value="Relatório 2" url="/pages/relatorios/fluxodepacientes/relatorio.xhtml" icon="ui-icon-script" />
+	            <p:menuitem value="Relatório 3" url="/pages/relatorios/fluxodepacientes/relatorio.xhtml" icon="ui-icon-script" /> 
 	        </p:submenu> 
-	        
+	        <p:submenu label="Administrativo">  
+	            <p:menuitem value="Funcionario" url="/pages/mantertratamento/cadastrarTratamento.xhtml" icon="ui-icon-wrench" disabled="true"/> 
+	        </p:submenu>
+	        <p:submenu label="Controle Acesso">  
+	            <p:menuitem value="Usuario" url="usuario.jsf" disabled="true" icon="ui-icon-locked"/>
+			   	<p:menuitem value="Perfil" url="perfil.jsf" disabled="true" icon="ui-icon-locked"/>
+			 	<p:menuitem value="Recurso" url="recurso.jsf" disabled="true" icon="ui-icon-locked"/>
+	        </p:submenu>
 	    </p:menu>	
 	</h:form>		                      
 <!--            <p:accordionPanel id="menuPanel" style="font-size:small;padding:0px;" >   -->

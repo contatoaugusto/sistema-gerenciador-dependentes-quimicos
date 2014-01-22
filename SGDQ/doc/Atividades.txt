@@ -5,3 +5,9 @@ Se o tratamento em Andamento
 
 Embulatorial > 
 
+Tipo de Status
+
+Em Andamento 
+Finalizado por Conclusão 
+Afastato
+Finalizado Interrupção (Problemas pessoais)

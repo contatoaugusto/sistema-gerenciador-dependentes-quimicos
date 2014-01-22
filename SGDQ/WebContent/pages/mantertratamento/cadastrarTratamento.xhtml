@@ -30,7 +30,7 @@
 
 					$('#showDialogTerminoTratamento').click(function() {
 
-						alert ("Teste tudo desabilita: "+ #{empty tratamentoController.selected.dtsolicitacaotermino });
+						//alert ("Teste tudo desabilita: "+ #{empty tratamentoController.selected.dtsolicitacaotermino });
 
 						var toggleDados = document.getElementById("formSolicitacaoTerminoTratamento:fieldset_dados_solicitcao_termino_tratamento_inclusao");
 						var toggleSolicitacao = document.getElementById("formSolicitacaoTerminoTratamento:radio_status_do_tratamento_finaliza");
@@ -149,8 +149,10 @@
 					  						required="true" requiredMessage="Status do tratamento deve ser informado."
 					  						>  
 							            <f:selectItem itemLabel="Em andamento" itemValue="1" checked="checked"/>  
-							            <f:selectItem itemLabel="Finalizado por abandono" itemValue="2" itemDisabled="true"/>
-							            <f:selectItem itemLabel="Finalizado por conclusão" itemValue="3" itemDisabled="true"/>  
+							            <f:selectItem itemLabel="Interrompido" itemValue="2" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Concluido" itemValue="3" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Desistência" itemValue="4" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Afastado" itemValue="5" itemDisabled="true"/>  
 							        </p:selectOneRadio>
 					  				
 					  			</p:column>
@@ -318,45 +320,45 @@
 			
 			
 			<!-- 		************** Solicitacao termino ***************** -->	
-				<p:dialog header="Solicitação Termino Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="true" width="600" appendToBody="true">  
+				<p:dialog header="Finalizar Tratamento" widgetVar="dialogTerminoTratamento" id="dlSolicitaTerminoTratamento" resizable="true" width="600" appendToBody="true">  
 				    <h:form id="formSolicitacaoTerminoTratamento">
 				    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
-				    	<p:fieldset id="fieldset_dados_solicitcao_termino_tratamento_inclusao" toggleable="true" legend="Dados">	
-					    	<p:panelGrid> 
-					        	<p:row> 
-									<p:column>
-						  				<p:outputLabel value="#{rotulo['tratamento.data_de_inclusao']}:" style="font-weight: bold"/>
-						  			</p:column>
-						  			<p:column>
-						  				<h:outputText  value="#{tratamentoController.selected.dtinclusao}" >
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
-										</h:outputText >
-						  	    	</p:column>
-						    	</p:row> 
-						    	<p:row> 
-						    		<p:column>
-						  				<p:outputLabel value="#{rotulo['tratamento.usuario_responsavel']}:" style="font-weight: bold"/>
-						  			</p:column>
-						  			<p:column>
-						  				<p:outputLabel value="#{tratamentoController.usuario.tbpessoa.nmPessoa}" />  
-						        	</p:column>
-						        </p:row>
-					        	<p:row> 
-									<p:column colspan="2">
-										<p:outputLabel value="Justificativa solicitação termino: "/>
-									</p:column>
-								</p:row>
-								<p:row>	
-									<p:column colspan="2">
-										<p:inputTextarea 
-						  					id="input_motivo_solicitacao_termino"
-						  					value="#{tratamentoController.dsmotivofasetratamento}" 
-						  					cols="60" 
-						  					/>
-									</p:column> 
-					        	</p:row>
-					        </p:panelGrid>
-				        </p:fieldset>
+<!-- 				    	<p:fieldset id="fieldset_dados_solicitcao_termino_tratamento_inclusao" toggleable="true" legend="Dados">	 -->
+<!-- 					    	<p:panelGrid>  -->
+<!-- 					        	<p:row>  -->
+<!-- 									<p:column> -->
+<!-- 						  				<p:outputLabel value="#{rotulo['tratamento.data_de_inclusao']}:" style="font-weight: bold"/> -->
+<!-- 						  			</p:column> -->
+<!-- 						  			<p:column> -->
+<!-- 						  				<h:outputText  value="#{tratamentoController.selected.dtinclusao}" > -->
+<!-- 											<f:convertDateTime type="date" pattern="dd/MM/yyyy"/> -->
+<!-- 										</h:outputText > -->
+<!-- 						  	    	</p:column> -->
+<!-- 						    	</p:row>  -->
+<!-- 						    	<p:row>  -->
+<!-- 						    		<p:column> -->
+<!-- 						  				<p:outputLabel value="#{rotulo['tratamento.usuario_responsavel']}:" style="font-weight: bold"/> -->
+<!-- 						  			</p:column> -->
+<!-- 						  			<p:column> -->
+<!-- 						  				<p:outputLabel value="#{tratamentoController.usuario.tbpessoa.nmPessoa}" />   -->
+<!-- 						        	</p:column> -->
+<!-- 						        </p:row> -->
+<!-- 					        	<p:row>  -->
+<!-- 									<p:column colspan="2"> -->
+<!-- 										<p:outputLabel value="Justificativa solicitação termino: "/> -->
+<!-- 									</p:column> -->
+<!-- 								</p:row> -->
+<!-- 								<p:row>	 -->
+<!-- 									<p:column colspan="2"> -->
+<!-- 										<p:inputTextarea  -->
+<!-- 						  					id="input_motivo_solicitacao_termino" -->
+<!-- 						  					value="#{tratamentoController.dsmotivofasetratamento}"  -->
+<!-- 						  					cols="60"  -->
+<!-- 						  					/> -->
+<!-- 									</p:column>  -->
+<!-- 					        	</p:row> -->
+<!-- 					        </p:panelGrid> -->
+<!-- 				        </p:fieldset> -->
 				        <p:fieldset id="fieldset_dados_solicitcao_termino_tratamento" toggleable="true" legend="Solicitação" >	
 							<p:panelGrid>
 								<p:row>
@@ -391,8 +393,10 @@
 						  						id="radio_status_do_tratamento_finaliza" 
 						  						value="#{tratamentoController.idTratamentoStatus}" 
 						  						required="true" requiredMessage="Status do tratamento deve ser informado na finalização do tratamento.">  
-								            <f:selectItem itemLabel="Finalizado por abandono" itemValue="2" />
-								            <f:selectItem itemLabel="Finalizado por conclusão" itemValue="3" />  
+								        <f:selectItem itemLabel="Interrompido" itemValue="2" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Concluido" itemValue="3" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Desistência" itemValue="4" itemDisabled="true"/>
+							            <f:selectItem itemLabel="Afastado" itemValue="5" itemDisabled="true"/>   
 								        </p:selectOneRadio>
 									</p:column>
 								</p:row>

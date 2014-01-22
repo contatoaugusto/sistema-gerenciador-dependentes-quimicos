@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -108,11 +109,15 @@ public class Tratamento implements Serializable {
     @Column(name = "idprontuario")
     private Integer idprontuario;
     
-    @ManyToOne
+    @ManyToOne (cascade= CascadeType.REFRESH)
     @JoinColumn(name="idProntuario", referencedColumnName = "idprontuario", insertable=false, updatable=false)
     public Prontuario prontuario; //unidirectional
     
-    @Column(name = "dssolicitacaotermino")
+    @ManyToOne (cascade= CascadeType.REFRESH)
+    @JoinColumn(name="idtratamentostatus", referencedColumnName = "idtratamentostatus", insertable=false, updatable=false)
+    public TratamentoStatus tratamentoStatus; //unidirectional
+    
+	@Column(name = "dssolicitacaotermino")
     private String dssolicitacaotermino;
 
     @Column(name = "dtsolicitacaotermino")
@@ -268,6 +273,14 @@ public class Tratamento implements Serializable {
 
 	public void setProntuario(Prontuario prontuario) {
 		this.prontuario = prontuario;
+	}
+	
+    public TratamentoStatus getTratamentoStatus() {
+		return tratamentoStatus;
+	}
+
+	public void setTratamentoStatus(TratamentoStatus tratamentoStatus) {
+		this.tratamentoStatus = tratamentoStatus;
 	}
 	
     @Override

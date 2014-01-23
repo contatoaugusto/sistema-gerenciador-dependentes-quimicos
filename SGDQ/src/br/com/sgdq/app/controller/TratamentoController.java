@@ -317,20 +317,20 @@ public class TratamentoController implements Serializable {
     public String finalizaTratamento() {
         try {
         	
-        	if (getSelected().getDtsolicitacaotermino() == null){
-        		JsfUtil.addErrorMessage("Não é permitido finalizar tratamento sem solicitação de finalização.");
-        	}else {
-        		current = getFacade().find(getSelected().getIdtratamento());
-	        	current.setIdtratamentostatus(idTratamentoStatus);
-	        	current.setIcativo(new Integer(0).shortValue());
-	        	current.setDttratamentofim(new Date());
-	        	update();
-	        	
-	            JsfUtil.addSuccessMessage("Solicitação de termino incluida com sucesso.");
-        	}    
+//        	if (getSelected().getDtsolicitacaotermino() == null){
+//        		JsfUtil.addErrorMessage("Não é permitido finalizar tratamento sem solicitação de finalização.");
+//        	}else {
+			current = getFacade().find(getSelected().getIdtratamento());
+	    	current.setIdtratamentostatus(idTratamentoStatus);
+	    	current.setIcativo(new Integer(0).shortValue());
+	    	current.setDttratamentofim(new Date());
+	    	update();
+	    	
+	        JsfUtil.addSuccessMessage("Tratamento finalizado com sucesso.");
+//        	}    
             return null;
         } catch (Exception e) {
-            JsfUtil.addErrorMessage("Erro ao incluir solicitação de termino.");
+            JsfUtil.addErrorMessage("Erro ao finalizar tratamento.");
             return null;
         }
     }

@@ -1,28 +1,35 @@
 package br.com.sgdq.app.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import br.com.sgdq.app.entity.Tratamento;
+import br.com.sgdq.app.facade.TratamentoFacade;
 //import br.com.sgdq.app.service.TratamentoService;
 
+/**
+*
+* @author Antonio Augusto
+*/
 @ManagedBean
 @SessionScoped
-public class EmitirRelatorioDeFluxoDePacientesController {
+public class RelatorioDeFluxoDePacientesController {
 	
-	public EmitirRelatorioDeFluxoDePacientesController() {
+	private  TratamentoFacade tratamentoFacade;
+	
+	public RelatorioDeFluxoDePacientesController() {
 		
 	}
 	
@@ -57,7 +64,7 @@ public class EmitirRelatorioDeFluxoDePacientesController {
 		this.relatorioModel = relatorioModel;
 	}
 	
-	public String emitir() {
+	public void emitir() throws IOException{
 		
 		relatorioModel = new CartesianChartModel();
 		
@@ -79,9 +86,9 @@ public class EmitirRelatorioDeFluxoDePacientesController {
 		int quantidadeDeTratamentosIniciadosPorMes = 0;
 		int quantidadeDeTratamentosFinalizadosPorMes = 0;
 		
-//		tratamentosIniciados = tratamentoService.consultarQuantidadeDeTratamentosIniciadosPorMes(this.dataInicial, this.dataFinal);
-//		tratamentosFinalizados = tratamentoService.consultarQuantidadeDeTratamentosFinalizadosPorMes(this.dataInicial, this.dataFinal);
-//		
+		tratamentosIniciados = getFacade().findTratamentoIniciadoByPeriodo(this.dataInicial, this.dataFinal);
+		tratamentosFinalizados =  getFacade().findTratamentoFinalizadoByPeriodo(this.dataInicial, this.dataFinal);
+		
 		for(int i = 1; i <= dias.getDays(); i++) {
 			
 			if(!mesAno.contains(String.valueOf(dataAuxiliar.getMonthOfYear()).concat("/").concat(String.valueOf(dataAuxiliar.getYear())))) {
@@ -100,10 +107,12 @@ public class EmitirRelatorioDeFluxoDePacientesController {
         	
         	for(Tratamento tratamentoIniciado : tratamentosIniciados) {
         		
-        		//dataDeInclusaoDoTratamentoIniciado = new DateTime(tratamentoIniciado.getDataDeInclusao().getTime());
+        		dataDeInclusaoDoTratamentoIniciado = new DateTime(tratamentoIniciado.getDtinclusao().getTime());
         		
-        		//if(mesAnoAuxiliar.contains((String.valueOf(dataDeInclusaoDoTratamentoIniciado.getMonthOfYear()))))
-        		//	quantidadeDeTratamentosIniciadosPorMes++;
+        		if(mesAnoAuxiliar.contains((
+        					String.valueOf(dataDeInclusaoDoTratamentoIniciado.getMonthOfYear()).concat("/")
+        					.concat(String.valueOf(dataDeInclusaoDoTratamentoIniciado.getYear())))))
+        			quantidadeDeTratamentosIniciadosPorMes++;
         		
         	}
         	
@@ -113,10 +122,12 @@ public class EmitirRelatorioDeFluxoDePacientesController {
         	
         	for(Tratamento tratamentoFinalizado : tratamentosFinalizados) {
         		
-        		//dataDeInclusaoDoTratamentoFinalizado = new DateTime(tratamentoFinalizado.getDataDeInclusao().getTime());
+        		dataDeInclusaoDoTratamentoFinalizado = new DateTime(tratamentoFinalizado.getDttratamentofim().getTime());
         		
-        		//if(mesAnoAuxiliar.contains((String.valueOf(dataDeInclusaoDoTratamentoFinalizado.getMonthOfYear()))))
-        		//	quantidadeDeTratamentosFinalizadosPorMes++;
+        		if(mesAnoAuxiliar.contains((
+        				String.valueOf(dataDeInclusaoDoTratamentoFinalizado.getMonthOfYear()).concat("/")
+    					.concat(String.valueOf(dataDeInclusaoDoTratamentoFinalizado.getYear())))))
+        			quantidadeDeTratamentosFinalizadosPorMes++;
         		
         	}
         	
@@ -129,8 +140,16 @@ public class EmitirRelatorioDeFluxoDePacientesController {
         relatorioModel.addSeries(iniciados);  
         relatorioModel.addSeries(finalizados);  
 	
-        return "/pages/usuario/relatorios/fluxodepacientes/relatorio?faces-redirect=true";
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        context.redirect(context.getRequestContextPath() + "/pages/relatorios/fluxodepacientes/relatorio.xhtml");
+        //return "/pages/relatorios/fluxodepacientes/relatorio.xhtml?faces-redirect=true";
         
 	}
 	
+	
+    private TratamentoFacade getFacade() {
+    	if (tratamentoFacade == null)
+    		tratamentoFacade = new TratamentoFacade();
+    	return tratamentoFacade;
+    }
 }

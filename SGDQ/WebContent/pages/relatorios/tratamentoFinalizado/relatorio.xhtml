@@ -10,13 +10,11 @@
 <ui:define name="metadata"/>
     <ui:define name="content">
 		<!-- Breadcrumb -->
-		<p:breadCrumb>  
-		    <p:menuitem url="#" icon="ui-icon-home" />  
-		    <p:menuitem value="Relatórios - Emitir Relatório de Fluxo de Pacientes" url="#" />  
-		</p:breadCrumb>
 		<br/>
 		<div class="relatorio">
-			<p:barChart id="basic" value="#{relatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>  
+<!-- 			<p:barChart id="basic" value="#{relatorioTratamentosFinalizadosController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>   -->
+			<p:lineChart id="stacked" value="#{relatorioTratamentosFinalizadosController.relatorioModel}" legendPosition="ne" stacked="true" fill="true"  
+             title="Tratamento Finalizados" style="height:300px;margin-top:20px" xaxisLabel="Motivos" yaxisLabel="Pacientes" minY="0" animate="true" />
 		</div>
 	</ui:define>
 </ui:composition>

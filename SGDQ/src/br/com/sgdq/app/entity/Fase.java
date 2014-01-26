@@ -25,14 +25,14 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author prohgy
+ * @author Antonio Augusto
  */
 @Entity
 @Table(name = "\"Fase\"", schema = "dbo")
 @SequenceGenerator(name = "dbo.id_fase_seq", sequenceName = "dbo.id_pessoa_seq")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Fase.findAll", query = "SELECT f FROM Fase f"),
+    @NamedQuery(name = "Fase.findAll", query = "SELECT f FROM Fase f order by f.idfase"),
     @NamedQuery(name = "Fase.findByIdfase", query = "SELECT f FROM Fase f WHERE f.idfase = :idfase"),
     @NamedQuery(name = "Fase.findByNmfase", query = "SELECT f FROM Fase f WHERE f.nmfase = :nmfase"),
     @NamedQuery(name = "Fase.findByDsfase", query = "SELECT f FROM Fase f WHERE f.dsfase = :dsfase")})

@@ -4,52 +4,53 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<ui:composition template="/templates/main.xhtml">
+<ui:composition template="/templates/Template.xhtml">
 	<ui:define name="content">
-		<div class="content">
-			<!-- Breadcrumb -->
-			<p:breadCrumb>  
-			    <p:menuitem url="#" icon="ui-icon-home" />  
-			    <p:menuitem value="Relatórios - Emitir Relatório de Fluxo de Pacientes" url="#" />  
-			</p:breadCrumb>
-			<!-- Emitir -->
-			<h:form id="emitir">
-				<p:focus context=":emitir" />
-				<!-- Mensagens -->
-				<p:messages id="mensagens" closable="true"/>
-				<!-- Dados Gerais -->
-				<p:fieldset id="fieldset_dados_do_tratamento" legend="#{rotulo['tratamento.dados_do_tratamento']}">
-					<!-- Inputs -->
-					<div class="input-and-label">
-					    <p:panelGrid>
-					    	<p:row>
-					    		<p:column>
-					    			<p:outputLabel value="#{rotulo['relatorio.data_inicial']}:" />
-					    		</p:column>
-					    		<p:column>
-					  				<p:calendar id="input_data_inicial" value="#{emitirRelatorioDeFluxoDePacientesController.dataInicial}" />  
-					        	</p:column>
-					        </p:row>
-					    	<p:row>
-					    		<p:column>
-					    			<p:outputLabel value="#{rotulo['relatorio.data_final']}:" />
-					    		</p:column>
-					    		<p:column>
-					    			<p:calendar id="input_data_final" value="#{emitirRelatorioDeFluxoDePacientesController.dataFinal}" />
-					        	</p:column>
-					        </p:row>
-						</p:panelGrid>
+		<h:body style="font-size:small;padding:0px;">
+			<div class="content">
+				<!-- Breadcrumb -->
+				<p:breadCrumb>  
+				    <p:menuitem url="#" icon="ui-icon-home" />  
+				    <p:menuitem value="Relatórios - Emitir Relatório de Fluxo de Pacientes" url="#" />  
+				</p:breadCrumb>
+				<!-- Emitir -->
+				<br/>
+				<h:form id="emitir">
+					<p:focus context=":emitir" />
+					<!-- Mensagens -->
+					<p:messages id="mensagens" closable="true"/>
+					<!-- Dados Gerais -->
+					<p:fieldset id="fieldset_dados_do_tratamento" legend="#{rotulo['tratamento.dados_do_tratamento']}">
+						<!-- Inputs -->
+						<div class="input-and-label">
+						    <p:panelGrid>
+						    	<p:row>
+						    		<p:column>
+						    			<p:outputLabel value="#{rotulo['relatorio.data_inicial']}:" />
+						    		</p:column>
+						    		<p:column>
+						  				<p:calendar id="input_data_inicial" value="#{relatorioDeFluxoDePacientesController.dataInicial}" />  
+						        	</p:column>
+						        </p:row>
+						    	<p:row>
+						    		<p:column>
+						    			<p:outputLabel value="#{rotulo['relatorio.data_final']}:" />
+						    		</p:column>
+						    		<p:column>
+						    			<p:calendar id="input_data_final" value="#{relatorioDeFluxoDePacientesController.dataFinal}" />
+						        	</p:column>
+						        </p:row>
+							</p:panelGrid>
+						</div>
+					</p:fieldset>
+					<!-- Button -->
+					<div class="buttons">
+					    <p:commandButton id="button_salvar" value="Emitir" actionListener="#{relatorioDeFluxoDePacientesController.emitir}" update=":emitir" icon="ui-icon-check" />  
+						<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/mantertratamento/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
 					</div>
-				</p:fieldset>
-				<!-- Button -->
-				<div class="buttons">
-				    <p:commandButton id="button_salvar" value="#{rotulo['generico.salvar']}" action="#{emitirRelatorioDeFluxoDePacientesController.emitir}" update=":emitir" icon="ui-icon-check" />  
-				</div>			
-				<div class="button-voltar">
-					<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/usuario/mantertratamento/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
-				</div>
-			</h:form>
-		</div>
+				</h:form>
+			</div>
+		</h:body>	
 	</ui:define>
 </ui:composition>
 </html>

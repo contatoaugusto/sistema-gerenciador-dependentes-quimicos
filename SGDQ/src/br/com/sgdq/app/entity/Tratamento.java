@@ -48,7 +48,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tratamento.findByIdtratamentostatus", query = "SELECT t FROM Tratamento t WHERE t.idtratamentostatus = :idtratamentostatus"),
     @NamedQuery(name = "Tratamento.findByIdtratamentotipo", query = "SELECT t FROM Tratamento t WHERE t.idtratamentotipo = :idtratamentotipo"),
     @NamedQuery(name = "Tratamento.findByProntuario", query = "SELECT t FROM Tratamento t WHERE t.idprontuario = :idprontuario"),
-    @NamedQuery(name = "Tratamento.findByProntuarioAtivo", query = "SELECT t FROM Tratamento t WHERE t.idprontuario = :idprontuario and t.icativo = :icativo")})
+    @NamedQuery(name = "Tratamento.findByProntuarioAtivo", query = "SELECT t FROM Tratamento t WHERE t.idprontuario = :idprontuario and t.icativo = :icativo"),
+    @NamedQuery(name = "Tratamento.findTratamentoIniciadoByPeriodo", query = "SELECT t FROM Tratamento t WHERE t.dtinclusao between :dataInicial and :datafinal"),
+    @NamedQuery(name = "Tratamento.findTratamentoFinalizadoByPeriodo", query = "SELECT t FROM Tratamento t WHERE t.dttratamentofim between :dataInicial and :datafinal")})
 public class Tratamento implements Serializable {
     private static final long serialVersionUID = 1L;
     

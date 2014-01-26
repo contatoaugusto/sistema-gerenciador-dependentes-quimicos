@@ -6,6 +6,7 @@
 
 package br.com.sgdq.app.facade;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -61,4 +62,37 @@ public class TratamentoFacade extends AbstractFacade<Tratamento> {
 	    }
     }
     
+    /*
+     * Retorna o tratamentos iniciados entre as datas informadas
+     * @param idProntuario
+     * @return Tratamento
+     */
+    public List<Tratamento> findTratamentoIniciadoByPeriodo(Date dataInicial, Date datafinal) {
+    	try{
+	    	getEntityManager();
+	    	return em.createNamedQuery("Tratamento.findTratamentoIniciadoByPeriodo")
+	    		    .setParameter("dataInicial", dataInicial)
+	    		    .setParameter("datafinal", datafinal)
+	    		    .getResultList();
+	    } catch(Exception e) {
+	        return null;
+	    }
+    }
+    
+    /*
+     * Retorna os tratamentos finalizados entre as datas informadas
+     * @param idProntuario
+     * @return Tratamento
+     */
+    public List<Tratamento> findTratamentoFinalizadoByPeriodo(Date dataInicial, Date datafinal) {
+    	try{
+	    	getEntityManager();
+	    	return em.createNamedQuery("Tratamento.findTratamentoFinalizadoByPeriodo")
+	    		    .setParameter("dataInicial", dataInicial)
+	    		    .setParameter("datafinal", datafinal)
+	    		    .getResultList();
+	    } catch(Exception e) {
+	        return null;
+	    }
+    }
 }

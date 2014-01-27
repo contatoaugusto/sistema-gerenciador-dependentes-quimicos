@@ -4,30 +4,32 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:f="http://java.sun.com/jsf/core">
 
-	<h:form>		
-		 <p:menu>  
-	        <p:submenu label="Prontuario">  
-	            <p:menuitem value="Cadastrar" url="/pages/manterprontuario/cadastrar.xhtml" icon="ui-icon-disk" />  
-	            <p:menuitem value="Consultar" url="/pages/manterprontuario/consultar.xhtml" icon="ui-icon-search"/>  
-	        </p:submenu>
-	         <p:submenu label="Tratamento">  
-	            <p:menuitem value="Cadastrar" url="/pages/mantertratamento/cadastrarTratamento.xhtml" icon="ui-icon-disk" /> 
-	            <p:menuitem value="Consultar" url="/pages/mantertratamento/consultar.xhtml" icon="ui-icon-search"/>  
-	        </p:submenu> 
-	         <p:submenu label="Relatorio">  
-	            <p:menuitem value="Fluxo de Pacientes" url="/pages/relatorios/fluxodepacientes/emitir.xhtml" icon="ui-icon-script" />
-	            <p:menuitem value="Tratamento Finalizado" url="/pages/relatorios/tratamentoFinalizado/relatorio.xhtml" icon="ui-icon-script" />
-	            <p:menuitem value="Relatório 3" url="/pages/relatorios/fluxodepacientes/relatorio.xhtml" icon="ui-icon-script" /> 
-	        </p:submenu> 
-	        <p:submenu label="Administrativo">  
-	            <p:menuitem value="Funcionario" url="/pages/mantertratamento/cadastrarTratamento.xhtml" icon="ui-icon-wrench" disabled="true"/> 
-	        </p:submenu>
-	        <p:submenu label="Controle Acesso">  
-	            <p:menuitem value="Usuario" url="usuario.jsf" disabled="true" icon="ui-icon-locked"/>
-			   	<p:menuitem value="Perfil" url="perfil.jsf" disabled="true" icon="ui-icon-locked"/>
-			 	<p:menuitem value="Recurso" url="recurso.jsf" disabled="true" icon="ui-icon-locked"/>
-	        </p:submenu>
-	    </p:menu>	
+	<h:form>	
+		<h:body style="font-size:small;padding:0px;">	
+			 <p:menu>  
+		        <p:submenu label="Prontuario">  
+		            <p:menuitem value="Cadastrar" url="/pages/manterprontuario/cadastrar.xhtml" icon="ui-icon-disk" />  
+		            <p:menuitem value="Consultar" url="/pages/manterprontuario/consultar.xhtml" icon="ui-icon-search"/>  
+		        </p:submenu>
+		         <p:submenu label="Tratamento">  
+		            <p:menuitem value="Cadastrar" url="/pages/mantertratamento/cadastrarTratamento.xhtml" icon="ui-icon-disk" /> 
+		            <p:menuitem value="Consultar" url="/pages/mantertratamento/consultar.xhtml" icon="ui-icon-search"/>  
+		        </p:submenu> 
+		         <p:submenu label="Relatorio">  
+		            <p:menuitem value="Fluxo de Pacientes" url="/pages/relatorios/fluxodepacientes/emitir.xhtml" icon="ui-icon-script" />
+		            <p:menuitem value="Finalizados" url="/pages/relatorios/tratamentoFinalizado/relatorio.xhtml" icon="ui-icon-script" />
+		            <p:menuitem value="Media Permanencia" url="/pages/relatorios/mediaPermanencia/emitir.xhtml" icon="ui-icon-script" /> 
+		        </p:submenu> 
+		        <p:submenu label="Administrativo">  
+		            <p:menuitem value="Funcionario" url="/pages/mantertratamento/cadastrarTratamento.xhtml" icon="ui-icon-wrench" disabled="true"/> 
+		        </p:submenu>
+		        <p:submenu label="Controle Acesso">  
+		            <p:menuitem value="Usuario" url="usuario.jsf" disabled="true" icon="ui-icon-locked"/>
+				   	<p:menuitem value="Perfil" url="perfil.jsf" disabled="true" icon="ui-icon-locked"/>
+				 	<p:menuitem value="Recurso" url="recurso.jsf" disabled="true" icon="ui-icon-locked"/>
+		        </p:submenu>
+		    </p:menu>
+	    </h:body>
 	</h:form>		                      
 <!--            <p:accordionPanel id="menuPanel" style="font-size:small;padding:0px;" >   -->
 <!-- 		     <p:tab title="Prontuario"  >   -->

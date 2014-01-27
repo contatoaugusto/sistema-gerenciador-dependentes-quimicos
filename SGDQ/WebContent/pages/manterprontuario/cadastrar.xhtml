@@ -8,10 +8,52 @@
 
 	<ui:define name="metadata" />
 	<ui:define name="content">
-
+		<script type="text/javascript">  
+				/**  
+				 * JSF Validator  
+				 */  
+				PrimeFaces.validator['custom.emailValidator'] = {  
+				      
+				    pattern: /\S+@\S+/,  
+				      
+				    validate: function(element, value) {  
+				        //use element.data() to access validation metadata, in this case there is none.  
+				        if(!this.pattern.test(value)) {  
+				            throw {  
+				                summary: 'Validation Error',  
+				                detail: value + ' is not a valid email.'  
+				            }  
+				        }  
+				    }  
+				};  
+				  
+				/**  
+				 * Bean validator for @Email  
+				 */  
+				PrimeFaces.validator['Email'] = {  
+				      
+				    pattern: /\S+@\S+/,  
+				              
+				    MESSAGE_ID: 'org.primefaces.examples.validate.email.message',  
+				      
+				    validate: function(element, value) {  
+				        var vc = PrimeFaces.util.ValidationContext;  
+				  
+				        if(!this.pattern.test(value)) {  
+				            var msgStr = element.data('p-email-msg'),  
+				            msg = msgStr ? {summary:msgStr, detail: msgStr} : vc.getMessage(this.MESSAGE_ID);  
+				      
+				            throw msg;  
+				        }  
+				    }  
+				};  
+			</script>
 		<h:body style="font-size:small;padding:0px;">
+			
+			
+		
 			<h:form id="formCadastroProntuario"  prependId="false" enctype="multipart/form-data">
-				<p:messages id="mensagensCadastroProntuario" closable="true" />
+<!-- 				<p:messages id="mensagensCadastroProntuario" closable="true" /> -->
 				
 				<br />
 
@@ -59,19 +101,6 @@
 								</p:column>
 
 							</p:row>
-
-<!-- 							<p:row> -->
-<!-- 								<p:column> -->
-<!-- 									<p:outputLabel -->
-<!-- 										value="#{rotulo['prontuario.responsavel_medico']}:" /> -->
-<!-- 								</p:column> -->
-<!-- 								<p:column> -->
-<!-- 									<p:inputText id="input_responsavel" -->
-<!-- 										value="#{prontuarioController.selected.responsavelMedico}" -->
-<!-- 										required="true" -->
-<!-- 										requiredMessage="#{mensagem['sistema.descricao.required']}" /> -->
-<!-- 								</p:column> -->
-<!-- 							</p:row> -->
 						</p:panelGrid>
 					</div>
 				</p:fieldset>
@@ -190,11 +219,11 @@
 										value="#{rotulo['prontuario.paciente.data_de_nascimento']}:" />
 								</p:column>
 								<p:column>
-<!-- 									<p:calendar id="input_paciente_data_de_nascimento" -->
-<!-- 										datePattern="MM/dd/yyyy" -->
-<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" /> -->
-									<p:inputMask 
-										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" mask="99/99/9999" converter="convertInput"/>
+									<p:calendar id="input_paciente_data_de_nascimento"
+										datePattern="MM/dd/yyyy"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" />
+<!-- 									<p:inputMask  -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" mask="99/99/9999" converter="converterCampoData"/> -->
 										
 								</p:column>
 						
@@ -406,8 +435,9 @@
 								</p:column>
 								<p:column>
 									<p:inputText id="input_responsavel_email"
-										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dsEmail}"
-										required="false"/>
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dsEmail}" required="false"/>
+<!-- 										<f:validator validatorId="custom.emailValidator" />   -->
+<!--             						</p:inputText> -->
 								</p:column>
 							</p:row>
 							<p:row>
@@ -428,7 +458,7 @@
 										value="#{rotulo['prontuario.responsavel.observacoes']}:" />
 								</p:column>
 								<p:column colspan="3">
-									<p:inputTextarea rows="5" cols="150" counter="counter" maxlength="500"       
+									<p:inputTextarea rows="5" cols="120" counter="counter" maxlength="500"       
 											counterTemplate="{0} carateres restantes." autoResize="false"
 											id="input_responsavel_observacoes"
 											value="#{prontuarioController.selected.idPaciente.idResponsavel.dsObservacao}"/>

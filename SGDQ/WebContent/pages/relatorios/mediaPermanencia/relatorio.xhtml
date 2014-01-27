@@ -13,11 +13,16 @@
 			<!-- Breadcrumb -->
 			<p:breadCrumb>  
 			    <p:menuitem url="#" icon="ui-icon-home" />  
-			    <p:menuitem value="Relatórios - Emitir Relatório de Fluxo de Pacientes" url="/pages/relatorios/fluxodepacientes/emitir.xhtml" />  
+			    <p:menuitem value="Relatórios - Emitir Relatório Média de Permanência" url="/pages/relatorios/mediaPermanencia/emitir.xhtml" />  
 			</p:breadCrumb>
 			<br/>
 			<div class="relatorio">
-				<p:barChart id="basic" value="#{relatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>  
+<!-- 				<p:barChart id="basic" value="#{relatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>   -->
+				<p:lineChart id="mediaPermanencia" value="#{relatorioMediaPermanenciaController.relatorioModel}" 
+					legendPosition="e" title="Média de Permanência para Conclusão" 
+					minY="0" style="height:300px;margin-top:20px"
+					xaxisLabel="Data de Pesquisa" yaxisLabel="Meses"
+					animate="true" />
 			</div>
 		</h:body>
 	</ui:define>

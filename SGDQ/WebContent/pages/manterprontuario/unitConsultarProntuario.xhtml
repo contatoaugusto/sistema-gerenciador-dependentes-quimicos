@@ -4,6 +4,7 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:f="http://java.sun.com/jsf/core">
 
+	<h:body style="font-size:small;padding:0px;">
 	<h:form id="formConsultarProntuario">        	
 <!-- 				<p:messages id="mensagens" closable="true"/> -->
 					<br/>
@@ -47,26 +48,30 @@
 					</div>
 					
 					<br/>
-					<div class="resultado">
-						<p:dataTable id="dataTable_consultar_prontuario" value="#{prontuarioController.items}" var="prontuario" emptyMessage="#{mensagem['datatable.empty']}" paginator="true" paginatorPosition="bottom" resizableColumns="true" rows="10">
-							<p:column headerText="#{rotulo['prontuario']}" sortBy="#{prontuario.idProntuario}">
+					<div class="resultado" >
+						<p:dataTable id="dataTable_consultar_prontuario" value="#{prontuarioController.items}" 
+							var="prontuario" emptyMessage="#{mensagem['datatable.empty']}" 
+							paginator="true" 
+							paginatorPosition="bottom" resizableColumns="true" rows="10">
+							
+							<p:column headerText="#{rotulo['prontuario']}" sortBy="#{prontuario.idProntuario}"  style="width:80px">
 								<p:outputLabel value="#{prontuario.idProntuario}" />
 							</p:column>
 							
-							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}">
+							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}" style="width:200px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmPessoa}" />
 							</p:column>
-							<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}">
+							<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}" style="width:100px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuCPF}" />
 							</p:column>
 							
-							<p:column headerText="#{rotulo['prontuario.paciente.telefone']}" sortBy="#{prontuario.idPaciente.idPessoa.nuTelefone}">
+							<p:column headerText="#{rotulo['prontuario.paciente.telefone']}" sortBy="#{prontuario.idPaciente.idPessoa.nuTelefone}" style="width:100px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuTelefone}"/>
 						    </p:column>
-						    <p:column headerText="#{rotulo['prontuario.paciente.cidade']}" sortBy="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}">
+						    <p:column headerText="#{rotulo['prontuario.paciente.cidade']}" sortBy="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}" style="width:150px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}"/>
 						    </p:column>
-							<p:column headerText="#{rotulo['generico.acoes']}">
+							<p:column headerText="#{rotulo['generico.acoes']}" style="width:100px">
 
 								<p:commandButton id="button_editar" action="#{prontuarioController.prepareEdit}" icon="ui-icon-pencil" value="Editar"/>
 
@@ -83,5 +88,5 @@
 						</p:dataTable>
 					</div>
 	</h:form>				
-        
+    </h:body>     
 </ui:composition>

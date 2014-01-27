@@ -52,26 +52,27 @@
 						<p:dataTable id="dataTable_consultar_prontuario" value="#{prontuarioController.items}" 
 							var="prontuario" emptyMessage="#{mensagem['datatable.empty']}" 
 							paginator="true" 
-							paginatorPosition="bottom" resizableColumns="true" rows="10">
+							paginatorPosition="bottom" resizableColumns="true" rows="10" style="width:99%"
+							rowKey="#{prontuario.idProntuario}" selectionMode="single">
 							
 							<p:column headerText="#{rotulo['prontuario']}" sortBy="#{prontuario.idProntuario}"  style="width:80px">
 								<p:outputLabel value="#{prontuario.idProntuario}" />
 							</p:column>
 							
-							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}" style="width:200px">
+							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}" >
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmPessoa}" />
 							</p:column>
-							<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}" style="width:100px">
+							<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}" style="width:110px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuCPF}" />
 							</p:column>
 							
-							<p:column headerText="#{rotulo['prontuario.paciente.telefone']}" sortBy="#{prontuario.idPaciente.idPessoa.nuTelefone}" style="width:100px">
+							<p:column headerText="#{rotulo['prontuario.paciente.telefone']}" sortBy="#{prontuario.idPaciente.idPessoa.nuTelefone}" style="width:110px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuTelefone}"/>
 						    </p:column>
 						    <p:column headerText="#{rotulo['prontuario.paciente.cidade']}" sortBy="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}" style="width:150px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}"/>
 						    </p:column>
-							<p:column headerText="#{rotulo['generico.acoes']}" style="width:100px">
+							<p:column headerText="#{rotulo['generico.acoes']}" >
 
 								<p:commandButton id="button_editar" action="#{prontuarioController.prepareEdit}" icon="ui-icon-pencil" value="Editar"/>
 

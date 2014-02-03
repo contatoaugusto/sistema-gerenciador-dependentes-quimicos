@@ -16,6 +16,35 @@
 			    <p:menuitem value="Relatórios - Emitir Relatório Média de Permanência" url="/pages/relatorios/mediaPermanencia/emitir.xhtml" />  
 			</p:breadCrumb>
 			<br/>
+			<h:form id="emitir">
+					<!-- Mensagens -->
+					<p:messages id="mensagens" closable="true"/>
+					<!-- Dados Gerais -->
+					<!-- Inputs -->
+					<div class="input-and-label">
+					    <p:panelGrid>
+					    	<p:row>
+					    		<p:column>
+					    			<p:outputLabel value="#{rotulo['relatorio.data_inicial']}:" />
+					    		</p:column>
+					    		<p:column>
+					  				<p:calendar id="input_data_inicial" value="#{relatorioMediaPermanenciaController.dataInicial}" />  
+					        	</p:column>
+					        
+					    		<p:column>
+					    			<p:outputLabel value="#{rotulo['relatorio.data_final']}:" />
+					    		</p:column>
+					    		<p:column>
+					    			<p:calendar id="input_data_final" value="#{relatorioMediaPermanenciaController.dataFinal}" />
+					        	</p:column>
+					        	<p:column>
+					    			<p:commandButton id="button_salvar" value="Gerar" actionListener="#{relatorioMediaPermanenciaController.emitir}" update=":emitir" icon="ui-icon-check" />  
+								</p:column>
+					        </p:row>
+						</p:panelGrid>
+					</div>
+				</h:form>
+			
 			<div class="relatorio">
 <!-- 				<p:barChart id="basic" value="#{relatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>   -->
 				<p:lineChart id="mediaPermanencia" value="#{relatorioMediaPermanenciaController.relatorioModel}" 

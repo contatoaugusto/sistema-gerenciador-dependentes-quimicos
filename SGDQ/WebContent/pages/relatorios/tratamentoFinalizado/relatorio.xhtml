@@ -11,9 +11,34 @@
     <ui:define name="content">
 		<h:body style="font-size:small;padding:0px;">
 			<br/>
+			<h:form id="emitir">
+					<!-- Inputs -->
+					<div class="input-and-label">
+					    <p:panelGrid>
+					    	<p:row>
+					    		<p:column>
+					    			<p:outputLabel value="#{rotulo['relatorio.data_inicial']}:" />
+					    		</p:column>
+					    		<p:column>
+					  				<p:calendar id="input_data_inicial" value="#{relatorioTratamentosFinalizadosController.dataInicial}" />  
+					        	</p:column>
+					       		<p:column>
+					    			<p:outputLabel value="#{rotulo['relatorio.data_final']}:" />
+					    		</p:column>
+					    		<p:column>
+					    			<p:calendar id="input_data_final" value="#{relatorioTratamentosFinalizadosController.dataFinal}" />
+					        	</p:column>
+					        	<p:column>
+					        		<p:commandButton id="button_salvar" value="Gerar" actionListener="#{relatorioTratamentosFinalizadosController.emitir}" update=":emitir" icon="ui-icon-check" />  
+						    	</p:column>
+					        </p:row>
+						</p:panelGrid>
+					</div>
+				</h:form>
+			
 			<div class="relatorio">
 				<p:lineChart id="stacked" value="#{relatorioTratamentosFinalizadosController.relatorioModel}" legendPosition="ne" stacked="true" fill="true"  
-	             title="Tratamento Finalizados" style="height:300px;margin-top:20px" xaxisLabel="Motivos" yaxisLabel="Pacientes" minY="0" animate="true" />
+	             title="Fase por Motivo" style="height:300px;margin-top:20px" xaxisLabel="Motivos" yaxisLabel="Pacientes"  animate="true" />
 			</div>
 		</h:body>	
 	</ui:define>

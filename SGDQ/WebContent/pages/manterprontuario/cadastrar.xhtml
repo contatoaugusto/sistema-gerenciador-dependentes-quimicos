@@ -62,7 +62,7 @@
 					legend="#{rotulo['prontuario.dados_gerais']}">
 					<div class="input-and-label">
 						<p:panelGrid >
-							<p:row>
+ 							<p:row>
 								<p:column>
 									<p:outputLabel value="#{rotulo['prontuario.paciente.cpf']}:" />
 								</p:column>
@@ -74,7 +74,11 @@
 										mask="999.999.999-99" >
 										<p:ajax event="blur" update="formCadastroProntuario" partialSubmit="true" process="@this"  
     										 listener="#{prontuarioController.buscaProntuarioBynuCPFPaciente}"></p:ajax>
-									</p:inputMask>	
+									</p:inputMask>
+								</p:column>
+								<p:column rowspan="3" style="text-align: center">
+									<p:graphicImage id="input_paciente_foto" value="/resources/images/semFoto.jpg" width="120" height="150" cache="false" style="border-style: solid;border-color: #9c9d9f; border-width: 1px" />
+									<br/><p:commandButton id="button_incluir_foto" value="Anexar" style="font-size: 70%" actionListener="#{prontuarioController.incluirFoto}" update=":formCadastroProntuario" disabled="true"/>  
 								</p:column>
 							</p:row>
 							<p:row>
@@ -87,6 +91,8 @@
 										required="true"
 										requiredMessage="#{mensagem['paciente.nome.required']}" size="50"/>
 								</p:column>
+							</p:row>
+							<p:row>	
 								<p:column>
 									<p:outputLabel value="#{rotulo['prontuario.paciente.sexo']}:" />
 								</p:column>
@@ -99,8 +105,8 @@
 										<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
 									</p:selectOneRadio>
 								</p:column>
-
 							</p:row>
+							
 						</p:panelGrid>
 					</div>
 				</p:fieldset>
@@ -116,9 +122,12 @@
 									<p:outputLabel value="#{rotulo['prontuario.paciente.rg']}:" />
 								</p:column>
 								<p:column>
-									<p:inputMask id="input_paciente_rg"
+<!-- 									<p:inputMask id="input_paciente_rg" -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.nuRG}" -->
+<!-- 										mask="999999999-9" /> -->
+									<p:inputText id="input_paciente_rg"
 										value="#{prontuarioController.selected.idPaciente.idPessoa.nuRG}"
-										mask="999999999-9" />
+										required="false"/>	
 								</p:column>
 								<p:column>
 									<p:outputLabel
@@ -212,6 +221,16 @@
 										required="false"
 										mask="99999-999" />
 								</p:column>
+								<p:column>
+									<p:outputLabel
+										value="Email:" />
+								</p:column>
+								<p:column>
+									<p:inputText id="input_paciente_email"
+										value="#{prontuarioController.selected.idPaciente.idPessoa.dsEmail}" required="false"/>
+<!-- 										<f:validator validatorId="custom.emailValidator" />   -->
+<!--             						</p:inputText> -->
+								</p:column>
 							</p:row>
 							<p:row>
 								<p:column>
@@ -281,10 +300,13 @@
 									<p:outputLabel value="#{rotulo['prontuario.responsavel.rg']}:" />
 								</p:column>
 								<p:column>
-									<p:inputMask id="input_responsavel_rg"
+<!-- 									<p:inputMask id="input_responsavel_rg" -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuRG}" -->
+<!-- 										required="false" -->
+<!-- 										mask="999999999-9" /> -->
+									<p:inputText id="input_responsavel_rg"
 										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuRG}"
-										required="false"
-										mask="999999999-9" />
+										required="false"/>		
 								</p:column>
 								<p:column>
 									<p:outputLabel
@@ -477,7 +499,7 @@
 						id="button_salvar" value="#{rotulo['generico.salvar']}" actionListener="#{prontuarioController.create}" update="formCadastroProntuario" icon="ui-icon-check" />  
 					<p:commandButton 
 						disabled="#{empty prontuarioController.selected.idProntuario}"
-						id="button_atualizar" value="#{rotulo['generico.atualizar']}" 
+						id="button_atualizar" value="Alterar" 
 						actionListener="#{prontuarioController.update}" update=":formCadastroProntuario" icon="ui-icon-check" />  
 										
 					<p:commandButton id="button_voltar"

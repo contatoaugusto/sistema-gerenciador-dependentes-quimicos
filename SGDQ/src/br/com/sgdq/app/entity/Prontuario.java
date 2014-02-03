@@ -26,6 +26,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import controleacesso.web.modelo.Usuario;
 
 
 /**
@@ -68,7 +69,19 @@ public class Prontuario implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
     private Paciente idPaciente;	
 
-    public Prontuario() {
+    @ManyToOne (cascade= CascadeType.REFRESH)
+    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario", insertable=false, updatable=false)
+    public UsuarioSGDQ usuario; //unidirectional
+    
+    public UsuarioSGDQ getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioSGDQ usuario) {
+		this.usuario = usuario;
+	}
+
+	public Prontuario() {
     	this.idPaciente = new Paciente();
     }
 

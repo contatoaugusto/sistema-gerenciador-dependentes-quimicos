@@ -66,7 +66,16 @@ public class TratamentoController implements Serializable {
     private Prontuario prontuario;
     private List<FaseTratamento> faseTratamento;
     private Integer idTratamentoStatus;
+    private Integer idFaseTratamentoAtual;
     
+	public Integer getIdFaseTratamentoAtual() {
+		return idFaseTratamentoAtual;
+	}
+
+	public void setIdFaseTratamentoAtual(Integer idFaseTratamentoAtual) {
+		this.idFaseTratamentoAtual = idFaseTratamentoAtual;
+	}
+
 	private String dsmotivofasetratamento;
     
     public String getDsmotivofasetratamento() {
@@ -98,7 +107,7 @@ public class TratamentoController implements Serializable {
 	}
 
 	private Usuario usuario;
-   
+	
 	public Prontuario getProntuario() {
 		return prontuario;
 	}
@@ -180,6 +189,11 @@ public class TratamentoController implements Serializable {
 	private void loadFaseTratamento(Integer idTratamento) {
 		FaseTratamentoFacade faseTratamentoFacade = new FaseTratamentoFacade();
 		faseTratamento = faseTratamentoFacade.findByTratamento(idTratamento);
+		idFaseTratamentoAtual = 0;
+		for (FaseTratamento faseTratamentoAuxiliar : faseTratamento){
+			if (faseTratamentoAuxiliar.getIdfase() > idFaseTratamentoAtual)
+				idFaseTratamentoAtual = faseTratamentoAuxiliar.getIdfase();
+		}
 	}
 
 	private void loadProntuario(Integer idProntuario) {
@@ -250,6 +264,8 @@ public class TratamentoController implements Serializable {
         	getSelected().setIdusuario(usuario.getIdUsuario());
         	getSelected().setIcativo(new Integer(1).shortValue());
         	
+        	//getSelected().setDsexame(getSelected().getDsexame() + " - Data Solicitação: " + getSelected().getDtexame()); 
+        	
         	getFacade().create(current);
         	
         	// A criar tratamento do tipo Internação, deve criar automaticamente fase 1
@@ -257,11 +273,11 @@ public class TratamentoController implements Serializable {
         		addFaseTratamento();
         	}
         	
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.inclusao"));
+            JsfUtil.addSuccessMessage("Tratamento incluído com sucesso");
            // return prepareCreate();
             return "cadastrarTratamento";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/message").getString("sistema.inclusao.erro"));
+            JsfUtil.addErrorMessage(e, "Erro ao incluir Tratamento");
             return null;
         }
     }
@@ -274,23 +290,25 @@ public class TratamentoController implements Serializable {
         loadUsuarioSessao();
         loadProntuario(getSelected().getIdprontuario());
         loadFaseTratamento(getSelected().getIdtratamento());
-//        visualizacoesComponentesTela();
         
         return "cadastrarTratamento";
     }
 
     public String update() {
         try {
+        	
+        	//current.setDsexame(current.getDsexame() + " - Data Solicitação: " + current.getDtexame());
+        	
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.alteracao"));
+            JsfUtil.addSuccessMessage("Tratamento alterado com sucesso");
  
             loadUsuarioSessao();
             loadProntuario(getSelected().getIdprontuario());
             loadFaseTratamento(getSelected().getIdtratamento());
-//            visualizacoesComponentesTela();
+
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/message").getString("sistema.alteracao.erro"));
+            JsfUtil.addErrorMessage(e, "Erro ao alterar Tratamento");
             return null;
         }
     }

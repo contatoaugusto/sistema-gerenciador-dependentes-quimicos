@@ -55,6 +55,9 @@ public class ProntuarioFacade extends AbstractFacade<Prontuario> {
     public List<Prontuario> findByProntuarioCPFNomePaciente(Integer idProntuario, String nmPaciente, String nuCPF) {
     	try{
 	    	getEntityManager();
+	    	if (!nmPaciente.isEmpty())
+	    		nmPaciente = "%"+nmPaciente+"%";
+	    	
 	    	return em.createNamedQuery("Prontuario.findByProntuarioCPFNomePaciente")
 	    		    .setParameter("idProntuario", idProntuario)
 	    		    .setParameter("nmPessoa", nmPaciente)

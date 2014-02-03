@@ -77,6 +77,41 @@ public class Tratamento implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dtinclusao;
     
+    @Column(name = "dsexame")
+    private String dsexame;
+    
+    @Column(name = "dtexame")
+    @Temporal(TemporalType.DATE)
+    private Date dtexame;
+    
+	@Column(name = "dsresultadoexame")
+    private String dsresultadoexame;
+    
+    public String getDsexame() {
+		return dsexame;
+	}
+
+	public void setDsexame(String dsexame) {
+		this.dsexame = dsexame;
+	}
+
+	public Date getDtexame() {
+		return dtexame;
+	}
+
+	public void setDtexame(Date dtexame) {
+		this.dtexame = dtexame;
+	}
+
+	public String getDsresultadoexame() {
+		return dsresultadoexame;
+	}
+
+	public void setDsresultadoexame(String dsresultadoexame) {
+		this.dsresultadoexame = dsresultadoexame;
+	}
+
+    
 //    @OneToMany(mappedBy = "idtratamento")
 //    private Collection<FaseTratamento> faseTratamentoCollection;
 //    

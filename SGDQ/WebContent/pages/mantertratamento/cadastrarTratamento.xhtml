@@ -161,6 +161,44 @@
 					    </p:panelGrid>
 				</p:fieldset>
 				<br/>			
+				<p:fieldset  id="fieldset_tratamento_exames_medicos" legend="Exames Médicos" toggleable="true" >
+					<p:panelGrid>
+						<p:row>
+				  			<p:column>
+				  				<p:outputLabel value="Nome:" />
+				  			</p:column>  
+				  			<p:column>
+				  				<p:inputTextarea 
+				  					id="input_exames" 
+				  					value="#{tratamentoController.selected.dsexame}" 
+				  					cols="60"/>
+				  			</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel
+									value="Data Realização do Exame:" />
+							</p:column>
+							<p:column>
+								<p:calendar id="input_tratamento_data_exame"
+									datePattern="MM/dd/yyyy"
+									value="#{tratamentoController.selected.dtexame}" />
+							</p:column>
+						</p:row>
+						<p:row>
+				  			<p:column>
+				  				<p:outputLabel value="Resultado dos Exames:" />
+				  			</p:column>  
+				  			<p:column>
+				  				<p:inputTextarea 
+				  					id="input_tratamento_resultado_exames" 
+				  					value="#{tratamentoController.selected.dsresultadoexame}" 
+				  					cols="60"/>
+				  			</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>	
+				<br/>
 				
 				<p:fieldset id="fieldset_dados_fasetratamento"
 					toggleable="true" legend="Fase Tratamento" 
@@ -245,7 +283,7 @@
 					 	value="Solicitar Termino" icon="ui-icon-newwin" 
 					 	imediate="true"
 					 	oncomplete="dialogTerminoTratamento.show()"
-					 	disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"
+					 	disabled="#{(empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1) or tratamentoController.idFaseTratamentoAtual != 3}"
 					 	/> 	
 					 	 		
 				</div>

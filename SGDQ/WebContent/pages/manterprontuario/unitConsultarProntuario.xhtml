@@ -44,37 +44,39 @@
 					<br/>		
 					<div class="buttons-alone">
 					    <p:commandButton id="button_consultar" value="#{rotulo['generico.consultar']}" action="#{prontuarioController.pesquisarProntuario}" update="formConsultarProntuario" icon="ui-icon-search" />
-					    <p:commandButton id="button_novo" value="#{rotulo['generico.novo']}" action="/pages/manterprontuario/cadastrar?faces-redirect=true" icon="ui-icon-plus" />
+					    <p:commandButton id="button_novo" value="Incluir Prontuário" action="/pages/manterprontuario/cadastrar?faces-redirect=true" icon="ui-icon-plus" />
 					</div>
 					
 					<br/>
 					<div class="resultado" >
 						<p:dataTable id="dataTable_consultar_prontuario" value="#{prontuarioController.items}" 
-							var="prontuario" emptyMessage="#{mensagem['datatable.empty']}" 
+							var="prontuario" emptyMessage="Prontuário não Encontrado" 
 							paginator="true" 
 							paginatorPosition="bottom" resizableColumns="true" rows="10" style="width:99%"
 							rowKey="#{prontuario.idProntuario}" selectionMode="single">
 							
-							<p:column headerText="#{rotulo['prontuario']}" sortBy="#{prontuario.idProntuario}"  style="width:80px">
-								<p:outputLabel value="#{prontuario.idProntuario}" />
-							</p:column>
-							
-							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}" >
+							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}" style="width:160px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmPessoa}" />
 							</p:column>
+
 							<p:column headerText="#{rotulo['prontuario.paciente.cpf']}" sortBy="#{prontuario.idPaciente.idPessoa.nuCPF}" style="width:110px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuCPF}" />
 							</p:column>
 							
-							<p:column headerText="#{rotulo['prontuario.paciente.telefone']}" sortBy="#{prontuario.idPaciente.idPessoa.nuTelefone}" style="width:110px">
-								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nuTelefone}"/>
+							<p:column headerText="Data Inclusão" sortBy="#{prontuario.dtProntuarioInicio}"  style="width:85px">
+								<h:outputText value="#{prontuario.dtProntuarioInicio}" >
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Responsável Pela Inclusão" sortBy="#{prontuario.usuario.pessoa.nmPessoa}" style="width:180px">
+								<p:outputLabel value="#{prontuario.usuario.pessoa.nmPessoa}"/>
 						    </p:column>
-						    <p:column headerText="#{rotulo['prontuario.paciente.cidade']}" sortBy="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}" style="width:150px">
-								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.idEndereco.idCidade}"/>
+						    <p:column headerText="#{rotulo['prontuario.paciente.sexo']}" sortBy="#{prontuario.idPaciente.idPessoa.nmSexo}" style="width:110px">
+								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmSexo}"/>
 						    </p:column>
 							<p:column headerText="#{rotulo['generico.acoes']}" >
 
-								<p:commandButton id="button_editar" action="#{prontuarioController.prepareEdit}" icon="ui-icon-pencil" value="Editar"/>
+								<p:commandButton id="button_editar" action="#{prontuarioController.prepareEdit}" icon="ui-icon-pencil" value="Consultar"/>
 
 <!-- 								<p:commandButton id="button_consultar_tratamentos_blarg"   -->
 <!-- 									action="/pages/mantertratamento/cadastrarTratamento?faces-redirect=true"  -->

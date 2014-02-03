@@ -8,19 +8,12 @@
 	<ui:define name="content">
 		<h:body style="font-size:small;padding:0px;">
 			<div class="content">
-				<!-- Breadcrumb -->
-				<p:breadCrumb>  
-				    <p:menuitem url="#" icon="ui-icon-home" />  
-				    <p:menuitem value="Relatórios - Emitir Relatório de Fluxo de Pacientes" url="#" />  
-				</p:breadCrumb>
 				<!-- Emitir -->
 				<br/>
 				<h:form id="emitir">
 					<p:focus context=":emitir" />
-					<!-- Mensagens -->
-					<p:messages id="mensagens" closable="true"/>
 					<!-- Dados Gerais -->
-					<p:fieldset id="fieldset_dados_do_tratamento" legend="Media Permanência">
+					<p:fieldset id="fieldset_dados_do_tratamento" legend="Fase por Motivo">
 						<!-- Inputs -->
 						<div class="input-and-label">
 						    <p:panelGrid>
@@ -29,7 +22,7 @@
 						    			<p:outputLabel value="#{rotulo['relatorio.data_inicial']}:" />
 						    		</p:column>
 						    		<p:column>
-						  				<p:calendar id="input_data_inicial" value="#{relatorioMediaPermanenciaController.dataInicial}" />  
+						  				<p:calendar id="input_data_inicial" value="#{relatorioTratamentosFinalizadosController.dataInicial}" />  
 						        	</p:column>
 						        </p:row>
 						    	<p:row>
@@ -37,7 +30,7 @@
 						    			<p:outputLabel value="#{rotulo['relatorio.data_final']}:" />
 						    		</p:column>
 						    		<p:column>
-						    			<p:calendar id="input_data_final" value="#{relatorioMediaPermanenciaController.dataFinal}" />
+						    			<p:calendar id="input_data_final" value="#{relatorioTratamentosFinalizadosController.dataFinal}" />
 						        	</p:column>
 						        </p:row>
 							</p:panelGrid>
@@ -45,7 +38,7 @@
 					</p:fieldset>
 					<!-- Button -->
 					<div class="buttons">
-					    <p:commandButton id="button_salvar" value="Gerar" actionListener="#{relatorioMediaPermanenciaController.emitir}" update=":emitir" icon="ui-icon-check" />  
+					    <p:commandButton id="button_salvar" value="Gerar" actionListener="#{relatorioTratamentosFinalizadosController.emitir}" update=":emitir" icon="ui-icon-check" />  
 						<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/mantertratamento/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
 					</div>
 				</h:form>

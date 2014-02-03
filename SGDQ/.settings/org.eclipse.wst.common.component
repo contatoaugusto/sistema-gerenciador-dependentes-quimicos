@@ -2,6 +2,7 @@
     <wb-module deploy-name="SGDQ">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/META-INF"/>
         <property name="context-root" value="SGDQ"/>
         <property name="java-output-path" value="/SGDQ/build/WEB-INF/classes"/>
     </wb-module>

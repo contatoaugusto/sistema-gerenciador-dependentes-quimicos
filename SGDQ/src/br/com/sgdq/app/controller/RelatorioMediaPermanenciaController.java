@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,6 +19,7 @@ import org.joda.time.Years;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
+import br.com.sgdq.app.controller.util.JsfUtil;
 import br.com.sgdq.app.entity.Tratamento;
 import br.com.sgdq.app.facade.TratamentoFacade;
 //import br.com.sgdq.app.service.TratamentoService;
@@ -69,96 +71,83 @@ public class RelatorioMediaPermanenciaController {
 	
 	public void emitir() throws IOException{
 		
-		relatorioModel = new CartesianChartModel();
-		
-		ChartSeries finalizados = new ChartSeries();
-        
-		List<String> ano = new ArrayList<String>();
-		//List<Tratamento> tratamentosIniciados = new ArrayList<Tratamento>();
-		List<Tratamento> tratamentosFinalizados = new ArrayList<Tratamento>();
-		
 		DateTime dataFinal = new DateTime(this.dataFinal.getTime());
 		DateTime dataInicial = new DateTime(this.dataInicial.getTime());
-		DateTime dataAuxiliar = dataInicial;
 		
-		DateTime dataDeInclusaoDoTratamentoFinalizado;
-		
-		Years anos = Years.yearsBetween(dataInicial, dataFinal);
-		
-		//int quantidadeDeTratamentosIniciadosPorMes = 0;
-		
-		double somaMesesTratamentoPorAno = 0.;
-		
-		//tratamentosIniciados = getFacade().findTratamentoIniciadoByPeriodo(this.dataInicial, this.dataFinal);
-		tratamentosFinalizados =  getFacade().findTratamentoFinalizadoByPeriodo(this.dataInicial, this.dataFinal);
-		
-		double quantidadeDeTratamentosFinalizadosPorAno = 0.;
-		
-		ano.add(String.valueOf(dataInicial.getYear()));
-		if(!ano.contains(String.valueOf(dataFinal.getYear())))
-			ano.add(String.valueOf(dataFinal.getYear()));
-		
-		for(int i = 1; i <= anos.getYears(); i++) {
+		if (dataFinal.getMillis() < dataInicial.getMillis())
+			JsfUtil.addErrorMessage(ResourceBundle.getBundle("/message").getString("relatorio.erro.dataFinal_menor_dataInicial"));
+		else {
+			relatorioModel = new CartesianChartModel();
 			
-			if(!ano.contains(String.valueOf(dataAuxiliar.getYear()))) {
-				ano.add(String.valueOf(dataAuxiliar.getYear()));
+			ChartSeries finalizados = new ChartSeries();
+	        
+			List<String> ano = new ArrayList<String>();
+			List<Tratamento> tratamentosFinalizados = new ArrayList<Tratamento>();
+			
+			DateTime dataAuxiliar = dataInicial;
+			
+			DateTime dataDeInclusaoDoTratamentoFinalizado;
+			
+			Years anos = Years.yearsBetween(dataInicial, dataFinal);
+			
+			double somaMesesTratamentoPorAno = 0.;
+			double somaMesesTratamentoPorAnoAuxiliar = 0.;
+			
+			tratamentosFinalizados =  getFacade().findTratamentoFinalizadoByPeriodo(this.dataInicial, this.dataFinal);
+			
+			double quantidadeDeTratamentosFinalizadosPorAno = 0.;
+			
+			ano.add(String.valueOf(dataInicial.getYear()));
+			
+			for(int i = 1; i <= anos.getYears(); i++) {
+				
+				dataAuxiliar = dataAuxiliar.plusYears(1);
+				
+				if(!ano.contains(String.valueOf(dataAuxiliar.getYear()))) {
+					ano.add(String.valueOf(dataAuxiliar.getYear()));
+				}
 			}
 			
-			dataAuxiliar = dataAuxiliar.plusYears(1);
+			if(!ano.contains(String.valueOf(dataFinal.getYear())))
+				ano.add(String.valueOf(dataFinal.getYear()));
 			
-		}
+			//iniciados.setLabel("Iniciados");  
+	        finalizados.setLabel("Meses");  
+	        
+	        for(String anoAuxiliar : ano) {
+	        	
+	        	for(Tratamento tratamentoFinalizado : tratamentosFinalizados) {
+	        		
+	        		dataDeInclusaoDoTratamentoFinalizado = new DateTime(tratamentoFinalizado.getDttratamentofim().getTime());
+	        		
+	        		if(anoAuxiliar.contains(String.valueOf(dataDeInclusaoDoTratamentoFinalizado.getYear()))){
+	        			quantidadeDeTratamentosFinalizadosPorAno++;
+	        			
+	        			// Quantidade de meses dos tratamentos finalizados no ano em questão anoAuxiliar
+	        			somaMesesTratamentoPorAnoAuxiliar = Months.monthsBetween(
+								new DateTime(tratamentoFinalizado.getDtinclusao().getTime()), 
+								new DateTime(tratamentoFinalizado.getDttratamentofim().getTime())).getMonths();
+	        			if (somaMesesTratamentoPorAnoAuxiliar >= 7 && somaMesesTratamentoPorAnoAuxiliar <= 12)
+	        				somaMesesTratamentoPorAno = somaMesesTratamentoPorAno + somaMesesTratamentoPorAnoAuxiliar;
+	        					
+	        		}
+	        	}
+	        	
+	        	if (quantidadeDeTratamentosFinalizadosPorAno == 0) quantidadeDeTratamentosFinalizadosPorAno = 1;
+	        	finalizados.set(anoAuxiliar, somaMesesTratamentoPorAno/quantidadeDeTratamentosFinalizadosPorAno);
+	        	
+	        	somaMesesTratamentoPorAno = 0;
+	        	quantidadeDeTratamentosFinalizadosPorAno = 0;
+	        	
+	        }
+	        
+	        //relatorioModel.addSeries(iniciados);  
+	        relatorioModel.addSeries(finalizados);  
 		
-		
-		//iniciados.setLabel("Iniciados");  
-        finalizados.setLabel("Meses");  
-        
-        for(String anoAuxiliar : ano) {
-        	
-//        	for(Tratamento tratamentoIniciado : tratamentosIniciados) {
-//        		
-//        		dataDeInclusaoDoTratamentoIniciado = new DateTime(tratamentoIniciado.getDtinclusao().getTime());
-//        		
-//        		if(mesAnoAuxiliar.contains((
-//        					String.valueOf(dataDeInclusaoDoTratamentoIniciado.getMonthOfYear()).concat("/")
-//        					.concat(String.valueOf(dataDeInclusaoDoTratamentoIniciado.getYear())))))
-//        			quantidadeDeTratamentosIniciadosPorMes++;
-//        		
-//        	}
-//        	
-//        	iniciados.set(mesAnoAuxiliar, quantidadeDeTratamentosIniciadosPorMes);
-        	
-//        	quantidadeDeTratamentosIniciadosPorMes = 0;
-        	
-        	for(Tratamento tratamentoFinalizado : tratamentosFinalizados) {
-        		
-        		dataDeInclusaoDoTratamentoFinalizado = new DateTime(tratamentoFinalizado.getDttratamentofim().getTime());
-        		
-        		if(anoAuxiliar.contains(String.valueOf(dataDeInclusaoDoTratamentoFinalizado.getYear()))){
-        			quantidadeDeTratamentosFinalizadosPorAno++;
-        			
-        			// Quantidade de meses dos tratamentos finalizados no ano em questão anoAuxiliar
-        			somaMesesTratamentoPorAno = somaMesesTratamentoPorAno + 
-        					Months.monthsBetween(
-        							new DateTime(tratamentoFinalizado.getDtinclusao().getTime()), 
-        							new DateTime(tratamentoFinalizado.getDttratamentofim().getTime())).getMonths();
-        		}
-        	}
-        	
-        	if (quantidadeDeTratamentosFinalizadosPorAno == 0) quantidadeDeTratamentosFinalizadosPorAno = 1;
-        	finalizados.set(anoAuxiliar, somaMesesTratamentoPorAno/quantidadeDeTratamentosFinalizadosPorAno);
-        	
-        	somaMesesTratamentoPorAno = 0;
-        	quantidadeDeTratamentosFinalizadosPorAno = 0;
-        	
-        }
-        
-        //relatorioModel.addSeries(iniciados);  
-        relatorioModel.addSeries(finalizados);  
-	
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        context.redirect(context.getRequestContextPath() + "/pages/relatorios/mediaPermanencia/relatorio.xhtml");
-        //return "/pages/relatorios/fluxodepacientes/relatorio.xhtml?faces-redirect=true";
-        
+	        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+	        context.redirect(context.getRequestContextPath() + "/pages/relatorios/mediaPermanencia/relatorio.xhtml");
+	        //return "/pages/relatorios/fluxodepacientes/relatorio.xhtml?faces-redirect=true";
+		}   
 	}
 	
 	

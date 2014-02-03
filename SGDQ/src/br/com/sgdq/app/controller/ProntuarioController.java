@@ -204,10 +204,10 @@ public class ProntuarioController implements Serializable {
         	
         	getFacade().create(prontuario);
         	
-        	JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.inclusao"));
+        	JsfUtil.addSuccessMessage("Prontuário Incluido com Sucesso");
             return "consultar";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/message").getString("sistema.inclusao.erro"));
+            JsfUtil.addErrorMessage(e, "Erro ao incluir Prontuário");
             return null;
         }
     }
@@ -232,10 +232,10 @@ public class ProntuarioController implements Serializable {
     public String update() {
         try {
             getFacade().edit(prontuario);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("sistema.alteracao"));
+            JsfUtil.addSuccessMessage("Prontuário alterado com sucesso");
             return "cadastrar";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/message").getString("sistema.alteracao.erro"));
+            JsfUtil.addErrorMessage(e, "Erro ao alterar Prontuário");
             return null;
         }
     }
@@ -265,9 +265,9 @@ public class ProntuarioController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(prontuario);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProntuarioDeleted"));
+            JsfUtil.addSuccessMessage("Prontuário removido com sucesso");
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, "Erro ao alterar prontuário");
         }
     }
 

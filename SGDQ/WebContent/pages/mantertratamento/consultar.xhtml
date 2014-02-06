@@ -35,9 +35,9 @@
 							<p:outputLabel value="#{tratamento.tratamentoStatus.nmtratamentostatus}" />
 						</p:column>
 						
-						<p:column headerText="#{rotulo['tratamento.motivo_do_status']}" sortBy="#{tratamento.dstratamentostatusmotivo}">
-							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" />
-						</p:column>
+<!-- 						<p:column headerText="#{rotulo['tratamento.motivo_do_status']}" sortBy="#{tratamento.dstratamentostatusmotivo}"> -->
+<!-- 							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" /> -->
+<!-- 						</p:column> -->
 						
 						<p:column headerText="Início" sortBy="#{tratamento.dtinclusao}">
 							<h:outputText value="#{tratamento.dtinclusao}" >
@@ -51,9 +51,9 @@
 						</p:column>
 						
 						<p:column headerText="#{rotulo['generico.acoes']}">
-<!-- 						 	<p:commandButton id="button_editar_tratamento" action="tratamentoController.prepareEdit" icon="ui-icon-pencil" value="Editar"/> -->
+<!-- 						 	<p:commandButton id="button_editar_tratamento" action="tratamentoController.prepareEdit" icon="ui-icon-pencil" value="Consultar"/> -->
 							<h:commandLink action="#{tratamentoController.prepareEdit}">
-								<p:graphicImage value="/resources/images/editar.png"/>
+								<p:graphicImage value="/resources/images/consultar.png"/>
 							</h:commandLink>
 						</p:column>
 					</p:dataTable>

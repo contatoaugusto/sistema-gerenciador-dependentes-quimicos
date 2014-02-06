@@ -88,6 +88,7 @@
 		    	<h:inputHidden value="#{tratamentoController.selected.dtinclusao}">
 		    		<f:convertDateTime pattern="yyyy-MM-dd" />
 		    	</h:inputHidden>	
+		    	<h:inputHidden value="#{tratamentoController.idFaseTratamentoAtual}"/>
 <!-- 				<p:messages id="mensagens" closable="true"/> -->
 				<br/>	
 				<p:fieldset  id="fieldset_dados_do_tratamento" legend="#{rotulo['tratamento.dados_do_tratamento']}" >
@@ -283,7 +284,7 @@
 					 	value="Solicitar Termino" icon="ui-icon-newwin" 
 					 	imediate="true"
 					 	oncomplete="dialogTerminoTratamento.show()"
-					 	disabled="#{(empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1) or tratamentoController.idFaseTratamentoAtual != 3}"
+					 	disabled="#{(empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1)}"
 					 	/> 	
 					 	 		
 				</div>

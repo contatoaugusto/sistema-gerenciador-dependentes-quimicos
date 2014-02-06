@@ -55,6 +55,10 @@
 							paginatorPosition="bottom" resizableColumns="true" rows="10" style="width:99%"
 							rowKey="#{prontuario.idProntuario}" selectionMode="single">
 							
+							<p:column headerText="#{rotulo['prontuario.id']}" sortBy="#{prontuario.idProntuario}" style="width:80px">
+								<p:outputLabel value="#{prontuario.idProntuario}" />
+							</p:column>
+							
 							<p:column headerText="#{rotulo['prontuario.paciente.nome']}" sortBy="#{prontuario.idPaciente.idPessoa.nmPessoa}" style="width:160px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmPessoa}" />
 							</p:column>
@@ -71,7 +75,7 @@
 							<p:column headerText="Responsável Pela Inclusão" sortBy="#{prontuario.usuario.pessoa.nmPessoa}" style="width:180px">
 								<p:outputLabel value="#{prontuario.usuario.pessoa.nmPessoa}"/>
 						    </p:column>
-						    <p:column headerText="#{rotulo['prontuario.paciente.sexo']}" sortBy="#{prontuario.idPaciente.idPessoa.nmSexo}" style="width:110px">
+						    <p:column headerText="#{rotulo['prontuario.paciente.sexo']}" sortBy="#{prontuario.idPaciente.idPessoa.nmSexo}" style="width:100px">
 								<p:outputLabel value="#{prontuario.idPaciente.idPessoa.nmSexo}"/>
 						    </p:column>
 							<p:column headerText="#{rotulo['generico.acoes']}" >

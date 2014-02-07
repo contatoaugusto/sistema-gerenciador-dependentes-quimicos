@@ -17,9 +17,9 @@
 <!-- 				<p:messages id="mensagens" closable="true"/> -->
 				<!-- Buttons -->
 				<br/>
-				<div class="buttons-alone">
-				    <p:commandButton id="button_novo" value="#{rotulo['generico.novo']}" action="/pages/mantertratamento/cadastrarTratamento?faces-redirect=true" icon="ui-icon-plus" />
-				</div>
+<!-- 				<div class="buttons-alone"> -->
+<!-- 				    <p:commandButton id="button_novo" value="#{rotulo['generico.novo']}" action="/pages/mantertratamento/cadastrarTratamento?faces-redirect=true" icon="ui-icon-plus" /> -->
+<!-- 				</div> -->
 					<p:dataTable id="dataTable_consultar_prontuario" value="#{tratamentoController.items}" var="tratamento" 
 						emptyMessage="#{mensagem['datatable.empty']}" paginator="true" paginatorPosition="bottom" 
 						resizableColumns="true" rows="10" rowKey="#{tratamento.idprontuario}" selectionMode="single">

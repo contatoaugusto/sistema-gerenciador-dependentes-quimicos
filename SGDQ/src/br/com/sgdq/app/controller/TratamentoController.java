@@ -154,7 +154,6 @@ public class TratamentoController implements Serializable {
 			}
 		}
 		
-//		visualizacoesComponentesTela();
 	
 		// Verifica se existe tratamento e realiza procedimentos necessário
 		if (getSelected().getIdtratamento() != null && getSelected().getIdtratamento() > 0){
@@ -164,26 +163,16 @@ public class TratamentoController implements Serializable {
 		//}
 	}
 
-//	private void visualizacoesComponentesTela() {
-//		if (idProntuario == null || idProntuario <= 0)
-//			prontuarioExiste = false;
-//		else
-//			prontuarioExiste = true;	
-//		
-//		if (getSelected().getIdtratamento() == null || getSelected().getIdtratamento() <= 0)
-//			tratamentoExiste = false;
-//		else
-//			tratamentoExiste = true;
-//	}
 
+	/**
+	 * 
+	 */
 	private void loadUsuarioSessao() {
 		// Recuperar usuário logado na sessão Que foi criada na classe do componeten controleAcesso.jar
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)facesContext.getExternalContext().getRequest();  
 		HttpSession httpSession = request.getSession(false);  
 		usuario = (Usuario) httpSession.getAttribute("usuario");  
-		//getSelected().setIdusuario(usuario.getIdUsuario());	
-		//getSelected().setDtinclusao(new Date());
 	}
 
 	private void loadFaseTratamento(Integer idTratamento) {
@@ -335,10 +324,14 @@ public class TratamentoController implements Serializable {
     public String finalizaTratamento() {
         try {
         	
-        	if (idTratamentoStatus == 3 && idFaseTratamentoAtual != 3){
-        		JsfUtil.addErrorMessage("Não é permitido finalizar tratamento por conclusão que não se encontra na fase 3.");
+        	current = getFacade().find(getSelected().getIdtratamento());
+        	
+        	if (current.getIdtratamentotipo() == 2 && idTratamentoStatus == 3){
+        		loadFaseTratamento(getSelected().getIdtratamento());
+        		if (idFaseTratamentoAtual != 3)
+        			JsfUtil.addErrorMessage("Não é permitido finalizar tratamento por conclusão fora da fase 3");
         	}else {
-				current = getFacade().find(getSelected().getIdtratamento());
+				
 		    	current.setIdtratamentostatus(idTratamentoStatus);
 		    	current.setIcativo(new Integer(0).shortValue());
 		    	current.setDttratamentofim(new Date());

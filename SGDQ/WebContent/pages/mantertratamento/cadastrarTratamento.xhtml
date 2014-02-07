@@ -271,7 +271,7 @@
 						type="button" 
 						value="Incluir Fase" 
 						onclick="dialogFaseTratamento.show()" 
-						disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1}"/>   	
+						disabled="#{empty tratamentoController.selected.idtratamento or tratamentoController.selected.idtratamentostatus != 1 or tratamentoController.selected.idtratamentotipo == 1}"/>   	
 					  	
 <!-- 					<p:commandButton  -->
 <!-- 					 	value="Incluir Exame" icon="ui-icon-newwin"  -->
@@ -298,8 +298,8 @@
 				
 				<p:dialog header="Inclusão Fase Tratamento" widgetVar="dialogFaseTratamento" resizable="true" width="500">  
 				    <h:form id="formInclusaoFaseTratamento">
-				    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />  
-				  		<p:panelGrid> 
+				    	<h:inputHidden value="#{tratamentoController.selected.idtratamento}" />
+				    	<p:panelGrid> 
 				        	<p:row> 
 								<p:column>
 					  				<p:outputLabel value="#{rotulo['tratamento.data_de_inclusao']}:" style="font-weight: bold"/>

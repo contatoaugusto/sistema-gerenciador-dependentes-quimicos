@@ -32,9 +32,11 @@ import org.springframework.orm.hibernate3.support.IdTransferringMergeEventListen
 
 import br.com.sgdq.app.controller.util.JsfUtil;
 import br.com.sgdq.app.controller.util.PaginationHelper;
+import br.com.sgdq.app.entity.Exame;
 import br.com.sgdq.app.entity.FaseTratamento;
 import br.com.sgdq.app.entity.Prontuario;
 import br.com.sgdq.app.entity.Tratamento;
+import br.com.sgdq.app.facade.ExameFacade;
 import br.com.sgdq.app.facade.FaseTratamentoFacade;
 import br.com.sgdq.app.facade.ProntuarioFacade;
 import br.com.sgdq.app.facade.TratamentoFacade;
@@ -60,8 +62,6 @@ public class TratamentoController implements Serializable {
     private br.com.sgdq.app.facade.TratamentoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-//    boolean prontuarioExiste;
-//    boolean tratamentoExiste;
     private Integer idProntuario;
     private Prontuario prontuario;
     private List<FaseTratamento> faseTratamento;
@@ -257,6 +257,9 @@ public class TratamentoController implements Serializable {
         	
         	getFacade().create(current);
         	
+        	// Após incluir o tratamento, criar os exames
+        	addExame();
+        	
         	// A criar tratamento do tipo Internação, deve criar automaticamente fase 1
         	if (current.getIdtratamentotipo() == 2){
         		addFaseTratamento();
@@ -270,6 +273,22 @@ public class TratamentoController implements Serializable {
             return null;
         }
     }
+
+    /**
+     * Criar os 6 exames predefinidos
+	 * Foi definido dessa forma pelo fato da documentão não preve um requisito incluir exame, segundo os componentes do grupo    
+     */
+	public void addExame() {
+		ExameFacade exameFacade = new ExameFacade();
+		int i = 1;
+		while (i <= 6){
+			Exame exame = new Exame();
+			exame.setDsexame("Exame " + i);
+			exame.setIdtratamento(current);
+			exameFacade.create(exame);
+			i++;
+		}
+	}
 
     public String prepareEdit() {
     	current = null;

@@ -19,7 +19,7 @@
        		</p:toolbarGroup> 
        		<p:toolbarGroup align="right">  
        			
-       			<span id="usuario" style="font-weight: bold ; font-size:12px;"> #{request.remoteUser == null ? 'Visitante' : request.remoteUser}</span>
+       			<span id="usuario" style="font-weight: bold ; font-size:12px;"> #{request.remoteUser == null ? 'Visitante' : controleAcessoController.nmPessoa}</span>
        			<p:separator />
        			<span id="textosessaoexpira" style="font-weight: bold ; font-size:12px;">#{request.remoteUser == null ? '' : 'Sessão expira em: '} </span>
        			<span id="dialog-countdown" style="font-weight: bold ; font-size:12px;"></span>

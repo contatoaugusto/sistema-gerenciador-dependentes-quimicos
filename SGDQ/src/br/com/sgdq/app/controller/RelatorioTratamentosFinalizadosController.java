@@ -107,30 +107,30 @@ public class RelatorioTratamentosFinalizadosController {
 				for (TratamentoStatus tratamentoStatusEntity : tratamentoStatus){
 					
 					// Não contabilizar o status Em Andamento
-					//if (tratamentoStatusEntity.getIdtratamentostatus() != 1){
-					int qtdeTratamentoPorStatus = 0;
-					// Loop Para Tratamentos
-					for (Tratamento tratamento : tratamentosFinalizados){
-						
-						if (tratamento.getIdtratamentostatus() == tratamentoStatusEntity.getIdtratamentostatus() &&
-								tratamento.getDttratamentofim() != null){
+					if (tratamentoStatusEntity.getIdtratamentostatus() != 1){
+						int qtdeTratamentoPorStatus = 0;
+						// Loop Para Tratamentos
+						for (Tratamento tratamento : tratamentosFinalizados){
 							
-							int idFase = 0;
-							for (FaseTratamento faseTratamentoAuxiliar : faseTratamento){
-								if (faseTratamentoAuxiliar.getIdtratamento() == tratamento.getIdtratamento() &&
-										idFase < faseTratamentoAuxiliar.getIdfase()){
-									idFase = faseTratamentoAuxiliar.getIdfase();
-								}	
-							}
-							
-							if (idFase == faseEntity.getIdfase())
-								qtdeTratamentoPorStatus++;
-						} // Fim Teste se o tratament está no status iterado
-				        
-					} // Fim loop Tratamentos 
-				
-					faseChartSerie.set(tratamentoStatusEntity.getNmtratamentostatus(), qtdeTratamentoPorStatus);
-					//}
+							if (tratamento.getIdtratamentostatus() == tratamentoStatusEntity.getIdtratamentostatus() &&
+									tratamento.getDttratamentofim() != null){
+								
+								int idFase = 0;
+								for (FaseTratamento faseTratamentoAuxiliar : faseTratamento){
+									if (faseTratamentoAuxiliar.getIdtratamento() == tratamento.getIdtratamento() &&
+											idFase < faseTratamentoAuxiliar.getIdfase()){
+										idFase = faseTratamentoAuxiliar.getIdfase();
+									}	
+								}
+								
+								if (idFase == faseEntity.getIdfase())
+									qtdeTratamentoPorStatus++;
+							} // Fim Teste se o tratament está no status iterado
+					        
+						} // Fim loop Tratamentos 
+					
+						faseChartSerie.set(tratamentoStatusEntity.getNmtratamentostatus(), qtdeTratamentoPorStatus);
+					}
 				} // Fim loop tratamentoStatus    
 			
 				relatorioModel.addSeries(faseChartSerie);

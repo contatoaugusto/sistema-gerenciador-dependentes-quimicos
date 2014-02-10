@@ -162,43 +162,48 @@
 					    </p:panelGrid>
 				</p:fieldset>
 				<br/>			
-				<p:fieldset  id="fieldset_tratamento_exames_medicos" legend="Exames Médicos" toggleable="true" >
-					<p:panelGrid>
-						<p:row>
-				  			<p:column>
-				  				<p:outputLabel value="Nome:" />
-				  			</p:column>  
-				  			<p:column>
-				  				<p:inputTextarea 
-				  					id="input_exames" 
-				  					value="#{tratamentoController.selected.dsexame}" 
-				  					cols="60"/>
-				  			</p:column>
-						</p:row>
-						<p:row>
-							<p:column>
-								<p:outputLabel
-									value="Data Realização do Exame:" />
-							</p:column>
-							<p:column>
-								<p:calendar id="input_tratamento_data_exame"
-									datePattern="MM/dd/yyyy"
-									value="#{tratamentoController.selected.dtexame}" />
-							</p:column>
-						</p:row>
-						<p:row>
-				  			<p:column>
-				  				<p:outputLabel value="Resultado dos Exames:" />
-				  			</p:column>  
-				  			<p:column>
-				  				<p:inputTextarea 
-				  					id="input_tratamento_resultado_exames" 
-				  					value="#{tratamentoController.selected.dsresultadoexame}" 
-				  					cols="60"/>
-				  			</p:column>
-						</p:row>
-					</p:panelGrid>
-				</p:fieldset>	
+				 <p:dataTable id="dataTable_exame_medico" var="exame" 
+				 		value="#{exameController.exameList}" 
+				 		editable="false" widgetVar="examesTable"
+				 		rendered="#{not empty exameController.exameList}">  
+ 
+			        <f:facet name="header">  
+			            Exames  
+			        </f:facet>  
+			  
+					<p:column headerText="Nome do Exame" style="width:40%">  
+<!-- 			               <p:cellEditor>   -->
+<!-- 			                   <f:facet name="output"><h:outputText value="#{exame.dsexame}" /></f:facet>   -->
+<!-- 			                   <f:facet name="input"><p:inputText value="#{exame.dsexame}" style="width:96%"/></f:facet>   -->
+<!-- 			               </p:cellEditor> -->
+		               <p:inputText id="input_exame_nome" value="#{exame.nmexame}">
+		               		<p:ajax event="blur" partialSubmit="false" listener="#{exameController.onBlur}" update="@this" execute="@this" process="@this" imediate="true"/>
+		               		<f:attribute name="input_exame_nome_atributo" value="#{exame.nmexame}" />
+		               </p:inputText>	  
+		          	</p:column>		
+		          	<p:column headerText="Data Realização do Exame" style="width:25%">  
+<!-- 			               <p:cellEditor>   -->
+<!-- 			                   <f:facet name="output"><h:outputText value="#{exame.dtexame}" /></f:facet>   -->
+<!-- 			                   <f:facet name="input"><p:inputText value="#{exame.dtexame}" style="width:96%"/></f:facet>   -->
+<!-- 			               </p:cellEditor> -->
+<!-- 			               <p:inputText id="input_exame_data" value="#{exame.dtexame}"> -->
+						   <p:inputMask value="#{exame.dtexame}" mask="99/99/9999" converter="converterCampoData">	
+		               			<p:ajax event="blur" partialSubmit="false" listener="#{exameController.onBlur}" update="@this" execute="@this" process="@this" imediate="true"/>
+ 			               </p:inputMask>
+<!-- 						   </p:inputText>     -->
+		          	</p:column>	
+		          	<p:column headerText="Resultado dos Exames" style="width:25%">  
+		               <p:inputTextarea
+			  					id="input_tratamento_resultado_exames" 
+			  					value="#{exame.dsresultado}" 
+				  					cols="60"
+				  					rows="1" >
+		               		<p:ajax event="blur" partialSubmit="false" listener="#{exameController.onBlur}" update="@this" execute="@this" process="@this" imediate="true"/>
+		               </p:inputTextarea>    
+		          	</p:column>	
+		          	
+<!-- 			          	<p:ajax event="cellEdit" listener="#{exameController.onEdit}" update=":formTratamento" process="@this"/>	 -->
+				</p:dataTable>		
 				<br/>
 				
 				<p:fieldset id="fieldset_dados_fasetratamento"

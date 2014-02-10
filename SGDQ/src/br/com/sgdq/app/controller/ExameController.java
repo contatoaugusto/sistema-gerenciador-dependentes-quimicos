@@ -1,28 +1,42 @@
 package br.com.sgdq.app.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+
 import br.com.sgdq.app.controller.util.JsfUtil;
 import br.com.sgdq.app.controller.util.PaginationHelper;
 import br.com.sgdq.app.entity.Exame;
+import br.com.sgdq.app.entity.Prontuario;
+import br.com.sgdq.app.entity.Tratamento;
 import br.com.sgdq.app.facade.ExameFacade;
+import br.com.sgdq.app.facade.TratamentoFacade;
 
 @Named("exameController")
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class ExameController implements Serializable {
 
@@ -32,8 +46,24 @@ public class ExameController implements Serializable {
     private br.com.sgdq.app.facade.ExameFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private Integer idTratamento;
+    
+    private List<Exame> exameList;
 
-    public ExameController() {
+    @PostConstruct
+    public void init() {
+    	getExameByTratamento();
+    }
+    
+    public List<Exame> getExameList() {
+		return exameList;
+	}
+
+	public void setExameList(List<Exame> exameList) {
+		this.exameList = exameList;
+	}
+
+	public ExameController() {
     }
 
     public Exame getSelected() {
@@ -186,6 +216,93 @@ public class ExameController implements Serializable {
         return "List";
     }
 
+    public void onEdit(CellEditEvent event) {  
+    	
+    	Object oldValue = event.getOldValue();  
+        Object newValue = event.getNewValue();  
+      
+        if(newValue != null && !newValue.equals(oldValue)) {  
+
+            DataTable s = (DataTable) event.getSource();
+            Exame exame = (Exame) s.getRowData();
+
+            getFacade().edit(exame);
+            
+            JsfUtil.addSuccessMessage("Exame atualizado com sucesso");
+            
+        }	
+        //Exame exame = (Exame) event.getObject();  
+    }
+    
+    public void onBlur(AjaxBehaviorEvent actionEvent) {
+    	
+    	FacesContext context = FacesContext.getCurrentInstance();
+    	Exame exame = (Exame) context.getApplication().evaluateExpressionGet(context, "#{exame}", Exame.class);
+    	
+    	
+    	UIInput input = (UIInput) actionEvent.getComponent();
+    	
+    	if (input.getId().equalsIgnoreCase("input_exame_nome"))
+    		exame.setNmexame((String) input.getValue());
+    	else if (input.getId().equalsIgnoreCase("input_exame_data"))
+    		exame.setDtexame((Date) input.getValue());
+    	else if (input.getId().equalsIgnoreCase("input_tratamento_resultado_exames"))
+    		exame.setDsresultado((String) input.getValue());
+    	
+        getFacade().edit(exame);
+        
+        getExameByTratamento();
+        
+        //JsfUtil.addSuccessMessage("Exame atualizado com sucesso");
+    }
+    
+    
+    /**
+     * 
+     * @param idTratamento
+     * @return
+     */
+    public List<Exame> getExameByTratamento() {
+    	
+    	FacesContext facesContext = FacesContext.getCurrentInstance(); 
+    	TratamentoController tratamentoController = (TratamentoController) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "tratamentoController");
+    	
+    	if (this.idTratamento == null || this.idTratamento == 0)
+    		this.idTratamento = tratamentoController.getSelected().getIdtratamento();
+    	
+    	if (this.idTratamento == null){
+    		exameList = null;
+    	}else{	
+    		TratamentoFacade tratamentoFacade = new TratamentoFacade();
+	    	Tratamento tratamento = tratamentoFacade.find(this.idTratamento);
+	    	exameList = getFacade().findByTratamento(tratamento);
+	    	if (exameList.size() == 0){
+	    		addExame(tratamento);
+	    		exameList = getFacade().findByTratamento(tratamento);
+	    	}
+    	}
+    		
+    	return exameList;
+    }
+    
+    
+    /**
+     * Criar os 6 exames predefinidos
+	 * Foi definido dessa forma pelo fato da documentão não preve um requisito incluir exame, segundo os componentes do grupo    
+     */
+	public void addExame(Tratamento tratamento) {
+		int i = 1;
+		while (i <= 6){
+			Exame exame = new Exame();
+			exame.setNmexame("Exame " + i);
+			exame.setIdtratamento(tratamento);
+			getFacade().create(exame);
+			i++;
+		}
+	}
+    
+    
     public List<SelectItem> getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(getFacade().findAll(), false);
     }

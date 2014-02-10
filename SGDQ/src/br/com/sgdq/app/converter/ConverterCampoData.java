@@ -19,15 +19,18 @@ public class ConverterCampoData implements Converter {
     @Override  
     public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {  
           
-        df.setLenient(false);  
-        try {  
-              
-            return df.parse(arg2);              
-              
-        } catch (Exception e) {  
-              
-            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de conversão", "Não é uma data válida"));   
-        }  
+    	if (!arg2.isEmpty()){
+	    	df.setLenient(false);  
+	        try {  
+	              
+	            return df.parse(arg2);              
+	              
+	        } catch (Exception e) {  
+	              
+	            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de conversão", "Não é uma data válida"));   
+	        }  
+    	}else
+    		return "";
     }  
   
     @Override  

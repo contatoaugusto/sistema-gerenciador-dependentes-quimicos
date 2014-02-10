@@ -6,10 +6,15 @@
 
 package br.com.sgdq.app.facade;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import br.com.sgdq.app.entity.Exame;
+import br.com.sgdq.app.entity.Prontuario;
+import br.com.sgdq.app.entity.Tratamento;
 
 /**
  *
@@ -30,4 +35,19 @@ public class ExameFacade extends AbstractFacade<Exame> {
         super(Exame.class);
     }
     
+    /**
+     * Retorna os exames de um dado tratamento
+     * @param idTratamento
+     * @return
+     */
+    public List<Exame> findByTratamento(Tratamento idTratamento) {
+    	try{
+	    	getEntityManager();
+	    	return em.createNamedQuery("Exame.findByIdTratamento")
+		    .setParameter("idtratamento", idTratamento)
+		    .getResultList();
+	    } catch(NoResultException e) {
+	        return null;
+	    }
+    }
 }

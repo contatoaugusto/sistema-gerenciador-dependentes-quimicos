@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Exame.findByIdexame", query = "SELECT e FROM Exame e WHERE e.idexame = :idexame"),
     @NamedQuery(name = "Exame.findByNmmedico", query = "SELECT e FROM Exame e WHERE e.nmmedico = :nmmedico"),
     @NamedQuery(name = "Exame.findByDtexame", query = "SELECT e FROM Exame e WHERE e.dtexame = :dtexame"),
-    @NamedQuery(name = "Exame.findByDsexame", query = "SELECT e FROM Exame e WHERE e.dsexame = :dsexame")})
+    @NamedQuery(name = "Exame.findByNmexame", query = "SELECT e FROM Exame e WHERE e.nmexame = :nmexame"),
+    @NamedQuery(name = "Exame.findByIdTratamento", query = "SELECT e FROM Exame e WHERE e.idtratamento = :idtratamento order by e.idexame")})
 public class Exame implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -52,18 +53,21 @@ public class Exame implements Serializable {
     
     @Size(max = 2147483647)
     @Column(name = "nmmedico")
-    
     private String nmmedico;
+    
     @Column(name = "dtexame")
     @Temporal(TemporalType.DATE)
-    
     private Date dtexame;
+    
     @Size(max = 2147483647)
-    @Column(name = "dsexame")
+    @Column(name = "nmexame")
+    private String nmexame;
     
-    private String dsexame;
+    @Size(max = 2147483647)
+    @Column(name = "dsresultado")
+    private String dsresultado;
     
-//    @JoinColumn(name = "idusuario", referencedColumnName = "id_usuario")
+	//    @JoinColumn(name = "idusuario", referencedColumnName = "id_usuario")
 //    @ManyToOne
 //    private Tbusuario idusuario;
     private Integer idusuario;
@@ -103,14 +107,22 @@ public class Exame implements Serializable {
         this.dtexame = dtexame;
     }
 
-    public String getDsexame() {
-        return dsexame;
+    public String getNmexame() {
+        return nmexame;
     }
 
-    public void setDsexame(String dsexame) {
-        this.dsexame = dsexame;
+    public void setNmexame(String nmexame) {
+        this.nmexame = nmexame;
     }
 
+    public String getDsresultado() {
+		return dsresultado;
+	}
+
+	public void setDsresultado(String dsresultado) {
+		this.dsresultado = dsresultado;
+	}
+    
     public Integer getIdusuario() {
         return idusuario;
     }

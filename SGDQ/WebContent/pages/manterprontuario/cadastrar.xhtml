@@ -238,11 +238,13 @@
 										value="#{rotulo['prontuario.paciente.data_de_nascimento']}:" />
 								</p:column>
 								<p:column>
-									<p:calendar id="input_paciente_data_de_nascimento"
-										datePattern="MM/dd/yyyy"
-										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" />
-<!-- 									<p:inputMask  -->
-<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" mask="99/99/9999" converter="converterCampoData"/> -->
+<!-- 									<p:calendar id="input_paciente_data_de_nascimento" -->
+<!-- 										datePattern="MM/dd/yyyy" -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" /> -->
+									<p:inputMask 
+										value="#{prontuarioController.selected.idPaciente.idPessoa.dtNascimento}" 
+										mask="99/99/9999" 
+										converter="converterCampoData"/>
 										
 								</p:column>
 						
@@ -420,8 +422,12 @@
 										value="#{rotulo['prontuario.responsavel.data_de_nascimento']}:" />
 								</p:column>
 								<p:column>
-									<p:calendar id="input_responsavel_data_de_nascimento"
-										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dtNascimento}" />
+<!-- 									<p:calendar id="input_responsavel_data_de_nascimento" -->
+<!-- 										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dtNascimento}" /> -->
+									<p:inputMask 
+										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.dtNascimento}" 
+										mask="99/99/9999" 
+										converter="converterCampoData"/>		
 								</p:column>
 								<p:column>
 									<p:outputLabel

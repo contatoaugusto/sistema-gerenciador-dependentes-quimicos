@@ -279,15 +279,12 @@ public class TratamentoController implements Serializable {
 	 * Foi definido dessa forma pelo fato da documentão não preve um requisito incluir exame, segundo os componentes do grupo    
      */
 	public void addExame() {
-		ExameFacade exameFacade = new ExameFacade();
-		int i = 1;
-		while (i <= 6){
-			Exame exame = new Exame();
-			exame.setDsexame("Exame " + i);
-			exame.setIdtratamento(current);
-			exameFacade.create(exame);
-			i++;
-		}
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance(); 
+		ExameController exameController = (ExameController) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, "exameController");
+		
+		exameController.addExame(current);
 	}
 
     public String prepareEdit() {

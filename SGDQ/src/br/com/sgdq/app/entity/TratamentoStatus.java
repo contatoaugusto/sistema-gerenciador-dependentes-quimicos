@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name = "dbo.id_tratamentostatus_seq", sequenceName = "dbo.id_tratamentostatus_seq", allocationSize=1)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TratamentoStatus.findAll", query = "SELECT t FROM TratamentoStatus t"),
+    @NamedQuery(name = "TratamentoStatus.findAll", query = "SELECT t FROM TratamentoStatus t order by t.idtratamentostatus"),
     @NamedQuery(name = "TratamentoStatus.findByIdtratamentostatus", query = "SELECT t FROM TratamentoStatus t WHERE t.idtratamentostatus = :idtratamentostatus"),
     @NamedQuery(name = "TratamentoStatus.findByNmtratamentostatus", query = "SELECT t FROM TratamentoStatus t WHERE t.nmtratamentostatus = :nmtratamentostatus"),
     @NamedQuery(name = "TratamentoStatus.findByDstratamentostatus", query = "SELECT t FROM TratamentoStatus t WHERE t.dstratamentostatus = :dstratamentostatus")})

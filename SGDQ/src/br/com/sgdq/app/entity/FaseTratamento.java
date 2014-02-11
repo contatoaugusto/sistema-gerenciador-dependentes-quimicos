@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SequenceGenerator(name = "dbo.id_fasetratamento_seq", sequenceName = "dbo.id_fasetratamento_seq", allocationSize=1)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "FaseTratamento.findAll", query = "SELECT f FROM FaseTratamento f"),
+    @NamedQuery(name = "FaseTratamento.findAll", query = "SELECT f FROM FaseTratamento f order by f.idfasetratamento"),
     @NamedQuery(name = "FaseTratamento.findByIdfasetratamento", query = "SELECT f FROM FaseTratamento f WHERE f.idfasetratamento = :idfasetratamento"),
     @NamedQuery(name = "FaseTratamento.findByDtfasetratamentonicio", query = "SELECT f FROM FaseTratamento f WHERE f.dtfasetratamentonicio = :dtfasetratamentonicio"),
     @NamedQuery(name = "FaseTratamento.findByDtfasetratamentofim", query = "SELECT f FROM FaseTratamento f WHERE f.dtfasetratamentofim = :dtfasetratamentofim"),

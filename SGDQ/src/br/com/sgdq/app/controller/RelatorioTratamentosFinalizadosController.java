@@ -115,6 +115,7 @@ public class RelatorioTratamentosFinalizadosController {
 							if (tratamento.getIdtratamentostatus() == tratamentoStatusEntity.getIdtratamentostatus() &&
 									tratamento.getDttratamentofim() != null){
 								
+								// Idntifica a última fase que se encontra o tratamento finalizado
 								int idFase = 0;
 								for (FaseTratamento faseTratamentoAuxiliar : faseTratamento){
 									if (faseTratamentoAuxiliar.getIdtratamento() == tratamento.getIdtratamento() &&

@@ -48,7 +48,15 @@ public class ExameController implements Serializable {
     private int selectedItemIndex;
     private Integer idTratamento;
     
-    private List<Exame> exameList;
+    public Integer getIdTratamento() {
+		return idTratamento;
+	}
+
+	public void setIdTratamento(Integer idTratamento) {
+		this.idTratamento = idTratamento;
+	}
+
+	private List<Exame> exameList;
 
     @PostConstruct
     public void init() {

@@ -22,7 +22,7 @@
 <!-- 				</div> -->
 					<p:dataTable id="dataTable_consultar_prontuario" value="#{tratamentoController.items}" var="tratamento" 
 						emptyMessage="#{mensagem['datatable.empty']}" paginator="true" paginatorPosition="bottom" 
-						resizableColumns="true" rows="10" rowKey="#{tratamento.idprontuario}" selectionMode="single">
+						resizableColumns="true" rows="50" rowKey="#{tratamento.idprontuario}" selectionMode="single">
 						<p:column headerText="Paciente" sortBy="#{tratamento.prontuario.idPaciente.idPessoa.nmPessoa}">
 							<p:outputLabel value="#{tratamento.prontuario.idPaciente.idPessoa.nmPessoa}" />
 						</p:column>

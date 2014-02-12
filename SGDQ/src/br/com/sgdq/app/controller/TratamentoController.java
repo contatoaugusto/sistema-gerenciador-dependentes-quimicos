@@ -220,7 +220,8 @@ public class TratamentoController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    //return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findAll());
                 }
             };
         }
@@ -285,6 +286,9 @@ public class TratamentoController implements Serializable {
                 getValue(facesContext.getELContext(), null, "exameController");
 		
 		exameController.addExame(current);
+		
+		exameController.setIdTratamento(current.getIdtratamento());
+		exameController.getExameByTratamento();
 	}
 
     public String prepareEdit() {
@@ -473,20 +477,6 @@ public class TratamentoController implements Serializable {
         return ejbFacade.find(id);
     }
 
-//    public boolean getProntuarioExiste() {
-//		return prontuarioExiste;
-//	}
-//
-//	public void setProntuarioExiste(boolean pronturarioExiste) {
-//		this.prontuarioExiste = pronturarioExiste;
-//	}
-//    public boolean getTratamentoExiste() {
-//		return tratamentoExiste;
-//	}
-//
-//	public void setTratamentoExiste(boolean tratamentoExiste) {
-//		this.tratamentoExiste = tratamentoExiste;
-//	}
 
 	public Usuario getUsuario() {
 		return usuario;

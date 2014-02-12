@@ -176,7 +176,7 @@
 <!-- 			                   <f:facet name="output"><h:outputText value="#{exame.dsexame}" /></f:facet>   -->
 <!-- 			                   <f:facet name="input"><p:inputText value="#{exame.dsexame}" style="width:96%"/></f:facet>   -->
 <!-- 			               </p:cellEditor> -->
-		               <p:inputText id="input_exame_nome" value="#{exame.nmexame}">
+		               <p:inputText id="input_exame_nome" value="#{exame.nmexame}" size="50">
 		               		<p:ajax event="blur" partialSubmit="false" listener="#{exameController.onBlur}" update="@this" execute="@this" process="@this" imediate="true"/>
 		               		<f:attribute name="input_exame_nome_atributo" value="#{exame.nmexame}" />
 		               </p:inputText>	  

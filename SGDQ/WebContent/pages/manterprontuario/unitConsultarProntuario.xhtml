@@ -52,7 +52,7 @@
 						<p:dataTable id="dataTable_consultar_prontuario" value="#{prontuarioController.items}" 
 							var="prontuario" emptyMessage="Prontuário não Encontrado" 
 							paginator="true" 
-							paginatorPosition="bottom" resizableColumns="true" rows="10" style="width:99%"
+							paginatorPosition="bottom" resizableColumns="true" rows="50" style="width:99%"
 							rowKey="#{prontuario.idProntuario}" selectionMode="single">
 							
 							<p:column headerText="#{rotulo['prontuario.id']}" sortBy="#{prontuario.idProntuario}" style="width:80px">

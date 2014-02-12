@@ -49,7 +49,11 @@
 				</h:form>
 			<br/>
 			<div class="relatorio">
-				<p:barChart id="basic" value="#{relatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>  
+				<p:barChart id="basic" 
+					value="#{relatorioDeFluxoDePacientesController.relatorioModel}" 
+					legendPosition="ne" 
+					title="Fluxo de Pacientes" min="0" max="10" style="height:300px"
+					xaxisAngle="45"/>  
 			</div>
 		</h:body>
 	</ui:define>

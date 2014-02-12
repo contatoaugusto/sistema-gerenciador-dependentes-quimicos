@@ -37,8 +37,12 @@
 				</h:form>
 			
 			<div class="relatorio">
-				<p:lineChart id="stacked" value="#{relatorioTratamentosFinalizadosController.relatorioModel}" legendPosition="ne" stacked="true" fill="true"  
-	             title="Fase por Motivo" style="height:300px;margin-top:20px" xaxisLabel="Motivos" yaxisLabel="Pacientes"  animate="true" minY="0"/>
+				<p:lineChart 
+					id="stacked" 
+					value="#{relatorioTratamentosFinalizadosController.relatorioModel}" 
+					legendPosition="ne" stacked="true" fill="true"  
+	             	title="Fase por Motivo" style="height:300px;margin-top:20px" 
+	             	xaxisLabel="Motivos" yaxisLabel="Pacientes"  animate="true" minY="0"/>
 			</div>
 		</h:body>	
 	</ui:define>

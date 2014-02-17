@@ -70,7 +70,7 @@ public class Prontuario implements Serializable {
     private Paciente idPaciente;	
 
     @ManyToOne (cascade= CascadeType.REFRESH)
-    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario", insertable=false, updatable=false)
+    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario")//	, insertable=false, updatable=false)
     public UsuarioSGDQ usuario; //unidirectional
     
     public UsuarioSGDQ getUsuario() {

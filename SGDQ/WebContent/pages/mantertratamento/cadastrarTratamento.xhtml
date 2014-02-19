@@ -122,8 +122,8 @@
 					  					value="#{tratamentoController.selected.idtratamentotipo}" 
 					  					required="true" 
 					  					requiredMessage="Tipo de tratamento deve ser informado.">  
-							            <f:selectItem itemLabel="Ambulatorial" itemValue="1" />  
-							            <f:selectItem itemLabel="Internação" itemValue="2" />  
+							            <f:selectItem itemLabel="Ambulatorial" itemValue="1" itemDisabled="#{not empty tratamentoController.selected.dttratamentofim}"/>  
+							            <f:selectItem itemLabel="Internação" itemValue="2" itemDisabled="#{not empty tratamentoController.selected.dttratamentofim}"/>  
 							        </p:selectOneRadio>
 					        	</p:column>
 					        </p:row>
@@ -137,7 +137,7 @@
 					  						value="#{tratamentoController.selected.idtratamentostatus}" 
 					  						required="true" requiredMessage="Status do tratamento deve ser informado."
 					  						>  
-							            <f:selectItem itemLabel="Em andamento" itemValue="1" checked="checked"/>  
+							            <f:selectItem itemLabel="Em andamento" itemValue="1" checked="checked" itemDisabled="#{not empty tratamentoController.selected.dttratamentofim}"/>  
 							            <f:selectItem itemLabel="Interrompido" itemValue="2" itemDisabled="true"/>
 							            <f:selectItem itemLabel="Concluido" itemValue="3" itemDisabled="true"/>
 							            <f:selectItem itemLabel="Desistência" itemValue="4" itemDisabled="true"/>
@@ -155,7 +155,8 @@
 					  					id="input_motivo_do_status" 
 					  					value="#{tratamentoController.selected.dstratamentostatusmotivo}" 
 					  					required="true" 
-					  					requiredMessage="#{mensagem['sistema.descricao.required']}" cols="60"/>
+					  					requiredMessage="#{mensagem['sistema.descricao.required']}" cols="60"
+					  					disabled="#{not empty tratamentoController.selected.dttratamentofim}"/>
 					  			</p:column>
 							</p:row>
 					    	

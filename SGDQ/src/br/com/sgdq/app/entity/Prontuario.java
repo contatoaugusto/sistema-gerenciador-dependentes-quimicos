@@ -26,6 +26,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.annotations.JoinFormula;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import controleacesso.web.modelo.Usuario;
 
 
@@ -69,8 +74,11 @@ public class Prontuario implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
     private Paciente idPaciente;	
 
-    @ManyToOne (cascade= CascadeType.REFRESH)
-    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario")//	, insertable=false, updatable=false)
+    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario", insertable=false, updatable=false)
+    @ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @ManyToOne
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    @JoinFormula(value="id_usuario", referencedColumnName = "idUsuarioCadastro")
     public UsuarioSGDQ usuario; //unidirectional
     
     public UsuarioSGDQ getUsuario() {

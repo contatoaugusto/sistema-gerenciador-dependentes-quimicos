@@ -348,17 +348,20 @@ public class TratamentoController implements Serializable {
         	
         	if (current.getIdtratamentotipo() == 2 && idTratamentoStatus == 3){
         		loadFaseTratamento(getSelected().getIdtratamento());
-        		if (idFaseTratamentoAtual != 3)
+        		if (idFaseTratamentoAtual != 3){
         			JsfUtil.addErrorMessage("Não é permitido finalizar tratamento por conclusão fora da fase 3");
-        	}else {
-				
-		    	current.setIdtratamentostatus(idTratamentoStatus);
-		    	current.setIcativo(new Integer(0).shortValue());
-		    	current.setDttratamentofim(new Date());
-		    	update();
-		    	
-		        JsfUtil.addSuccessMessage("Tratamento finalizado com sucesso.");
-        	}    
+        			return null;
+        		}	
+        	}
+			
+        	
+	    	current.setIdtratamentostatus(idTratamentoStatus);
+	    	current.setIcativo(new Integer(0).shortValue());
+	    	current.setDttratamentofim(new Date());
+	    	update();
+	    	
+	        JsfUtil.addSuccessMessage("Tratamento finalizado com sucesso.");
+    	    
             return null;
         } catch (Exception e) {
             JsfUtil.addErrorMessage("Erro ao finalizar tratamento.");

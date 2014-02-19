@@ -31,14 +31,17 @@
 						</p:column>
 						
 
-						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}">
-							<p:outputLabel value="#{tratamento.tratamentoStatus.nmtratamentostatus}" />
-						</p:column>
-						
-<!-- 						<p:column headerText="#{rotulo['tratamento.motivo_do_status']}" sortBy="#{tratamento.dstratamentostatusmotivo}"> -->
-<!-- 							<p:outputLabel value="#{tratamento.dstratamentostatusmotivo}" /> -->
+<!-- 						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}"> -->
+<!-- 							<p:outputLabel value="#{tratamento.tratamentoStatus.nmtratamentostatus}" /> -->
 <!-- 						</p:column> -->
-						
+						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}">
+							<p:outputLabel value="#{tratamento.idtratamentostatus == 1 ? 'Em Andamento' : 
+													tratamento.idtratamentostatus == 2 ? 'Interrompido' : 
+													tratamento.idtratamentostatus == 3 ? 'Concluido' :
+													tratamento.idtratamentostatus == 4 ? 'Desistência' :
+													tratamento.idtratamentostatus == 5 ? 'Afastado' : ' - '}" />
+						</p:column>
+												
 						<p:column headerText="Início" sortBy="#{tratamento.dtinclusao}">
 							<h:outputText value="#{tratamento.dtinclusao}" >
 								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>

@@ -3,7 +3,10 @@ package br.com.sgdq.app.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
@@ -91,7 +94,8 @@ public class RelatorioMediaPermanenciaController {
 			Years anos = Years.yearsBetween(dataInicial, dataFinal);
 			
 			double somaMesesTratamentoPorAno = 0.;
-			double somaMesesTratamentoPorAnoAuxiliar = 0.;
+			int somaMesesTratamentoPorAnoAuxiliar = 0;
+//			int somaTratamentoFinalizadoPorQuantidadeMes = 0;
 			
 			tratamentosFinalizados =  getFacade().findTratamentoFinalizadoByPeriodo(this.dataInicial, this.dataFinal);
 			
@@ -111,33 +115,48 @@ public class RelatorioMediaPermanenciaController {
 			if(!ano.contains(String.valueOf(dataFinal.getYear())))
 				ano.add(String.valueOf(dataFinal.getYear()));
 			
-			//iniciados.setLabel("Iniciados");  
-	        finalizados.setLabel("Meses");  
+			finalizados.setLabel("Meses");  
 	        
 	        for(String anoAuxiliar : ano) {
 	        	
+	        	// Armazenar a quantidade de tratamentos por meses no anor
+		        //HashMap<Integer, Integer> meseQtdeTratamento = new HashMap<Integer, Integer>();
+		        
 	        	for(Tratamento tratamentoFinalizado : tratamentosFinalizados) {
 	        		
 	        		dataDeInclusaoDoTratamentoFinalizado = new DateTime(tratamentoFinalizado.getDttratamentofim().getTime());
 	        		
 	        		if(anoAuxiliar.contains(String.valueOf(dataDeInclusaoDoTratamentoFinalizado.getYear()))){
-	        			quantidadeDeTratamentosFinalizadosPorAno++;
 	        			
 	        			// Quantidade de meses dos tratamentos finalizados no ano em questão anoAuxiliar
 	        			somaMesesTratamentoPorAnoAuxiliar = Months.monthsBetween(
 								new DateTime(tratamentoFinalizado.getDtinclusao().getTime()), 
 								new DateTime(tratamentoFinalizado.getDttratamentofim().getTime())).getMonths();
-	        			if (somaMesesTratamentoPorAnoAuxiliar >= 7 && somaMesesTratamentoPorAnoAuxiliar <= 12)
+	        			if (somaMesesTratamentoPorAnoAuxiliar >= 7 && somaMesesTratamentoPorAnoAuxiliar <= 12){
+	        				quantidadeDeTratamentosFinalizadosPorAno++;
 	        				somaMesesTratamentoPorAno = somaMesesTratamentoPorAno + somaMesesTratamentoPorAnoAuxiliar;
-	        					
+	        				
+	        				//meseQtdeTratamento.put(somaMesesTratamentoPorAnoAuxiliar, (meseQtdeTratamento.containsKey(somaMesesTratamentoPorAnoAuxiliar) ? meseQtdeTratamento.get(somaMesesTratamentoPorAnoAuxiliar) : 0) + 1);
+	        				
+	        			}	
 	        		}
 	        	}
 	        	
+//	        	Iterator it = meseQtdeTratamento.entrySet().iterator();
+//	            while (it.hasNext()) {
+//	                Map.Entry permanenciaQuantidade = (Map.Entry)it.next();
+//	                somaTratamentoFinalizadoPorQuantidadeMes = somaTratamentoFinalizadoPorQuantidadeMes + (Integer)permanenciaQuantidade.getKey() * (Integer)permanenciaQuantidade.getValue();
+//	                it.remove();
+//	            }
+	        	
+	        	
 	        	if (quantidadeDeTratamentosFinalizadosPorAno == 0) quantidadeDeTratamentosFinalizadosPorAno = 1;
+	        	//finalizados.set(anoAuxiliar, somaTratamentoFinalizadoPorQuantidadeMes/quantidadeDeTratamentosFinalizadosPorAno);
 	        	finalizados.set(anoAuxiliar, somaMesesTratamentoPorAno/quantidadeDeTratamentosFinalizadosPorAno);
 	        	
 	        	somaMesesTratamentoPorAno = 0;
 	        	quantidadeDeTratamentosFinalizadosPorAno = 0;
+//	        	somaTratamentoFinalizadoPorQuantidadeMes = 0;
 	        	
 	        }
 	        

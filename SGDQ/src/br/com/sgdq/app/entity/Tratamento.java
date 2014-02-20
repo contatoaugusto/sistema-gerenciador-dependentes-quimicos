@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -146,9 +147,15 @@ public class Tratamento implements Serializable {
     @Column(name = "idprontuario")
     private Integer idprontuario;
     
-    @ManyToOne (cascade= CascadeType.REFRESH)
-    @JoinColumn(name="idProntuario", referencedColumnName = "idprontuario", insertable=false, updatable=false)
-    public Prontuario prontuario; //unidirectional
+//    @ManyToOne (cascade= CascadeType.REFRESH)
+//    @JoinColumn(name="idProntuario", referencedColumnName = "idprontuario", insertable=false, updatable=false)
+//    public Prontuario prontuario; //unidirectional
+    @ManyToOne // owner side: it doesn't have mappedBy, and can decide how the association is mapped: with a join table
+    @JoinTable(name="\"Prontuario\"", schema = "dbo",
+               joinColumns={@JoinColumn(name="idprontuario")},
+               inverseJoinColumns={@JoinColumn(name="idProntuario")})
+    public Prontuario prontuario;
+    
     
     @ManyToOne (cascade= CascadeType.REFRESH)
     @JoinColumn(name="idtratamentostatus", referencedColumnName = "idtratamentostatus", insertable=false, updatable=false)

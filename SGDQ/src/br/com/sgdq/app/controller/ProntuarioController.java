@@ -164,7 +164,12 @@ public class ProntuarioController implements Serializable {
     	 
     	return items;
     }
-    
+
+   public Prontuario pesquisarProntuario(Integer idProntuario) {
+        
+    	return getFacade().find(idProntuario);
+    }
+
     public String prepareList() {
         recreateModel();
         return "List";

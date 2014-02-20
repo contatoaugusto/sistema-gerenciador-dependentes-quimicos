@@ -137,7 +137,7 @@
 					  						value="#{tratamentoController.selected.idtratamentostatus}" 
 					  						required="true" requiredMessage="Status do tratamento deve ser informado."
 					  						>  
-							            <f:selectItem itemLabel="Em andamento" itemValue="1" checked="checked" itemDisabled="#{not empty tratamentoController.selected.dttratamentofim}"/>  
+							            <f:selectItem itemLabel="Em andamento" itemValue="1" itemDisabled="#{not empty tratamentoController.selected.dttratamentofim}"/>  
 							            <f:selectItem itemLabel="Interrompido" itemValue="2" itemDisabled="true"/>
 							            <f:selectItem itemLabel="Concluido" itemValue="3" itemDisabled="true"/>
 							            <f:selectItem itemLabel="Desistência" itemValue="4" itemDisabled="true"/>

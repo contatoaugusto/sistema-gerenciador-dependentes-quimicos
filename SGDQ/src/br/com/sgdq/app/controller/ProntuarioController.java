@@ -30,7 +30,9 @@ import br.com.sgdq.app.controller.util.PaginationHelper;
 import br.com.sgdq.app.entity.Cidade;
 import br.com.sgdq.app.entity.Estado;
 import br.com.sgdq.app.entity.Prontuario;
+import br.com.sgdq.app.entity.UsuarioSGDQ;
 import br.com.sgdq.app.facade.ProntuarioFacade;
+import br.com.sgdq.app.facade.UsuarioSGDQFacade;
 import controleacesso.web.modelo.Usuario;
 //import javax.enterprise.context.SessionScoped;
 
@@ -206,7 +208,11 @@ public class ProntuarioController implements Serializable {
         	HttpServletRequest request = (HttpServletRequest)facesContext.getExternalContext().getRequest();  
 			HttpSession httpSession = request.getSession(false);  
 			Usuario usuario = (Usuario) httpSession.getAttribute("usuario");  
-			getSelected().setIdUsuarioCadastro(usuario.getIdUsuario());	
+			getSelected().setIdUsuarioCadastro(usuario.getIdUsuario());
+			
+			// Armazena o objeto usuario no prontuário relacionado
+			UsuarioSGDQFacade usuarioSGDQFacade = new UsuarioSGDQFacade();
+			getSelected().setUsuario(usuarioSGDQFacade.find(usuario.getIdUsuario()));
         	
         	getFacade().create(prontuario);
         	
@@ -224,14 +230,30 @@ public class ProntuarioController implements Serializable {
         return "/pages/manterprontuario/cadastrar.xhtml?faces-redirect=true&idProntuario="+prontuario.getIdProntuario();
     }
 
+    /**
+     * 
+     * @param actionEvent
+     */
     public void buscaProntuarioBynuCPFPaciente(AjaxBehaviorEvent actionEvent) {
         Prontuario prontuarioTemp = prontuario;
-    	prontuario = getFacade().findBynuCPFPaciente(getSelected().getIdPaciente().getIdPessoa().getNuCPF());
+        String nuCPF = getSelected().getIdPaciente().getIdPessoa().getNuCPF();
+    	
+        prontuario = getFacade().findBynuCPFPaciente(nuCPF);
         if (prontuario != null)
         	JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/message").getString("prontuario.paciente.cpf_existente"));
-        else 
-        	prontuario = prontuarioTemp;
-        
+        else{ 
+//        	prontuario = prontuarioTemp;
+//        	prontuario.setIdProntuario(null);
+//        	prontuario.setIdProntuarioStatus(null);
+//        	prontuario.getIdPaciente().getIdPessoa().setIdPessoa(null);
+//        	prontuario.getIdPaciente().getIdPessoa().set
+//        	if (prontuario.getIdProntuario() != null && prontuario.getIdProntuario() > 0)
+        	prontuario = null;
+        	getSelected().getIdPaciente().getIdPessoa().setNuCPF(nuCPF);
+        	
+//        	prontuario.getIdPaciente().getIdPessoa().setNuCPF(prontuarioTemp.getIdPaciente().getIdPessoa().getNuCPF());
+        	
+        }
         prontuarioTemp = null;
     }
     

@@ -13,12 +13,14 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -150,10 +152,16 @@ public class Tratamento implements Serializable {
 //    @ManyToOne (cascade= CascadeType.REFRESH)
 //    @JoinColumn(name="idProntuario", referencedColumnName = "idprontuario", insertable=false, updatable=false)
 //    public Prontuario prontuario; //unidirectional
-    @ManyToOne // owner side: it doesn't have mappedBy, and can decide how the association is mapped: with a join table
-    @JoinTable(name="\"Prontuario\"", schema = "dbo",
-               joinColumns={@JoinColumn(name="idprontuario")},
-               inverseJoinColumns={@JoinColumn(name="idProntuario")})
+//    @ManyToOne // owner side: it doesn't have mappedBy, and can decide how the association is mapped: with a join table
+//    @JoinTable(name="\"Prontuario\"", schema = "dbo",
+//               joinColumns={@JoinColumn(name="idprontuario")},
+//               inverseJoinColumns={@JoinColumn(name="idProntuario")})
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name="idprontuario")
+
+    //@MapsId("prontuario")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idProntuario", referencedColumnName = "idprontuario", insertable = false, updatable = false, nullable = false)
     public Prontuario prontuario;
     
     

@@ -74,11 +74,10 @@ public class Prontuario implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
     private Paciente idPaciente;	
 
-    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario", insertable=false, updatable=false)
-    @ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @ManyToOne
-//    @NotFound(action = NotFoundAction.IGNORE)
-//    @JoinFormula(value="id_usuario", referencedColumnName = "idUsuarioCadastro")
+//    @JoinColumn(name="idUsuarioCadastro", referencedColumnName = "id_usuario", insertable=false, updatable=false)
+//    @ManyToOne (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUsuarioCadastro", referencedColumnName = "id_usuario", insertable = false, updatable = false, nullable = false)
     public UsuarioSGDQ usuario; //unidirectional
     
     public UsuarioSGDQ getUsuario() {

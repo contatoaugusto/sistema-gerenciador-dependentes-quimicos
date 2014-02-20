@@ -25,7 +25,7 @@
 						resizableColumns="true" rows="50" rowKey="#{tratamento.idprontuario}" selectionMode="single">
 						
 						<p:column headerText="Paciente" sortBy="#{tratamento.prontuario.idPaciente.idPessoa.nmPessoa}">
-							<p:outputLabel value="#{prontuarioController.pesquisarProntuario(tratamento.idprontuario).idPaciente.idPessoa.nmPessoa}" />
+							<p:outputLabel value="#{tratamento.prontuario.idPaciente.idPessoa.nmPessoa}" />
 						</p:column>
 						
 						<p:column headerText="#{rotulo['tratamento.tipo_de_tratamento']}" sortBy="#{tratamento.idtratamentotipo}">
@@ -33,16 +33,16 @@
 						</p:column>
 						
 
-<!-- 						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}"> -->
-<!-- 							<p:outputLabel value="#{tratamento.tratamentoStatus.nmtratamentostatus}" /> -->
-<!-- 						</p:column> -->
 						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}">
-							<p:outputLabel value="#{tratamento.idtratamentostatus == 1 ? 'Em Andamento' : 
-													tratamento.idtratamentostatus == 2 ? 'Interrompido' : 
-													tratamento.idtratamentostatus == 3 ? 'Concluido' :
-													tratamento.idtratamentostatus == 4 ? 'Desistência' :
-													tratamento.idtratamentostatus == 5 ? 'Afastado' : ' - '}" />
+							<p:outputLabel value="#{tratamento.tratamentoStatus.nmtratamentostatus}" />
 						</p:column>
+<!-- 						<p:column headerText="#{rotulo['tratamento.status_do_tratamento']}" sortBy="#{tratamento.tratamentoStatus.nmtratamentostatus}"> -->
+<!-- 							<p:outputLabel value="#{tratamento.idtratamentostatus == 1 ? 'Em Andamento' :  -->
+<!-- 													tratamento.idtratamentostatus == 2 ? 'Interrompido' :  -->
+<!-- 													tratamento.idtratamentostatus == 3 ? 'Concluido' : -->
+<!-- 													tratamento.idtratamentostatus == 4 ? 'Desistência' : -->
+<!-- 													tratamento.idtratamentostatus == 5 ? 'Afastado' : ' - '}" /> -->
+<!-- 						</p:column> -->
 												
 						<p:column headerText="Início" sortBy="#{tratamento.dtinclusao}">
 							<h:outputText value="#{tratamento.dtinclusao}" >

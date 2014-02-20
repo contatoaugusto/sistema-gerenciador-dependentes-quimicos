@@ -71,7 +71,9 @@
 										value="#{prontuarioController.selected.idPaciente.idPessoa.nuCPF}"
 										required="true"
 										requiredMessage="#{mensagem['paciente.cpf.required']}"
-										mask="999.999.999-99" >
+										mask="999.999.999-99" 
+										disabled="#{not empty prontuarioController.selected.idProntuario}">
+										
 										<p:ajax event="blur" update="formCadastroProntuario" partialSubmit="true" process="@this"  
     										 listener="#{prontuarioController.buscaProntuarioBynuCPFPaciente}"></p:ajax>
 									</p:inputMask>
@@ -281,7 +283,8 @@
 										value="#{prontuarioController.selected.idPaciente.idResponsavel.idPessoa.nuCPF}"
 										required="true"
 										requiredMessage="#{mensagem['responsavel.cpf.required']}"
-										mask="999.999.999-99" />
+										mask="999.999.999-99" 
+										disabled="#{not empty prontuarioController.selected.idProntuario}"/>
 								</p:column>
 							</p:row>
 							<p:row>

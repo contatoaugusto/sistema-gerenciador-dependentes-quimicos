@@ -20,22 +20,22 @@
 						    		<p:column>
 								        <p:inputMask id="input_id" value="#{prontuarioController.selected.idProntuario}" mask="9?99999999999999" placeHolder="" />
 						    		</p:column>
-						    	</p:row>
-						    	<p:row>
+						    	
 						    		<p:column>
 								  		<p:outputLabel for="input_nome" value="#{rotulo['prontuario.paciente.nome']}:" />  
 						    		</p:column>
 						    		<p:column>
 								        <p:inputText id="input_nome" value="#{prontuarioController.selected.idPaciente.idPessoa.nmPessoa}" />
 						    		</p:column>
-						    	</p:row>
-						    	<p:row>
 						    		<p:column>
 								  		<p:outputLabel for="input_cpf" value="#{rotulo['prontuario.paciente.cpf']}:" />  
 						    		</p:column>
 						    		<p:column>
 								        <p:inputMask id="input_cpf" value="#{prontuarioController.selected.idPaciente.idPessoa.nuCPF}" mask="999.999.999-99" />
 						    		</p:column>
+						    		<p:column>
+						    			<p:commandButton id="button_consultar" value="#{rotulo['generico.consultar']}" action="#{prontuarioController.pesquisarProntuario}" update="formConsultarProntuario" icon="ui-icon-search" />
+					    			</p:column>
 						    	</p:row>
 						    	
 							</p:panelGrid>  	
@@ -43,7 +43,6 @@
 					</p:fieldset>
 					<br/>		
 					<div class="buttons-alone">
-					    <p:commandButton id="button_consultar" value="#{rotulo['generico.consultar']}" action="#{prontuarioController.pesquisarProntuario}" update="formConsultarProntuario" icon="ui-icon-search" />
 					    <p:commandButton id="button_novo" value="Incluir Prontuário" action="/pages/manterprontuario/cadastrar?faces-redirect=true" icon="ui-icon-plus" />
 					</div>
 					

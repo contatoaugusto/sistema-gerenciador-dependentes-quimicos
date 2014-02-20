@@ -20,6 +20,9 @@
 		<intercept-url pattern="/pages/manterprontuario/consultar.xhtml" access="hasRole('index.xhtml')"/>
 		<intercept-url pattern="/pages/mantertratamento/cadastrarTratamento.xhtml" access="hasRole('index.xhtml')"/>
 		<intercept-url pattern="/pages/mantertratamento/consultar.xhtml" access="hasRole('index.xhtml')"/>
+		<intercept-url pattern="/pages/relatorios/mediaPermanencia/*" access="hasRole('index.xhtml')"/>
+		<intercept-url pattern="/pages/relatorios/fluxodepacientes/*" access="hasRole('index.xhtml')"/>
+		<intercept-url pattern="/pages/relatorios/tratamentoFinalizado/*" access="hasRole('index.xhtml')"/>
 	</http>
   
 

@@ -40,6 +40,7 @@ import br.com.sgdq.app.facade.ExameFacade;
 import br.com.sgdq.app.facade.FaseTratamentoFacade;
 import br.com.sgdq.app.facade.ProntuarioFacade;
 import br.com.sgdq.app.facade.TratamentoFacade;
+import br.com.sgdq.app.facade.TratamentoStatusFacade;
 import controleacesso.web.modelo.Usuario;
 
 /**
@@ -255,6 +256,14 @@ public class TratamentoController implements Serializable {
         	getSelected().setIcativo(new Integer(1).shortValue());
         	
         	//getSelected().setDsexame(getSelected().getDsexame() + " - Data Solicitação: " + getSelected().getDtexame()); 
+        	
+        	// Guardar o objeto prontuario associado a esse tratamento
+        	ProntuarioFacade prontuarioFacade =  new ProntuarioFacade();
+        	getSelected().setProntuario(prontuarioFacade.find(getSelected().getIdprontuario()));
+        	
+        	// Guardar o objeto status associado a esse tratamento
+        	TratamentoStatusFacade statusFacade =  new TratamentoStatusFacade();
+        	getSelected().setTratamentoStatus(statusFacade.find(getSelected().getIdtratamentostatus()));
         	
         	getFacade().create(current);
         	

@@ -94,7 +94,7 @@ public class RelatorioMediaPermanenciaController {
 			Years anos = Years.yearsBetween(dataInicial, dataFinal);
 			
 			double somaMesesTratamentoPorAno = 0.;
-			int somaMesesTratamentoPorAnoAuxiliar = 0;
+			double somaMesesTratamentoPorAnoAuxiliar = 0.;
 //			int somaTratamentoFinalizadoPorQuantidadeMes = 0;
 			
 			tratamentosFinalizados =  getFacade().findTratamentoFinalizadoByPeriodo(this.dataInicial, this.dataFinal);
@@ -154,8 +154,8 @@ public class RelatorioMediaPermanenciaController {
 	        	//finalizados.set(anoAuxiliar, somaTratamentoFinalizadoPorQuantidadeMes/quantidadeDeTratamentosFinalizadosPorAno);
 	        	finalizados.set(anoAuxiliar, somaMesesTratamentoPorAno/quantidadeDeTratamentosFinalizadosPorAno);
 	        	
-	        	somaMesesTratamentoPorAno = 0;
-	        	quantidadeDeTratamentosFinalizadosPorAno = 0;
+	        	somaMesesTratamentoPorAno = 0.;
+	        	quantidadeDeTratamentosFinalizadosPorAno = 0.;
 //	        	somaTratamentoFinalizadoPorQuantidadeMes = 0;
 	        	
 	        }

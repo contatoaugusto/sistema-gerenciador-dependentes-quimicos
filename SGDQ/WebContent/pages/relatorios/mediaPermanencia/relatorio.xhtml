@@ -46,10 +46,9 @@
 				</h:form>
 			
 			<div class="relatorio">
-<!-- 				<p:barChart id="basic" value="#{relatorioDeFluxoDePacientesController.relatorioModel}" legendPosition="ne" title="Fluxo de Pacientes" min="0" max="10" style="height:300px"/>   -->
 				<p:lineChart id="mediaPermanencia" value="#{relatorioMediaPermanenciaController.relatorioModel}" 
 					legendPosition="e" title="Média de Permanência para Conclusão" 
-					minY="0" style="height:300px;margin-top:20px"
+					minY="0.0" maxY="15.0" style="height:300px;margin-top:20px"
 					xaxisLabel="Data de Pesquisa" yaxisLabel="Meses"
 					animate="true" />
 			</div>

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "tbusuario", schema = "dbo")
-@SequenceGenerator(name = "dbo.id_usuario_seq", sequenceName = "dbo.id_usuario_seq", allocationSize=1)
+@SequenceGenerator(name = "dbo.id_usuario_seq_SGDQ", sequenceName = "dbo.id_usuario_seq", allocationSize=1)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UsuarioSGDQ.findAll", query = "SELECT u FROM UsuarioSGDQ u"),

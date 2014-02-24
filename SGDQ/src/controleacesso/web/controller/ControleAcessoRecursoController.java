@@ -1,7 +1,5 @@
 package controleacesso.web.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -20,11 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
-import controleacesso.web.dao.PerfilDao;
-import controleacesso.web.dao.RecursoDao;
+import controleacesso.web.dao.ControleAcessoPerfilDao;
+import controleacesso.web.dao.ControleAcessoRecursoDao;
 import controleacesso.web.file.FileHandler;
-import controleacesso.web.modelo.Perfil;
-import controleacesso.web.modelo.Recurso;
+import controleacesso.web.modelo.ControleAcessoPerfil;
+import controleacesso.web.modelo.ControleAcessoRecurso;
 import controleacesso.web.util.Constantes;
 
 
@@ -34,17 +32,17 @@ import controleacesso.web.util.Constantes;
  */
 @ManagedBean
 @SessionScoped
-public class RecursoController {
+public class ControleAcessoRecursoController {
 
-	private Recurso recurso = new Recurso();
-	private DataModel<Recurso> lstRecurso;
-	private List<Recurso> lstRecursoAtivo;
+	private ControleAcessoRecurso recurso = new ControleAcessoRecurso();
+	private DataModel<ControleAcessoRecurso> lstRecurso;
+	private List<ControleAcessoRecurso> lstRecursoAtivo;
 	
-	private DualListModel<Perfil> perfis;
+	private DualListModel<ControleAcessoPerfil> perfis;
 	
 	private String lkRecursoAntigo;
 	
-	public RecursoController (){
+	public ControleAcessoRecursoController (){
 		carregaDualListModel(false);
 		// Aqui verifica toda a lista de recursos ativos, constata se consta no xml de configuração. Se não existe cria.
 		
@@ -59,28 +57,28 @@ public class RecursoController {
 		return "Recurso";
 	}
 
-	public DataModel<Recurso> getListarRecurso() {
-		RecursoDao dao = new RecursoDao();
-		List<Recurso> listaRecurso = dao.list();
-		lstRecurso = new ListDataModel<Recurso>(listaRecurso);
+	public DataModel<ControleAcessoRecurso> getListarRecurso() {
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
+		List<ControleAcessoRecurso> listaRecurso = dao.list();
+		lstRecurso = new ListDataModel<ControleAcessoRecurso>(listaRecurso);
 		return lstRecurso;
 	}
 	
-	public List<Recurso> getListarRecursoAtivo() {
-		RecursoDao dao = new RecursoDao();
+	public List<ControleAcessoRecurso> getListarRecursoAtivo() {
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
 		lstRecursoAtivo = dao.listByRecursoAtivo();
 		return lstRecursoAtivo;
 	}
 
-	public ArrayList<Perfil> getListarPerfil() {
-		PerfilDao dao = new PerfilDao();
-		ArrayList<Perfil> listaPerfil = (ArrayList)dao.list();
+	public ArrayList<ControleAcessoPerfil> getListarPerfil() {
+		ControleAcessoPerfilDao dao = new ControleAcessoPerfilDao();
+		ArrayList<ControleAcessoPerfil> listaPerfil = (ArrayList)dao.list();
 		return listaPerfil;
 	}
 	
 	
 	public void prepararAdicionarRecurso(ActionEvent actionEvent) {
-		this.recurso = new Recurso();
+		this.recurso = new ControleAcessoRecurso();
 		this.recurso.setDtInclusao(Calendar.getInstance().getTime());
 		this.recurso.setFgAtivo(true);
 		carregaDualListModel(false);
@@ -90,28 +88,28 @@ public class RecursoController {
 
 	public void prepararAlterarRecurso(ActionEvent actionEvent) {
 		this.recurso = null;
-		this.recurso = (Recurso) (lstRecurso.getRowData());
+		this.recurso = (ControleAcessoRecurso) (lstRecurso.getRowData());
 		carregaDualListModel(true);
 		carregaDadosBasicos ();
 		lkRecursoAntigo = recurso.getLkLink();
 		System.out.println("Preparar Alterar Recurso");
 	}
 
-	public Recurso getRecurso() {
+	public ControleAcessoRecurso getRecurso() {
 		return recurso;
 	}
 
-	public void setRecurso(Recurso recurso) {
+	public void setRecurso(ControleAcessoRecurso recurso) {
 		this.recurso = recurso;
 	}
 
-	public void setLstRecurso(DataModel<Recurso> lstRecurso) {
+	public void setLstRecurso(DataModel<ControleAcessoRecurso> lstRecurso) {
 		this.lstRecurso = lstRecurso;
 	}
 
 	public void excluirRecurso() {
-		Recurso recurso = (Recurso) (lstRecurso.getRowData());
-		RecursoDao dao = new RecursoDao();
+		ControleAcessoRecurso recurso = (ControleAcessoRecurso) (lstRecurso.getRowData());
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
 		dao.remove(recurso);
 		FileHandler fileHandler = new FileHandler();
 		fileHandler.removeInterceptUrlXML(recurso.getLkLink(), recuperaDiretorioConfiguracao());
@@ -119,7 +117,7 @@ public class RecursoController {
 
 	public void adicionarRecurso(ActionEvent actionEvent) {
 		System.out.println("Adicionar Recurso");
-		RecursoDao dao = new RecursoDao();
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
 		setDualListModelPerfiToSet();
 		dao.save(recurso);
 		FileHandler fileHandler = new FileHandler();
@@ -129,7 +127,7 @@ public class RecursoController {
 	public void alterarRecurso(ActionEvent actionEvent) {
 		// validacaoCampos();
 		System.out.println("Alterando Recurso na Base de dados");
-		RecursoDao dao = new RecursoDao();
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
 		setDualListModelPerfiToSet();
 		dao.update(recurso);
 		FileHandler fileHandler = new FileHandler();
@@ -144,7 +142,7 @@ public class RecursoController {
 	}
 
 	public List<SelectItem> getItemsPerfil() {
-		RecursoDao dao = new RecursoDao();
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
 		return dao.getItemsPerfil();
 	}
 
@@ -152,7 +150,7 @@ public class RecursoController {
 	 public void onTransfer(TransferEvent event) {  
 	     StringBuilder builder = new StringBuilder();  
 	     for(Object item : event.getItems()) {  
-	         builder.append(((Perfil) item).getDsPerfil()).append("<br />");  
+	         builder.append(((ControleAcessoPerfil) item).getDsPerfil()).append("<br />");  
 	     }  
 	       
 	     FacesMessage msg = new FacesMessage();  
@@ -163,29 +161,29 @@ public class RecursoController {
 	     FacesContext.getCurrentInstance().addMessage(null, msg);  
 	 }
 	
-	public DualListModel<Perfil> getPerfis() {  
+	public DualListModel<ControleAcessoPerfil> getPerfis() {  
 		return perfis;  
 	}  
-	public void setPerfis(DualListModel<Perfil> perfis) {  
+	public void setPerfis(DualListModel<ControleAcessoPerfil> perfis) {  
 		this.perfis = perfis;  
 	} 
 
 	private void carregaDualListModel(boolean isCarregarPerfilComAcesso){
-		List<Perfil> source =  new ArrayList<Perfil>();  
-		List<Perfil> target = new ArrayList<Perfil>();
+		List<ControleAcessoPerfil> source =  new ArrayList<ControleAcessoPerfil>();  
+		List<ControleAcessoPerfil> target = new ArrayList<ControleAcessoPerfil>();
 		
 		source = getListarPerfil();
 		
 		if (isCarregarPerfilComAcesso){
-			target = new ArrayList<Perfil>(recurso.getTbperfils());
+			target = new ArrayList<ControleAcessoPerfil>(recurso.getTbperfils());
 			source.removeAll(recurso.getTbperfils());
 		}
 		
-		perfis = new DualListModel<Perfil>(source, target);
+		perfis = new DualListModel<ControleAcessoPerfil>(source, target);
 	}
 	
 	private void setDualListModelPerfiToSet(){
-		for (Perfil perfil : perfis.getTarget())
+		for (ControleAcessoPerfil perfil : perfis.getTarget())
 			recurso.getTbperfils().add(perfil);
 		//recurso.setTbperfils(new HashSet<Perfil>(perfis.getTarget()));
 		
@@ -193,12 +191,12 @@ public class RecursoController {
 	
 	private void carregaDadosBasicos (){
 		if (recurso.getTbrecursoFilho() == null)
-			recurso.setTbrecursoFilho(new Recurso());
+			recurso.setTbrecursoFilho(new ControleAcessoRecurso());
 		
 	}
 	
 	public List<SelectItem> getItemsRecursoPai(){  
-		RecursoDao dao = new RecursoDao();
+		ControleAcessoRecursoDao dao = new ControleAcessoRecursoDao();
 		return dao.getItemsRecursoPai();
 	 }
 	

@@ -8,8 +8,8 @@ import javax.faces.convert.FacesConverter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import controleacesso.web.dao.RecursoDao;
-import controleacesso.web.modelo.Recurso;
+import controleacesso.web.dao.ControleAcessoRecursoDao;
+import controleacesso.web.modelo.ControleAcessoRecurso;
 
 
 @FacesConverter(value = "recursoSelectOneMenuConverter")
@@ -18,7 +18,7 @@ public class RecursoSelectOneMenuConverter implements Converter {
 	private static final Log log = LogFactory
 			.getLog(RecursoSelectOneMenuConverter.class);
 
-	RecursoDao recursoDAO;
+	ControleAcessoRecursoDao recursoDAO;
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component,
@@ -46,8 +46,8 @@ public class RecursoSelectOneMenuConverter implements Converter {
 			Object value) {
 		if (value == null || value.toString().trim().equals(""))
 			return null;
-		if (value instanceof Recurso)
-			return String.valueOf(((Recurso) value).getIdRecurso()); // -->
+		if (value instanceof ControleAcessoRecurso)
+			return String.valueOf(((ControleAcessoRecurso) value).getIdRecurso()); // -->
 																		// convert
 																		// to a
 																		// unique

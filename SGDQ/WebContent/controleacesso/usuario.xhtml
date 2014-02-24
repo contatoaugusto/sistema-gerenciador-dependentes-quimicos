@@ -19,16 +19,16 @@
 
     <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
 	
-			<p:layoutUnit position="north" size="150" id="north" >
-    	        <ui:include src="menu.xhtml" />
-        	</p:layoutUnit>
+<!-- 			<p:layoutUnit position="north" size="150" id="north" > -->
+<!--     	        <ui:include src="menu.xhtml" /> -->
+<!--         	</p:layoutUnit> -->
 	
         	<p:layoutUnit styleClass="layoutUnitCenter" position="center">
         		<h:body >
-			        <p:panel header="#{usuarioController.message}" style="font-size:small;padding:0px;">  
-				        <p:commandButton value="Novo" icon="ui-icon-disk" actionListener="#{usuarioController.prepararAdicionarUsuario}" update=":formcontroleacesso"  oncomplete="dialog.show();"/> 
-			        <h:form id="formcontroleacesso" prependId="false" enctype="multipart/form-data">
-				     	<p:dataTable var="usuario" id="dataTabelUsuario" value="#{usuarioController.listarUsuario}" > 
+        			<p:panel header="#{controleAcessoUsuarioController.message}" style="font-size:small;padding:0px;">  
+				        <p:commandButton value="Novo" icon="ui-icon-disk" actionListener="#{controleAcessoUsuarioController.prepararAdicionarUsuario}" update=":formcontroleacesso"  oncomplete="dialog.show();"/> 
+			        <h:form id="formcontroleacesso" >
+				     	<p:dataTable var="usuario" id="dataTabelUsuario" value="#{controleAcessoUsuarioController.listarUsuario}" > 
 			 	 	       
 				  	      <p:column headerText="Nome">  
 				  	      		<center>
@@ -42,41 +42,47 @@
 				       	  </p:column>
 				  	       <p:column headerText="Alterar">  
 				             	<center>
-				             			<p:commandButton icon="ui-icon-pencil" actionListener="#{usuarioController.prepararAlterarUsuario}" update=":formcontroleacesso" oncomplete="dialog.show();"/>
+			             			<p:commandButton icon="ui-icon-pencil" 
+			             				action="#{controleAcessoUsuarioController.prepararAlterarUsuario}"  
+			             				update=":formcontroleacesso" oncomplete="dialog.show();"
+			             				partialSubmit="true"/>
 				                </center>
 				       	   </p:column>  
 				           <p:column headerText="Excluir">  
 				                <center>
-				                    	<p:commandButton action="#{usuarioController.excluirUsuario}" update=":formcontroleacesso" icon="ui-icon-trash"/>
+				                    	<p:commandButton action="#{controleAcessoUsuarioController.excluirUsuario}" update=":formcontroleacesso" icon="ui-icon-trash"/>
 				                </center>
 				        	</p:column>
-				        </p:dataTable>  
-				
-					
-				    <p:dialog id="dlgUsuario" header="Usuario" widgetVar="dialog" resizable="true" showEffect="slide" width="600" >
-						
+				        </p:dataTable> 
+				         <p:commandButton update=":formcontroleacesso"  oncomplete="dialog.hide();"  value="Inserir" 
+			                    	actionListener="#{controleAcessoUsuarioController.adicionarUsuario}"/>
+					</h:form>
+				</p:panel>	
+				    
+				    <p:dialog id="dlgUsuario" header="Usuario" widgetVar="dialog" resizable="true" showEffect="slide" width="600" closable="false">
+						<h:form>
 						    <h:panelGrid id="infosUsuario" columns="2" style="margin-bottom:10px">
 
 			
 			                    <h:outputLabel for="nmLogin" value="Login:" />
-			                    <p:inputText id="nmLogin" value="#{usuarioController.usuario.nmLogin}" /> 
+			                    <p:inputText id="nmLogin" value="#{controleAcessoUsuarioController.usuario.nmLogin}" /> 
 							
 								<h:outputLabel for="dsSenha" value="Senha:" /> 
-				            	<p:password id="dsSenha" value="#{usuarioController.usuario.dsSenha}" feedback="true"/> 
+				            	<p:password id="dsSenha" value="#{controleAcessoUsuarioController.usuario.dsSenha}" feedback="true"/> 
 
 								<h:outputLabel for="fgAtivo" value="Status:" />
-			                    <p:selectBooleanCheckbox  id="fgAtivo" value="#{usuarioController.usuario.fgAtivo}" checked="true"/>
+			                    <p:selectBooleanCheckbox  id="fgAtivo" value="#{controleAcessoUsuarioController.usuario.fgAtivo}" checked="true"/>
 			                    
-			                    <h:outputLabel  for="idPessoa"  value="Pessoa:" />     
-								<p:selectOneMenu id="idPessoa"  value="#{usuarioController.usuario.tbpessoa}" > 
+			                    <h:outputLabel  for="idPessoa"  value="Pessoa:" />
+								<p:selectOneMenu id="idPessoa"  value="#{controleAcessoUsuarioController.usuario.tbpessoa}" > 
 									
 									<f:selectItem itemLabel="Selecione..." itemValue="" />   
-							        <f:selectItems value="#{usuarioController.itemsPessoa}"  />
+							        <f:selectItems value="#{controleAcessoUsuarioController.itemsPessoa}"  />
 							    </p:selectOneMenu> 
 			               </h:panelGrid>
 						 	<h:panelGrid id="infosPerfil" colspan="2" style="font-size:small;padding:0px;">		
 								<p:growl id="msg" showDetail="true" escape="false" /> 
-								<p:pickList  id="pojoPickList" value="#{usuarioController.perfis}" var="perfil" effect="bounce"  
+								<p:pickList  id="pojoPickList" value="#{controleAcessoUsuarioController.perfis}" var="perfil" effect="bounce"  
 						                    itemValue="#{perfil}" itemLabel="#{perfil.dsPerfil}"  converter="PerfilConverter"
 						                   showSourceControls="true" showTargetControls="true" showCheckbox="true"  
 						                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
@@ -101,18 +107,15 @@
  							<h:panelGrid style="font-size:small;padding:0px;" >     
 		                    	<p:column columns="2" cellpadding="5" style="float: center;"> 
 				                    <p:commandButton update=":formcontroleacesso"  oncomplete="dialog.hide();"  value="Inserir" 
-				                    	actionListener="#{usuarioController.adicionarUsuario}"/>
+				                    	actionListener="#{controleAcessoUsuarioController.adicionarUsuario}"/>
 				                    	
 				                    <p:commandButton   update=":formcontroleacesso" oncomplete="dialog.hide();" value="Alterar"
-				                    	actionListener="#{usuarioController.alterarUsuario}" />
+				                    	actionListener="#{controleAcessoUsuarioController.alterarUsuario}" />
 			                	</p:column>
 			                </h:panelGrid>
+			   			</h:form>
 			   		</p:dialog> 
-			   		<p:commandButton update=":formcontroleacesso"  oncomplete="dialog.hide();"  value="Inserir" 
-			                    	actionListener="#{usuarioController.adicionarUsuario}"/>
-			                    
-			   	</h:form>
-			        </p:panel>
+			   		
 			        <br/>
 			    </h:body>
 	        </p:layoutUnit>

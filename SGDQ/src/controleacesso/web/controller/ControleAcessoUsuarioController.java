@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -17,25 +18,25 @@ import javax.faces.model.SelectItem;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
-import controleacesso.web.dao.PerfilDao;
-import controleacesso.web.dao.UsuarioDao;
-import controleacesso.web.modelo.Perfil;
-import controleacesso.web.modelo.Recurso;
-import controleacesso.web.modelo.Usuario;
+import controleacesso.web.controller.util.JsfUtil;
+import controleacesso.web.dao.ControleAcessoPerfilDao;
+import controleacesso.web.dao.ControleAcessoUsuarioDao;
+import controleacesso.web.modelo.ControleAcessoPerfil;
+import controleacesso.web.modelo.ControleAcessoUsuario;
 
 
 @ManagedBean
-@SessionScoped
-public class UsuarioController implements Serializable {
+@RequestScoped
+public class ControleAcessoUsuarioController implements Serializable {
 
-	private Usuario usuario = new Usuario();
-	private DataModel<Usuario> lstUsuario;
+	private ControleAcessoUsuario usuario = new ControleAcessoUsuario();
+	private DataModel<ControleAcessoUsuario> lstUsuario;
 	
-	private DualListModel<Perfil> perfis;
+	private DualListModel<ControleAcessoPerfil> perfis;
 	
 	private String senhaAntiga;
 	
-	public UsuarioController (){
+	public ControleAcessoUsuarioController (){
 		carregaDualListModel(false);
 	}
 	
@@ -46,21 +47,21 @@ public class UsuarioController implements Serializable {
 	 public String getMessage(){
 	        return "Usuario";
 	 }
-	public DataModel<Usuario> getListarUsuario() {
-		UsuarioDao dao = new UsuarioDao();
-		List<Usuario> listaUsuario = dao.list();
-		lstUsuario = new ListDataModel<Usuario>(listaUsuario);
+	public DataModel<ControleAcessoUsuario> getListarUsuario() {
+		ControleAcessoUsuarioDao dao = new ControleAcessoUsuarioDao();
+		List<ControleAcessoUsuario> listaUsuario = dao.list();
+		lstUsuario = new ListDataModel<ControleAcessoUsuario>(listaUsuario);
 		return lstUsuario;
 	}
 	
 	public void prepararAdicionarUsuario(ActionEvent actionEvent){
-		this.usuario = new Usuario();
+		this.usuario = new ControleAcessoUsuario();
 		carregaDualListModel(false);
 		System.out.println("Preparar Adicionar Usuario");
 	}
-	public void prepararAlterarUsuario(ActionEvent actionEvent){
+	public void prepararAlterarUsuario(){
 		this.usuario= null;
-		this.usuario = (Usuario)(lstUsuario.getRowData());
+		this.usuario = (ControleAcessoUsuario)(lstUsuario.getRowData());
 		
 		senhaAntiga = usuario.getDsSenha();
 		
@@ -68,26 +69,26 @@ public class UsuarioController implements Serializable {
 		System.out.println("Preparar Alterar Usuario");
 
 	}
-	public Usuario getUsuario() {
+	public ControleAcessoUsuario getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(ControleAcessoUsuario usuario) {
 		this.usuario = usuario;
 	}
 	
-	public void setLstUsuario(DataModel<Usuario> lstUsuario) {
+	public void setLstUsuario(DataModel<ControleAcessoUsuario> lstUsuario) {
 		this.lstUsuario = lstUsuario;
 	}
 	public void excluirUsuario(){
-		Usuario usuario = (Usuario)(lstUsuario.getRowData());
-		UsuarioDao dao = new UsuarioDao();
+		ControleAcessoUsuario usuario = (ControleAcessoUsuario)(lstUsuario.getRowData());
+		ControleAcessoUsuarioDao dao = new ControleAcessoUsuarioDao();
 		dao.remove(usuario);
 	}
 
 	public void adicionarUsuario(ActionEvent actionEvent){
 		System.out.println("Adicionar Usuario");
 		
-		UsuarioDao dao = new UsuarioDao();
+		ControleAcessoUsuarioDao dao = new ControleAcessoUsuarioDao();
 		dao.save(usuario);
 	}
 	public void alterarUsuario(ActionEvent actionEvent){
@@ -99,7 +100,7 @@ public class UsuarioController implements Serializable {
 			usuario.setDsSenha(senhaAntiga);
 			criptografar = false;
 		}
-		UsuarioDao dao = new UsuarioDao();
+		ControleAcessoUsuarioDao dao = new ControleAcessoUsuarioDao();
 		dao.update(usuario, criptografar);
 	}
 	public void validacaoCampos(){
@@ -107,21 +108,21 @@ public class UsuarioController implements Serializable {
     }  
 	
 	public List<SelectItem> getItemsPessoa(){  
-		UsuarioDao dao = new UsuarioDao();
-		return dao.getItemsPessoa();
+		ControleAcessoUsuarioDao dao = new ControleAcessoUsuarioDao();
+		return JsfUtil.getSelectItems(dao.getItemsPessoa(), true);
 	 } 
 	
-	public DualListModel<Perfil> getPerfis() {  
+	public DualListModel<ControleAcessoPerfil> getPerfis() {  
 		return perfis;  
 	}  
-	public void setPerfis(DualListModel<Perfil> perfis) {  
+	public void setPerfis(DualListModel<ControleAcessoPerfil> perfis) {  
 		this.perfis = perfis;  
 	} 
 
 	 public void onTransfer(TransferEvent event) {  
 	     StringBuilder builder = new StringBuilder();  
 	     for(Object item : event.getItems()) {  
-	         builder.append(((Perfil) item).getDsPerfil()).append("<br />");  
+	         builder.append(((ControleAcessoPerfil) item).getDsPerfil()).append("<br />");  
 	     }  
 	       
 	     FacesMessage msg = new FacesMessage();  
@@ -133,27 +134,28 @@ public class UsuarioController implements Serializable {
 	 }
 	
 	private void carregaDualListModel(boolean isCarregarPerfilComAcesso){
-		List<Perfil> source =  new ArrayList<Perfil>();  
-		List<Perfil> target = new ArrayList<Perfil>();
+		List<ControleAcessoPerfil> source =  new ArrayList<ControleAcessoPerfil>();  
+		List<ControleAcessoPerfil> target = new ArrayList<ControleAcessoPerfil>();
 		
-		source = getListarPerfil();
+		ControleAcessoPerfilDao dao = new ControleAcessoPerfilDao();
+		source = dao.list();
 		
 		if (isCarregarPerfilComAcesso){
-			target = new ArrayList<Perfil>(usuario.getTbperfils());
+			target = new ArrayList<ControleAcessoPerfil>(usuario.getTbperfils());
 			source.removeAll(usuario.getTbperfils());
 		}
 		
-		perfis = new DualListModel<Perfil>(source, target);
+		perfis = new DualListModel<ControleAcessoPerfil>(source, target);
 	}
 	
 	private void setDualListModelPerfiToSet(){
-		for (Perfil perfil : perfis.getTarget())
+		for (ControleAcessoPerfil perfil : perfis.getTarget())
 			usuario.getTbperfils().add(perfil);
 	}
 	
-	public ArrayList<Perfil> getListarPerfil() {
-		PerfilDao dao = new PerfilDao();
-		ArrayList<Perfil> listaPerfil = (ArrayList)dao.list();
-		return listaPerfil;
+	public List<SelectItem> getListarPerfil() {
+		ControleAcessoPerfilDao dao = new ControleAcessoPerfilDao();
+		//ArrayList<ControleAcessoPerfil> listaPerfil = (ArrayList)dao.list();
+		return JsfUtil.getSelectItems(dao.list(), true);
 	}
 }

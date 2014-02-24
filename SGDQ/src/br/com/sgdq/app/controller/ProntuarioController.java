@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -30,10 +29,9 @@ import br.com.sgdq.app.controller.util.PaginationHelper;
 import br.com.sgdq.app.entity.Cidade;
 import br.com.sgdq.app.entity.Estado;
 import br.com.sgdq.app.entity.Prontuario;
-import br.com.sgdq.app.entity.UsuarioSGDQ;
 import br.com.sgdq.app.facade.ProntuarioFacade;
 import br.com.sgdq.app.facade.UsuarioSGDQFacade;
-import controleacesso.web.modelo.Usuario;
+import controleacesso.web.modelo.ControleAcessoUsuario;
 //import javax.enterprise.context.SessionScoped;
 
 @Named(value = "prontuarioController")
@@ -207,7 +205,7 @@ public class ProntuarioController implements Serializable {
         	FacesContext facesContext = FacesContext.getCurrentInstance(); 
         	HttpServletRequest request = (HttpServletRequest)facesContext.getExternalContext().getRequest();  
 			HttpSession httpSession = request.getSession(false);  
-			Usuario usuario = (Usuario) httpSession.getAttribute("usuario");  
+			ControleAcessoUsuario usuario = (ControleAcessoUsuario) httpSession.getAttribute("usuario");  
 			getSelected().setIdUsuarioCadastro(usuario.getIdUsuario());
 			
 			// Armazena o objeto usuario no prontuário relacionado

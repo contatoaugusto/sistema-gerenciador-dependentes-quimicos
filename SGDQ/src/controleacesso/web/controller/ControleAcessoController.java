@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import controleacesso.web.modelo.Usuario;
+import controleacesso.web.modelo.ControleAcessoUsuario;
 import controleacesso.web.process.ControleAcessoProcess;
 
 
@@ -39,16 +39,16 @@ public class ControleAcessoController {
 		this.nmPessoa = nmPessoa;
 	}
 
-	public Usuario getUsuario() {
+	public ControleAcessoUsuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(ControleAcessoUsuario usuario) {
 		this.usuario = usuario;
 	}
 
 	private String nmPessoa;
-	private Usuario usuario;
+	private ControleAcessoUsuario usuario;
 	
 	
 	@PostConstruct
@@ -64,6 +64,6 @@ public class ControleAcessoController {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)facesContext.getExternalContext().getRequest();  
 		HttpSession httpSession = request.getSession(false);  
-		usuario = (Usuario) httpSession.getAttribute("usuario");  
+		usuario = (ControleAcessoUsuario) httpSession.getAttribute("usuario");  
 	}
 }

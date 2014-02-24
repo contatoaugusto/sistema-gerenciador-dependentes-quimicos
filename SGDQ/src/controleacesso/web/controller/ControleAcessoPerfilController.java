@@ -12,16 +12,16 @@ import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
-import controleacesso.web.dao.PerfilDao;
-import controleacesso.web.modelo.Perfil;
+import controleacesso.web.dao.ControleAcessoPerfilDao;
+import controleacesso.web.modelo.ControleAcessoPerfil;
 
 
 @ManagedBean
 @SessionScoped
-public class PerfilController implements Serializable {
+public class ControleAcessoPerfilController implements Serializable {
 
-	private Perfil perfil = new Perfil();
-	private DataModel<Perfil> lstPerfil;
+	private ControleAcessoPerfil perfil = new ControleAcessoPerfil();
+	private DataModel<ControleAcessoPerfil> lstPerfil;
 
 	@PostConstruct
 	public void init() {
@@ -32,41 +32,41 @@ public class PerfilController implements Serializable {
 		return "Perfil";
 	}
 
-	public Perfil getPerfil() {
+	public ControleAcessoPerfil getPerfil() {
 		return perfil;
 	}
 
-	public void setPerfil(Perfil perfil) {
+	public void setPerfil(ControleAcessoPerfil perfil) {
 		this.perfil = perfil;
 	}
 
-	public DataModel<Perfil> getListarPerfil() {
-		List<Perfil> listaPerfil = new PerfilDao().list();
-		lstPerfil = new ListDataModel<Perfil>(listaPerfil);
+	public DataModel<ControleAcessoPerfil> getListarPerfil() {
+		List<ControleAcessoPerfil> listaPerfil = new ControleAcessoPerfilDao().list();
+		lstPerfil = new ListDataModel<ControleAcessoPerfil>(listaPerfil);
 		return lstPerfil;
 	}
 
 	public void prepararAdicionarPerfil(ActionEvent actionEvent) {
-		this.perfil = new Perfil();
+		this.perfil = new ControleAcessoPerfil();
 		System.out.println("Preparar Adicionar Perfil");
 	}
 
 	public void prepararAlterarPerfil(ActionEvent actionEvent) {
 		this.perfil = null;
-		this.perfil = (Perfil) (lstPerfil.getRowData());
+		this.perfil = (ControleAcessoPerfil) (lstPerfil.getRowData());
 		System.out.println("Preparar Alterar Perfil");
 
 	}
 
 	public void adicionarPerfil(ActionEvent actionEvent) {
-		PerfilDao dao = new PerfilDao();
+		ControleAcessoPerfilDao dao = new ControleAcessoPerfilDao();
 		dao.save(perfil);
 	}
 
 	public void alterarPerfil(ActionEvent actionEvent) {
 		// validacaoCampos();
 		System.out.println("Alterando Perfil na Base de dados");
-		PerfilDao dao = new PerfilDao();
+		ControleAcessoPerfilDao dao = new ControleAcessoPerfilDao();
 		dao.update(perfil);
 	}
 

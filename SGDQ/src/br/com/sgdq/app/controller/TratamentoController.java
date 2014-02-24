@@ -13,35 +13,27 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener;
-
 import br.com.sgdq.app.controller.util.JsfUtil;
 import br.com.sgdq.app.controller.util.PaginationHelper;
-import br.com.sgdq.app.entity.Exame;
 import br.com.sgdq.app.entity.FaseTratamento;
 import br.com.sgdq.app.entity.Prontuario;
 import br.com.sgdq.app.entity.Tratamento;
-import br.com.sgdq.app.facade.ExameFacade;
 import br.com.sgdq.app.facade.FaseTratamentoFacade;
 import br.com.sgdq.app.facade.ProntuarioFacade;
 import br.com.sgdq.app.facade.TratamentoFacade;
 import br.com.sgdq.app.facade.TratamentoStatusFacade;
-import controleacesso.web.modelo.Usuario;
+import controleacesso.web.modelo.ControleAcessoUsuario;
 
 /**
 * BackBean da pagina de tratamento do paciente.
@@ -107,7 +99,7 @@ public class TratamentoController implements Serializable {
 		this.faseTratamento = faseTratamento;
 	}
 
-	private Usuario usuario;
+	private ControleAcessoUsuario usuario;
 	
 	public Prontuario getProntuario() {
 		return prontuario;
@@ -173,7 +165,7 @@ public class TratamentoController implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)facesContext.getExternalContext().getRequest();  
 		HttpSession httpSession = request.getSession(false);  
-		usuario = (Usuario) httpSession.getAttribute("usuario");  
+		usuario = (ControleAcessoUsuario) httpSession.getAttribute("usuario");  
 	}
 
 	private void loadFaseTratamento(Integer idTratamento) {
@@ -490,11 +482,11 @@ public class TratamentoController implements Serializable {
     }
 
 
-	public Usuario getUsuario() {
+	public ControleAcessoUsuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(ControleAcessoUsuario usuario) {
 		this.usuario = usuario;
 	}
 	

@@ -18,16 +18,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import controleacesso.web.modelo.Usuario;
 
 import br.com.sgdq.app.controller.util.JsfUtil;
 import br.com.sgdq.app.controller.util.PaginationHelper;
 import br.com.sgdq.app.entity.FaseTratamento;
 import br.com.sgdq.app.facade.FaseTratamentoFacade;
+import controleacesso.web.modelo.ControleAcessoUsuario;
 
 //@Named("faseTratamentoController")
 @ManagedBean (name = "faseTratamentoController")
@@ -41,7 +39,7 @@ public class FaseTratamentoController implements Serializable {
     private br.com.sgdq.app.facade.FaseTratamentoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private Usuario usuario;
+    private ControleAcessoUsuario usuario;
     private Integer idTratamento;
     private String dsmotivofasetratamento;
     
@@ -132,7 +130,7 @@ public class FaseTratamentoController implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)facesContext.getExternalContext().getRequest();  
 		HttpSession httpSession = request.getSession(false);  
-		usuario = (Usuario) httpSession.getAttribute("usuario");  
+		usuario = (ControleAcessoUsuario) httpSession.getAttribute("usuario");  
 	}
 	
     public PaginationHelper getPagination() {

@@ -16,16 +16,16 @@ import javax.persistence.PostLoad;
 import org.primefaces.context.RequestContext;
 //import org.springframework.test.context.transaction.AfterTransaction;
 
-import controleacesso.web.dao.PessoaDao;
-import controleacesso.web.modelo.Pessoa;
+import controleacesso.web.dao.ControleAcessoPessoaDao;
+import controleacesso.web.modelo.ControleAcessoPessoa;
 
 
 @ManagedBean
 @SessionScoped
-public class PessoaController implements Serializable {
+public class ControleAcessoPessoaController implements Serializable {
 
-	private Pessoa pessoa = new Pessoa();
-	private DataModel<Pessoa> lstPessoa;
+	private ControleAcessoPessoa pessoa = new ControleAcessoPessoa();
+	private DataModel<ControleAcessoPessoa> lstPessoa;
 	
 	@PostConstruct
 	 public void init(){
@@ -34,40 +34,40 @@ public class PessoaController implements Serializable {
 	 public String getMessage(){
 	        return "Pessoa";
 	 }
-	public DataModel<Pessoa> getListarPessoa() {
-		List<Pessoa> listaPessoa = new PessoaDao().list();
-		lstPessoa = new ListDataModel<Pessoa>(listaPessoa);
+	public DataModel<ControleAcessoPessoa> getListarPessoa() {
+		List<ControleAcessoPessoa> listaPessoa = new ControleAcessoPessoaDao().list();
+		lstPessoa = new ListDataModel<ControleAcessoPessoa>(listaPessoa);
 		return lstPessoa;
 	}
 	
 	public void prepararAdicionarPessoa(ActionEvent actionEvent){
-		this.pessoa = new Pessoa();
+		this.pessoa = new ControleAcessoPessoa();
 		System.out.println("Preparar Adicionar Pessoa");
 	}
 	public void prepararAlterarPessoa(ActionEvent actionEvent){
 		this.pessoa= null;
-		this.pessoa = (Pessoa)(lstPessoa.getRowData());
+		this.pessoa = (ControleAcessoPessoa)(lstPessoa.getRowData());
 		System.out.println("Preparar Alterar Pessoa");
 
 	}
-	public Pessoa getPessoa() {
+	public ControleAcessoPessoa getPessoa() {
 		return pessoa;
 	}
-	public void setPessoa(Pessoa pessoa) {
+	public void setPessoa(ControleAcessoPessoa pessoa) {
 		this.pessoa = pessoa;
 	}
 	
-	public void setLstPessoa(DataModel<Pessoa> lstPessoa) {
+	public void setLstPessoa(DataModel<ControleAcessoPessoa> lstPessoa) {
 		this.lstPessoa = lstPessoa;
 	}
 	public String excluirPessoa(){
-		Pessoa pessoa = (Pessoa)(lstPessoa.getRowData());
-		PessoaDao dao = new PessoaDao();
+		ControleAcessoPessoa pessoa = (ControleAcessoPessoa)(lstPessoa.getRowData());
+		ControleAcessoPessoaDao dao = new ControleAcessoPessoaDao();
 		dao.remove(pessoa);
 		return "index";
 	}
 	public void adicionarPessoa(ActionEvent actionEvent){
-		PessoaDao dao = new PessoaDao();
+		ControleAcessoPessoaDao dao = new ControleAcessoPessoaDao();
 		//pessoa.setIdPessoa(lstPessoa.getRowCount() + 1);
 		//dao.persist(pessoa);
 		dao.save(pessoa);
@@ -75,7 +75,7 @@ public class PessoaController implements Serializable {
 	public void alterarPessoa(ActionEvent actionEvent){
 		//validacaoCampos();
 		System.out.println("Alterando Pessoa na Base de dados");
-		PessoaDao dao = new PessoaDao();
+		ControleAcessoPessoaDao dao = new ControleAcessoPessoaDao();
 		dao.update(pessoa);
 	}
 	public void validacaoCampos(){

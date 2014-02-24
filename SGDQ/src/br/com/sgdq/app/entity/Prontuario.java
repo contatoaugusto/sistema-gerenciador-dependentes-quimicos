@@ -27,12 +27,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.JoinFormula;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import controleacesso.web.modelo.Usuario;
-
 
 /**
  *

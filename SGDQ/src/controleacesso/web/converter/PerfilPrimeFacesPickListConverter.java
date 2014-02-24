@@ -8,7 +8,7 @@ import javax.faces.convert.FacesConverter;
 import org.primefaces.component.picklist.PickList;
 import org.primefaces.model.DualListModel;
 
-import controleacesso.web.modelo.Perfil;
+import controleacesso.web.modelo.ControleAcessoPerfil;
 
 
 @FacesConverter(value = "PerfilConverter")
@@ -20,7 +20,7 @@ public class PerfilPrimeFacesPickListConverter implements Converter {
 			Object dualList = ((PickList) arg1).getValue();
 			DualListModel dl = (DualListModel) dualList;
 			for (Object o : dl.getSource()) {
-				String id = "" + ((Perfil) o).getIdPerfil();
+				String id = "" + ((ControleAcessoPerfil) o).getIdPerfil();
 				if (arg2.equals(id)) {
 					ret = o;
 					break;
@@ -28,7 +28,7 @@ public class PerfilPrimeFacesPickListConverter implements Converter {
 			}
 			if (ret == null)
 				for (Object o : dl.getTarget()) {
-					String id = "" + ((Perfil) o).getIdPerfil();
+					String id = "" + ((ControleAcessoPerfil) o).getIdPerfil();
 					if (arg2.equals(id)) {
 						ret = o;
 						break;
@@ -41,8 +41,8 @@ public class PerfilPrimeFacesPickListConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
 		String str = "";
-		if (arg2 instanceof Perfil) {
-			str = "" + ((Perfil) arg2).getIdPerfil();
+		if (arg2 instanceof ControleAcessoPerfil) {
+			str = "" + ((ControleAcessoPerfil) arg2).getIdPerfil();
 		}
 		return str;
 	}

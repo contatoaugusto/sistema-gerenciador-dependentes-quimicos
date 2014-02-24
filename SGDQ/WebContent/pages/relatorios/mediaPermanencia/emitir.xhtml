@@ -20,7 +20,7 @@
 					<!-- Mensagens -->
 					<p:messages id="mensagens" closable="true"/>
 					<!-- Dados Gerais -->
-					<p:fieldset id="fieldset_dados_do_tratamento" legend="Media Permanência">
+<!-- 					<p:fieldset id="fieldset_dados_do_tratamento" legend="Media Permanência"> -->
 						<!-- Inputs -->
 						<div class="input-and-label">
 						    <p:panelGrid>
@@ -31,22 +31,23 @@
 						    		<p:column>
 						  				<p:calendar id="input_data_inicial" value="#{relatorioMediaPermanenciaController.dataInicial}" />  
 						        	</p:column>
-						        </p:row>
-						    	<p:row>
-						    		<p:column>
+						       		<p:column>
 						    			<p:outputLabel value="#{rotulo['relatorio.data_final']}:" />
 						    		</p:column>
 						    		<p:column>
 						    			<p:calendar id="input_data_final" value="#{relatorioMediaPermanenciaController.dataFinal}" />
 						        	</p:column>
-						        </p:row>
+						        	<p:column>
+						        		<p:commandButton id="button_salvar" value="Gerar" actionListener="#{relatorioMediaPermanenciaController.emitir}" update=":emitir" icon="ui-icon-check" />  
+						        	</p:column>	
+						    	</p:row>
 							</p:panelGrid>
 						</div>
-					</p:fieldset>
+<!-- 					</p:fieldset> -->
 					<!-- Button -->
+					<br/>
 					<div class="buttons">
-					    <p:commandButton id="button_salvar" value="Gerar" actionListener="#{relatorioMediaPermanenciaController.emitir}" update=":emitir" icon="ui-icon-check" />  
-						<p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/mantertratamento/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
+					    <p:commandButton id="button_voltar" value="#{rotulo['generico.voltar']}" action="/pages/mantertratamento/consultar?faces-redirect=true" immediate="true" icon="ui-icon-arrowreturnthick-1-w" />
 					</div>
 				</h:form>
 			</div>

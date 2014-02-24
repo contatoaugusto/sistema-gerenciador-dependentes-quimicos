@@ -18,6 +18,11 @@
 	    <class>br.com.sgdq.app.entity.TratamentoStatus</class>
 	    <class>br.com.sgdq.app.entity.TratamentoTipo</class>
 	    <class>br.com.sgdq.app.entity.UsuarioSGDQ</class>
+	    <class>controleacesso.web.modelo.ControleAcessoUsuario</class>
+	    <class>controleacesso.web.modelo.ControleAcessoPerfil</class>
+	    <class>controleacesso.web.modelo.ControleAcessoRecurso</class>
+	    <class>controleacesso.web.modelo.ControleAcessoPessoa</class>
+	    
 	   <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
 	   	<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sgdq"/>
